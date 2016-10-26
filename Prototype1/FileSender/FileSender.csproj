@@ -74,6 +74,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="user.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FileWatcherService.resx">
