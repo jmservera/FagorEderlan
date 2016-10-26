@@ -164,6 +164,10 @@ namespace FileSender
                                 }
                             }
                         Trace.TraceInformation($"Zip created:{stream.Length}");
+                        // TODO Send stream to Azure
+
+
+
                         }
                     }
                 }
