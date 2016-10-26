@@ -53,7 +53,7 @@ The participants will be people from three different companies: **Fagor Ederlan*
     - Aitor Akizu 
     - Josu Lopez 
     - Maite Beamurgia 
- - Microsoft
+- Microsoft
     - Juan Manuel Servera
 
 The Hackfest will focus on three different matters:
