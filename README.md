@@ -39,12 +39,13 @@ The participants will be people from three different companies: **Fagor Ederlan*
 
 - Fagor Ederlan (Edertek)
     - Eber Arregui (Project Manager)
-    -Yolanda Mendi (IT)
+    - Yolanda Mendi (IT)
     - Ibai Peña (IT)
     - Jesús Para (Data Analytics)
     - Imanol Santos (Installation technician)
 - LKS
     - Vicente Briz
+    - Miguel Baroja
 - ETIC
     - Natividad Herrasti (Managing Director)
     - Jon Alza
@@ -52,6 +53,8 @@ The participants will be people from three different companies: **Fagor Ederlan*
     - Aitor Akizu 
     - Josu Lopez 
     - Maite Beamurgia 
+- Microsoft
+    - Juan Manuel Servera
 
 The Hackfest will focus on three different matters:
 - Learning to use IoT Hub and how it enhances the real-time capture of the data
