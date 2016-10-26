@@ -14,7 +14,7 @@ namespace FileSender
     /// Using the pattern as found here: http://social.technet.microsoft.com/wiki/contents/articles/30957.c-windows-service-in-console-mode-for-debug-and-admin.aspx
     /// </summary>
     static class Program
-    {
+    { 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
