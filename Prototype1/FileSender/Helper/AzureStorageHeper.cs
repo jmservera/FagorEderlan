@@ -64,13 +64,22 @@ namespace FileSender.Helper
         }
         public async Task UploadZipToStorage(Stream zipFile)
         {
-            zipFile.Flush();
-            zipFile.Position = 0;
-            using (var fstr = new FileStream("c:\\temp\\filetest\\test.zip", FileMode.Create))
-            {
-                zipFile.CopyTo(fstr);
-            }
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference("example"); // TODO - name for the container.
+            //zipFile.Flush();
+            //zipFile.Position = 0;
+            //using (var fstr = new FileStream("c:\\temp\\filetest\\test.zip", FileMode.Create))
+            //{
+            //    zipFile.CopyTo(fstr);
+            //}
+            string year, month, day, hour, minute, second;
+            year = DateTime.Now.Year.ToString();
+            month = DateTime.Now.Month.ToString();
+            day = DateTime.Now.Day.ToString();
+            hour = DateTime.Now.Hour.ToString();
+            minute = DateTime.Now.Minute.ToString();
+            second = DateTime.Now.Second.ToString();
+            
+
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(year + "-" + month + "-" + day + "-" + hour + ":" + minute + ":" + second); // TODO - name for the container.
             zipFile.Flush();
             zipFile.Position = 0;
             blockBlob.Properties.ContentType = "application/zip";
