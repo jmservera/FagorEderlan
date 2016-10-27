@@ -137,7 +137,6 @@ namespace FileSender
             var filesToSend=new List<string>();
             try
             {
-
                 var filesEnum = files.GetEnumerator();
                 var old = DateTime.Now.AddMilliseconds(0-zipInterval);
                 while (filesEnum.MoveNext())
@@ -154,7 +153,6 @@ namespace FileSender
                 }
                 if (filesToSend.Count > 0)
                 {
-
                     try
                     {
                         var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
