@@ -54,7 +54,7 @@ namespace FileSender
                 this.CheckSource(source);
                 EventLog.WriteEntry(source, message, entryType, eventId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
         }
