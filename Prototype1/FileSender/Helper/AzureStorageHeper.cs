@@ -13,8 +13,7 @@ namespace FileSender.Helper
 {
     public class AzureStorageHelper
     {
-        // Azure Storage Account Credentials -  DELETE FROM HERE
-        //public string azureStorageAccountName = "eticdemostorageaccount";
+        // Azure Storage Account Credentials
         public string azureStorageAccountKey;
         public string azureStorageAccountContainer;
         public string azureStorageAccountName;
@@ -36,7 +35,6 @@ namespace FileSender.Helper
                 // Create a CloudBlobClient object using the CloudStorageAccount.
                 CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
                 // Create a CloudBlobContain object using the CloudBlobClient.
-
                 // Retrieve a reference to a container.
                 this.container = blobClient.GetContainerReference(azureStorageAccountContainer);
             }
@@ -73,28 +71,6 @@ namespace FileSender.Helper
             }
             blockBlob.Properties.ContentType = "application/zip";
             await blockBlob.SetPropertiesAsync();
-
-
-            ////zipFile.Flush();
-            ////zipFile.Position = 0;
-            ////using (var fstr = new FileStream("c:\\temp\\filetest\\test.zip", FileMode.Create))
-            ////{
-            ////    zipFile.CopyTo(fstr);
-            ////}
-            //string year, month, day, hour, minute, second;
-            //year = DateTime.Now.Year.ToString();
-            //month = DateTime.Now.Month.ToString();
-            //day = DateTime.Now.Day.ToString();
-            //hour = DateTime.Now.Hour.ToString();
-            //minute = DateTime.Now.Minute.ToString();
-            //second = DateTime.Now.Second.ToString();
-            
-            //CloudBlockBlob blockBlob = container.GetBlockBlobReference(year + "-" + month + "-" + day + "-" + hour + ":" + minute + ":" + second); // TODO - name for the container.
-            //zipFile.Flush();
-            //zipFile.Position = 0;
-            //blockBlob.Properties.ContentType = "application/zip";
-            //blockBlob.UploadFromStream(zipFile);
-            //await blockBlob.SetPropertiesAsync();
         }
     }
 }
