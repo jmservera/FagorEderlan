@@ -1,20 +1,15 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FileSender.Helper
 {
     public class AzureStorageHelper
     {
-        // Azure Storage Account Credentials -  DELETE FROM HERE
-        //public string azureStorageAccountName = "eticdemostorageaccount";
+        // Azure Storage Account Credentials
         public string azureStorageAccountKey;
         public string azureStorageAccountContainer;
         public string azureStorageAccountName;
@@ -64,37 +59,22 @@ namespace FileSender.Helper
         }
         public async Task UploadZipToStorage(string fileName, string fileFolder)
         {
-
-            // Retrieve reference to a blob named "userName".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
-            using (var fileStream = System.IO.File.OpenRead(fileFolder+ "\\" + fileName))
+            try
             {
-                await blockBlob.UploadFromStreamAsync(fileStream);
+                // Retrieve reference to a blob named "userName".
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+                using (var fileStream = System.IO.File.OpenRead(fileFolder + "\\" + fileName))
+                {
+                    await blockBlob.UploadFromStreamAsync(fileStream);
+                }
+                blockBlob.Properties.ContentType = "application/zip";
+                await blockBlob.SetPropertiesAsync();
             }
-            blockBlob.Properties.ContentType = "application/zip";
-            await blockBlob.SetPropertiesAsync();
-
-
-            ////zipFile.Flush();
-            ////zipFile.Position = 0;
-            ////using (var fstr = new FileStream("c:\\temp\\filetest\\test.zip", FileMode.Create))
-            ////{
-            ////    zipFile.CopyTo(fstr);
-            ////}
-            //string year, month, day, hour, minute, second;
-            //year = DateTime.Now.Year.ToString();
-            //month = DateTime.Now.Month.ToString();
-            //day = DateTime.Now.Day.ToString();
-            //hour = DateTime.Now.Hour.ToString();
-            //minute = DateTime.Now.Minute.ToString();
-            //second = DateTime.Now.Second.ToString();
+            catch (Exception e)
+            {
+                Trace.TraceError("Error uploading zip file.");
+            }
             
-            //CloudBlockBlob blockBlob = container.GetBlockBlobReference(year + "-" + month + "-" + day + "-" + hour + ":" + minute + ":" + second); // TODO - name for the container.
-            //zipFile.Flush();
-            //zipFile.Position = 0;
-            //blockBlob.Properties.ContentType = "application/zip";
-            //blockBlob.UploadFromStream(zipFile);
-            //await blockBlob.SetPropertiesAsync();
         }
     }
 }
