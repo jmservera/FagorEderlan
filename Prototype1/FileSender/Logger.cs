@@ -30,32 +30,22 @@ namespace FileSender
                 this.CheckSource(Logger.EventSource);
                 EventLog.WriteEntry(Logger.EventSource, message, entryType);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
             }
         }
 
-        public void WriteEntry(string source, string message, EventLogEntryType entryType)
+        public void WriteEntry(string message, EventLogEntryType entryType, int eventId)
         {
             try
             {
-                this.CheckSource(source);
-                EventLog.WriteEntry(Logger.EventSource, message, entryType);
+                this.CheckSource(Logger.EventSource);
+                EventLog.WriteEntry(Logger.EventSource, message, entryType, eventId);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-            }
-        }
-
-        public void WriteEntry(string source, string message, EventLogEntryType entryType, int eventId)
-        {
-            try
-            {
-                this.CheckSource(source);
-                EventLog.WriteEntry(source, message, entryType, eventId);
-            }
-            catch (Exception)
-            {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -154,7 +144,7 @@ namespace FileSender
                 type = EventLogEntryType.Error;
             else if (eventType == TraceEventType.Warning)
                 type = EventLogEntryType.Warning;
-            this.WriteEntry(Logger.EventSource, message, type, id);
+            this.WriteEntry(message, type, id);
         }
 
         // TraceError("message")
@@ -168,7 +158,7 @@ namespace FileSender
                 type = EventLogEntryType.Error;
             else if (eventType == TraceEventType.Warning)
                 type = EventLogEntryType.Warning;
-            this.WriteEntry(Logger.EventSource, message, type, id);
+            this.WriteEntry(message, type, id);
         }
 
         public override void Write(string message)

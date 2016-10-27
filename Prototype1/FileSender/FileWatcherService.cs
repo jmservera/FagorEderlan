@@ -160,6 +160,7 @@ namespace FileSender
                         Directory.CreateDirectory(zipFolder);
                         
                         var fileName =  DateTime.Now.ToString("yyyyMMddHHmmss") +".zip";
+                        Trace.TraceInformation($"Zipping file: {fileName}");
                         ZipFile zip = ZipFile.Create(zipFolder+ "\\" + fileName);
                         zip.BeginUpdate();
                         foreach (var file in filesToSend)
