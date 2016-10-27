@@ -62,6 +62,7 @@ namespace FileSender
             watcher.Changed += Watcher_Changed;
             watcher.Created += Watcher_Created;
 
+            try {
                 watcher.EnableRaisingEvents = true;
 
                 storageHelper = new AzureStorageHelper();
