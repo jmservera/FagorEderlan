@@ -67,7 +67,7 @@ namespace FileSender.Helper
 
             // Retrieve reference to a blob named "userName".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
-            using (var fileStream = System.IO.File.OpenRead(fileFolder))
+            using (var fileStream = System.IO.File.OpenRead(fileFolder+ "\\" + fileName))
             {
                 await blockBlob.UploadFromStreamAsync(fileStream);
             }
