@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.txt = readme.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvGenerator", "CsvGenerator\CsvGenerator.csproj", "{9578F4C4-7CA5-4998-8B1D-3E3EE8975564}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{4E64BBC6-BFDB-40FB-AF8F-635A44C10AAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E64BBC6-BFDB-40FB-AF8F-635A44C10AAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E64BBC6-BFDB-40FB-AF8F-635A44C10AAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9578F4C4-7CA5-4998-8B1D-3E3EE8975564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9578F4C4-7CA5-4998-8B1D-3E3EE8975564}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9578F4C4-7CA5-4998-8B1D-3E3EE8975564}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9578F4C4-7CA5-4998-8B1D-3E3EE8975564}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
