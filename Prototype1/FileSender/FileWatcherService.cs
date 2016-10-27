@@ -111,19 +111,21 @@ namespace FileSender
             watcher.EnableRaisingEvents = false;
             stopTimer();
             base.OnPause();
+            Trace.TraceInformation($"{this.ServiceName} paused.");
         }
         protected override void OnContinue()
         {
             watcher.EnableRaisingEvents = true;
             startTimer();
             base.OnContinue();
+            Trace.TraceInformation($"{this.ServiceName} resumed.");
         }
         protected override void OnStop()
         {
-
             watcher.EnableRaisingEvents = false;
             watcher.Dispose();
             stopTimer();
+            Trace.TraceInformation($"{this.ServiceName} stoped.");
         }
 
         private async void sendFilesTimer_Tick(object sender)
