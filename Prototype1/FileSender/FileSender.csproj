@@ -91,6 +91,7 @@
       <DependentUpon>FileWatcherService.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\AzureStorageHeper.cs" />
+    <Compile Include="Helper\OldFileZipper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
