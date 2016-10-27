@@ -51,30 +51,36 @@ namespace FileSender
         protected override void OnStart(string[] args)
         {
             string folder = ConfigurationManager.AppSettings["folder"];
-
-            watcher = new FileSystemWatcher(folder, "*.csv");
-            watcher.IncludeSubdirectories = true;
-            watcher.Changed += Watcher_Changed;
-            watcher.Created += Watcher_Created;
-
-            watcher.EnableRaisingEvents = true;
-
-            storageHelper = new AzureStorageHelper();
-
-            string interval = ConfigurationManager.AppSettings["interval"];
-            if (!string.IsNullOrEmpty(interval))
+            try
             {
-                int value = 0;
-                if(int.TryParse(interval,out value))
+                watcher = new FileSystemWatcher(folder, "*.csv");
+                watcher.IncludeSubdirectories = true;
+                watcher.Changed += Watcher_Changed;
+                watcher.Created += Watcher_Created;
+
+                watcher.EnableRaisingEvents = true;
+
+                storageHelper = new AzureStorageHelper();
+
+                string interval = ConfigurationManager.AppSettings["interval"];
+                if (!string.IsNullOrEmpty(interval))
                 {
-                    if (value > 1000)
+                    int value = 0;
+                    if (int.TryParse(interval, out value))
                     {
-                        Trace.TraceInformation($"Zip interval set to {value}");
-                        zipInterval = value;
+                        if (value > 1000)
+                        {
+                            Trace.TraceInformation($"Zip interval set to {value}");
+                            zipInterval = value;
+                        }
                     }
                 }
+                startTimer();
             }
-            startTimer();
+            catch (Exception ex)
+            {
+                Trace.TraceError($"OnStart error: {ex.Message}");
+            }
         }
 
         private void Watcher_Created(object sender, FileSystemEventArgs e)
