@@ -1,12 +1,8 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FileSender.Helper
@@ -63,14 +59,22 @@ namespace FileSender.Helper
         }
         public async Task UploadZipToStorage(string fileName, string fileFolder)
         {
-            // Retrieve reference to a blob named "userName".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
-            using (var fileStream = System.IO.File.OpenRead(fileFolder+ "\\" + fileName))
+            try
             {
-                await blockBlob.UploadFromStreamAsync(fileStream);
+                // Retrieve reference to a blob named "userName".
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+                using (var fileStream = System.IO.File.OpenRead(fileFolder + "\\" + fileName))
+                {
+                    await blockBlob.UploadFromStreamAsync(fileStream);
+                }
+                blockBlob.Properties.ContentType = "application/zip";
+                await blockBlob.SetPropertiesAsync();
             }
-            blockBlob.Properties.ContentType = "application/zip";
-            await blockBlob.SetPropertiesAsync();
+            catch (Exception e)
+            {
+                Trace.TraceError("Error uploading zip file.");
+            }
+            
         }
     }
 }
