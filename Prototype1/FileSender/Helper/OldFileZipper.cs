@@ -10,8 +10,6 @@ namespace FileSender.Helper
 {
     public class OldFileZipper
     {
-        // Check file's name and path.
-        private string logFile = "%TEMP%" + "log.txt";
         private List<string> FileNames;
         private string LastFileName;
 
@@ -23,7 +21,8 @@ namespace FileSender.Helper
 
         private string getLastCsvZippedFileName()
         {
-            string[] lines = File.ReadAllLines(logFile);
+            LogHelper fileLog = new LogHelper(LogCategory.lastFile, false);
+            string[] lines = File.ReadAllLines(fileLog.ReadLog());
             Trace.WriteLine(lines.LastOrDefault());
             return lines.LastOrDefault().Split(',').LastOrDefault();
         }

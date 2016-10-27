@@ -90,6 +90,8 @@
     <Compile Include="FileWatcherService.Designer.cs">
       <DependentUpon>FileWatcherService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\LogHelper.cs" />
+    <Compile Include="Helper\LogCategory.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Helper\AzureStorageHeper.cs" />
     <Compile Include="Helper\OldFileZipper.cs" />
