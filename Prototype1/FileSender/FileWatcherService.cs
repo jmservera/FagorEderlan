@@ -70,44 +70,41 @@ namespace FileSender
 
         private void Watcher_Created(object sender, FileSystemEventArgs e)
         {
-            Trace.TraceInformation($"File created {e.FullPath}");
+            Console.WriteLine($"File created {e.FullPath}");
             files.AddOrUpdate(e.FullPath, DateTime.Now, (key, oldvalue) => DateTime.Now);
             log();           
         }
 
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            Trace.TraceInformation($"File changed {e.FullPath}");
+            Console.WriteLine($"File changed {e.FullPath}");
             files.AddOrUpdate(e.FullPath, DateTime.Now, (key, oldvalue) => DateTime.Now);
             log();
         }
 
         private void log()
         {
-            Trace.WriteLine("**** Current list *****");
+            Console.WriteLine("**** Current list *****");
             foreach(var value in files)
             {
-                Trace.WriteLine($"{value.Key}:\t{value.Value}");
+                Console.WriteLine($"{value.Key}:\t{value.Value}");
             }
         }
 
         protected override void OnPause()
         {
-            Trace.TraceInformation("Pause");
             watcher.EnableRaisingEvents = false;
             stopTimer();
             base.OnPause();
         }
         protected override void OnContinue()
         {
-            Trace.TraceInformation("Recover from pause");
             watcher.EnableRaisingEvents = true;
             startTimer();
             base.OnContinue();
         }
         protected override void OnStop()
         {
-            Trace.TraceInformation("Stop");
 
             watcher.EnableRaisingEvents = false;
             watcher.Dispose();
@@ -116,7 +113,6 @@ namespace FileSender
 
         private void sendFilesTimer_Tick(object sender)
         {
-            Trace.TraceInformation("File check");
             var filesToSend=new List<string>();
             try
             {
@@ -163,7 +159,6 @@ namespace FileSender
                                     }
                                 }
                             }
-                        Trace.TraceInformation($"Zip created:{stream.Length}");
                         }
                     }
                 }

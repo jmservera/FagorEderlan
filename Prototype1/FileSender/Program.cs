@@ -111,6 +111,11 @@ namespace FileSender
             // Get the method to invoke on each service to start it
             MethodInfo onStartMethod = typeof(ServiceBase).GetMethod("OnStart", BindingFlags.Instance | BindingFlags.NonPublic);
 
+            //Logger logger = new Logger();
+            //logger.StartSimulator();
+            //Console.WriteLine();
+            //Console.WriteLine("Event viewer simulator starter.");
+
             // Start services loop
             foreach (ServiceBase service in servicesToRun)
             {
@@ -138,6 +143,7 @@ namespace FileSender
 
             Console.WriteLine();
             Console.WriteLine("All services are stopped.");
+
 
             // Waiting a key press to not return to VS directly
             if (System.Diagnostics.Debugger.IsAttached)
