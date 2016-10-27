@@ -31,6 +31,7 @@
             // 
             // FileWatcherService
             // 
+            this.CanPauseAndContinue = true;
             this.ServiceName = "CsvFileWatcher";
 
         }
