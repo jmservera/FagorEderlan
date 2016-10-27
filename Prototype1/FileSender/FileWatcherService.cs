@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.Zip;
 using System.Threading;
 using ICSharpCode.SharpZipLib.Core;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
+using FileSender.Helper;
 
 namespace FileSender
 {
@@ -23,6 +26,10 @@ namespace FileSender
         object sync = new object();
         FileSystemWatcher watcher;
         int zipInterval = 5 * 60 * 10000; //five minutes
+
+        public CloudBlobContainer container;
+        public AzureStorageHelper storageHelper;
+
         public FileWatcherService()
         {
             InitializeComponent();
@@ -51,6 +58,8 @@ namespace FileSender
             watcher.Created += Watcher_Created;
 
             watcher.EnableRaisingEvents = true;
+
+            storageHelper = new AzureStorageHelper();
 
             string interval = ConfigurationManager.AppSettings["interval"];
             if (!string.IsNullOrEmpty(interval))
@@ -114,7 +123,7 @@ namespace FileSender
             stopTimer();
         }
 
-        private void sendFilesTimer_Tick(object sender)
+        private async void sendFilesTimer_Tick(object sender)
         {
             Trace.TraceInformation("File check");
             var filesToSend=new List<string>();
@@ -163,7 +172,9 @@ namespace FileSender
                                     }
                                 }
                             }
-                        Trace.TraceInformation($"Zip created:{stream.Length}");
+                            Trace.TraceInformation($"Zip created:{stream.Length}");
+                            // TODO Send stream to Azure
+                            await storageHelper.UploadZipToStorage(stream);
                         }
                     }
                 }
