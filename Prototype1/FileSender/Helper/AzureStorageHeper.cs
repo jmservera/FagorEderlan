@@ -35,6 +35,7 @@ namespace FileSender.Helper
                 // Create a CloudBlobClient object using the CloudStorageAccount.
                 CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
                 // Create a CloudBlobContain object using the CloudBlobClient.
+
                 // Retrieve a reference to a container.
                 this.container = blobClient.GetContainerReference(azureStorageAccountContainer);
             }
@@ -62,7 +63,6 @@ namespace FileSender.Helper
         }
         public async Task UploadZipToStorage(string fileName, string fileFolder)
         {
-
             // Retrieve reference to a blob named "userName".
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
             using (var fileStream = System.IO.File.OpenRead(fileFolder+ "\\" + fileName))
