@@ -154,7 +154,6 @@ namespace FileSender
                 }
                 if (filesToSend.Count > 0)
                 {
-
                     try
                     {
                         var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -162,6 +161,7 @@ namespace FileSender
                         Directory.CreateDirectory(zipFolder);
                         
                         var fileName =  DateTime.Now.ToString("yyyyMMddHHmmss") +".zip";
+                        Trace.TraceInformation($"Zipping file: {fileName}");
                         ZipFile zip = ZipFile.Create(zipFolder+ "\\" + fileName);
                         zip.BeginUpdate();
                         foreach (var file in filesToSend)
