@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace FileSender.Helper
     {
         LogCategory category;
         bool accumulable;
+        string fileName;
         string fileFullPath;
 
         /// <summary>
@@ -21,7 +23,8 @@ namespace FileSender.Helper
         {
             category = _category;
             accumulable = _accumulable;
-            fileFullPath = "%TEMP%\\" + category.ToString() + ".txt";
+            fileName = category.ToString() + ".txt";
+            fileFullPath = ConfigurationManager.AppSettings["DefaultPath"] + "\\" + fileName;
             if (!File.Exists(fileFullPath))
             {
                 File.Create(fileFullPath);
