@@ -62,74 +62,78 @@ namespace FileSender
             watcher.Changed += Watcher_Changed;
             watcher.Created += Watcher_Created;
 
-            watcher.EnableRaisingEvents = true;
+            try {
+                watcher.EnableRaisingEvents = true;
 
-            storageHelper = new AzureStorageHelper();
+                storageHelper = new AzureStorageHelper();
 
-            string interval = ConfigurationManager.AppSettings["interval"];
-            if (!string.IsNullOrEmpty(interval))
-            {
-                int value = 0;
-                if(int.TryParse(interval,out value))
+                string interval = ConfigurationManager.AppSettings["interval"];
+                if (!string.IsNullOrEmpty(interval))
                 {
-                    if (value > 1000)
+                    int value = 0;
+                    if (int.TryParse(interval, out value))
                     {
-                        Trace.TraceInformation($"Zip interval set to {value}");
-                        zipInterval = value;
+                        if (value > 1000)
+                        {
+                            Trace.TraceInformation($"Zip interval set to {value}");
+                            zipInterval = value;
+                        }
                     }
                 }
+                startTimer();
             }
-            startTimer();
+            catch (Exception ex)
+            {
+                Trace.TraceError($"OnStart error: {ex.Message}");
+            }
         }
 
         private void Watcher_Created(object sender, FileSystemEventArgs e)
         {
-            Trace.TraceInformation($"File created {e.FullPath}");
+            Console.WriteLine($"File created {e.FullPath}");
             files.AddOrUpdate(e.FullPath, DateTime.Now, (key, oldvalue) => DateTime.Now);
             log();           
         }
 
         private void Watcher_Changed(object sender, FileSystemEventArgs e)
         {
-            Trace.TraceInformation($"File changed {e.FullPath}");
+            Console.WriteLine($"File changed {e.FullPath}");
             files.AddOrUpdate(e.FullPath, DateTime.Now, (key, oldvalue) => DateTime.Now);
             log();
         }
 
         private void log()
         {
-            Trace.WriteLine("**** Current list *****");
+            Console.WriteLine("**** Current list *****");
             foreach(var value in files)
             {
-                Trace.WriteLine($"{value.Key}:\t{value.Value}");
+                Console.WriteLine($"{value.Key}:\t{value.Value}");
             }
         }
 
         protected override void OnPause()
         {
-            Trace.TraceInformation("Pause");
             watcher.EnableRaisingEvents = false;
             stopTimer();
             base.OnPause();
+            Trace.TraceInformation($"{this.ServiceName} paused.");
         }
         protected override void OnContinue()
         {
-            Trace.TraceInformation("Recover from pause");
             watcher.EnableRaisingEvents = true;
             startTimer();
             base.OnContinue();
+            Trace.TraceInformation($"{this.ServiceName} resumed.");
         }
         protected override void OnStop()
         {
-            Trace.TraceInformation("Stop");
-
             watcher.EnableRaisingEvents = false;
             watcher.Dispose();
             stopTimer();
+            Trace.TraceInformation($"{this.ServiceName} stoped.");
         }
         private async void sendFilesTimer_Tick(object sender)
         {
-            Trace.TraceInformation("File check");
             var filesToSend=new List<string>();
             try
             {

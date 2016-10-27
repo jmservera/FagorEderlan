@@ -45,7 +45,7 @@ namespace FileSender
                             hasCommands = true;
                         }
                         // Having an uninstall command ?
-                        if (HasCommand(args, "uninstall") || HasCommand(args, "i"))
+                        if (HasCommand(args, "uninstall") || HasCommand(args, "u"))
                         {
                             ManagedInstallerClass.InstallHelper(new String[] { "/u", typeof(Program).Assembly.Location });
                             hasCommands = true;
@@ -70,15 +70,15 @@ namespace FileSender
                                 sc.Stop();
                                 sc.WaitForStatus(ServiceControllerStatus.Stopped, TimeSpan.FromSeconds(10));
                             }
-                            hasCommands = false;
+                            hasCommands = true;
                         }
                         // If we don't have commands we print usage message
                         if (!hasCommands)
                         {
                             Console.WriteLine("Usage : {0} [command] [command ...]", Environment.GetCommandLineArgs());
                             Console.WriteLine("Commands : ");
-                            Console.WriteLine(" - install or - i : Install the services");
-                            Console.WriteLine(" - uninstall or - u : Uninstall the services");
+                            Console.WriteLine(" - install or i : Install the services");
+                            Console.WriteLine(" - uninstall or u : Uninstall the services");
                             Console.WriteLine(" - start : Start the services");
                             Console.WriteLine(" - stop : Stop the services");
                         }
@@ -111,6 +111,11 @@ namespace FileSender
             // Get the method to invoke on each service to start it
             MethodInfo onStartMethod = typeof(ServiceBase).GetMethod("OnStart", BindingFlags.Instance | BindingFlags.NonPublic);
 
+            //Logger logger = new Logger();
+            //logger.StartSimulator();
+            //Console.WriteLine();
+            //Console.WriteLine("Event viewer simulator starter.");
+
             // Start services loop
             foreach (ServiceBase service in servicesToRun)
             {
@@ -138,6 +143,7 @@ namespace FileSender
 
             Console.WriteLine();
             Console.WriteLine("All services are stopped.");
+
 
             // Waiting a key press to not return to VS directly
             if (System.Diagnostics.Debugger.IsAttached)
