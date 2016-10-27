@@ -243,3 +243,4 @@ ModelManifest.xml
 
 #do not copy user config
 user.config
+/Prototype1/FileProcessor/test.bat
