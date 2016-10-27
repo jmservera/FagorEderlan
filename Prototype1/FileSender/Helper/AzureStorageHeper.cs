@@ -62,29 +62,39 @@ namespace FileSender.Helper
             // Create the container if it doesn't already exist.
             await this.container.CreateIfNotExistsAsync();
         }
-        public async Task UploadZipToStorage(Stream zipFile)
+        public async Task UploadZipToStorage(string fileName, string fileFolder)
         {
+
+            // Retrieve reference to a blob named "userName".
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+            using (var fileStream = System.IO.File.OpenRead(fileFolder))
+            {
+                await blockBlob.UploadFromStreamAsync(fileStream);
+            }
+            blockBlob.Properties.ContentType = "application/zip";
+            await blockBlob.SetPropertiesAsync();
+
+
+            ////zipFile.Flush();
+            ////zipFile.Position = 0;
+            ////using (var fstr = new FileStream("c:\\temp\\filetest\\test.zip", FileMode.Create))
+            ////{
+            ////    zipFile.CopyTo(fstr);
+            ////}
+            //string year, month, day, hour, minute, second;
+            //year = DateTime.Now.Year.ToString();
+            //month = DateTime.Now.Month.ToString();
+            //day = DateTime.Now.Day.ToString();
+            //hour = DateTime.Now.Hour.ToString();
+            //minute = DateTime.Now.Minute.ToString();
+            //second = DateTime.Now.Second.ToString();
+            
+            //CloudBlockBlob blockBlob = container.GetBlockBlobReference(year + "-" + month + "-" + day + "-" + hour + ":" + minute + ":" + second); // TODO - name for the container.
             //zipFile.Flush();
             //zipFile.Position = 0;
-            //using (var fstr = new FileStream("c:\\temp\\filetest\\test.zip", FileMode.Create))
-            //{
-            //    zipFile.CopyTo(fstr);
-            //}
-            string year, month, day, hour, minute, second;
-            year = DateTime.Now.Year.ToString();
-            month = DateTime.Now.Month.ToString();
-            day = DateTime.Now.Day.ToString();
-            hour = DateTime.Now.Hour.ToString();
-            minute = DateTime.Now.Minute.ToString();
-            second = DateTime.Now.Second.ToString();
-            
-
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(year + "-" + month + "-" + day + "-" + hour + ":" + minute + ":" + second); // TODO - name for the container.
-            zipFile.Flush();
-            zipFile.Position = 0;
-            blockBlob.Properties.ContentType = "application/zip";
-            blockBlob.UploadFromStream(zipFile);
-            await blockBlob.SetPropertiesAsync();
+            //blockBlob.Properties.ContentType = "application/zip";
+            //blockBlob.UploadFromStream(zipFile);
+            //await blockBlob.SetPropertiesAsync();
         }
     }
 }

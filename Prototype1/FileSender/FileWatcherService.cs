@@ -52,6 +52,11 @@ namespace FileSender
         {
             string folder = ConfigurationManager.AppSettings["folder"];
 
+            ////todo: remove, only test
+            //files.AddOrUpdate(@"C:\temp\filetest\VINMasterList.csv", DateTime.Now.AddMinutes(-50), (s, d) => DateTime.Now.AddMinutes(-50));
+            //sendFilesTimer_Tick(null);
+            //return;
+
             watcher = new FileSystemWatcher(folder, "*.csv");
             watcher.IncludeSubdirectories = true;
             watcher.Changed += Watcher_Changed;
@@ -122,7 +127,6 @@ namespace FileSender
             watcher.Dispose();
             stopTimer();
         }
-
         private async void sendFilesTimer_Tick(object sender)
         {
             Trace.TraceInformation("File check");
@@ -139,43 +143,34 @@ namespace FileSender
                         filesToSend.Add(filesEnum.Current.Key);
                     }
                 }
+                foreach(var name in filesToSend)
+                {
+                    DateTime t;
+                    files.TryRemove(name, out t);
+                }
                 if (filesToSend.Count > 0)
                 {
-                    using (MemoryStream stream = new MemoryStream()) //todo use temp file
-                    {
-                        using (ZipOutputStream zip = new ZipOutputStream(stream))
-                        {
-                            zip.SetLevel(9);
 
-                            foreach (var file in filesToSend)
-                            {
-                                DateTime d;
-                                if (files.TryRemove(file, out d))
-                                {
-                                    Trace.TraceInformation($"Zipping file: {file}");
-                                    try
-                                    {
-                                        using (var fileStream = new FileStream(file, FileMode.Open))
-                                        {
-                                            var name = Path.GetFileName(file);
-                                            ZipEntry entry = new ZipEntry(file);
-                                            entry.DateTime = DateTime.Now;
-                                            zip.PutNextEntry(entry);
-                                            StreamUtils.Copy(fileStream, zip, new byte[4096]);
-                                            zip.CloseEntry();
-                                        }
-                                    }
-                                    catch (Exception fex)
-                                    {
-                                        Trace.TraceError($"Exception reading file {file}. {fex.Message}");
-                                        files.AddOrUpdate(file, DateTime.Now, (key, oldValue) => DateTime.Now);
-                                    }
-                                }
-                            }
-                            Trace.TraceInformation($"Zip created:{stream.Length}");
-                            // TODO Send stream to Azure
-                            await storageHelper.UploadZipToStorage(stream);
+                    try
+                    {
+                        var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                        var zipFolder = Path.Combine(folder, "ZipFiles");
+                        Directory.CreateDirectory(zipFolder);
+                        
+                        var fileName =  DateTime.Now.ToString("yyyyMMddHHmmss") +".zip";
+                        ZipFile zip = ZipFile.Create(zipFolder+ "\\" + fileName);
+                        zip.BeginUpdate();
+                        foreach (var file in filesToSend)
+                        {
+                            zip.Add(file, Path.GetFileName(file));
                         }
+                        zip.CommitUpdate();
+                        zip.Close();
+                        await storageHelper.UploadZipToStorage(fileName, zipFolder);
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.TraceError(e.Message);
                     }
                 }
             }
