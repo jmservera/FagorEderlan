@@ -45,7 +45,7 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
             }
             catch(Exception ex)
             {
-                log.Info(ex.Message);
+                log.Error("Error reading Zip", ex);
             }
         }
     }
