@@ -27,7 +27,7 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                 var attributes = new Attribute[]
                 {
                     new BlobAttribute($"{container}/{zipEntry.Name}"),
-                    new StorageAccountAttribute("fagorederlanfiles_STORAGE")
+                    new StorageAccountAttribute("storageederlan_STORAGE")
                 };
 
                 //async work does not manage zip correctly
@@ -38,12 +38,15 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                         using (var r = new StreamReader(s, Encoding.GetEncoding(1252)))
                         {
                             var ss = r.ReadLine();
+                            ss = "ref;" + ss;
                             writer.WriteLine(cleanHeader(ss));
 
                             r.ReadLine();
                             while (!r.EndOfStream)
                             {
-                                writer.WriteLine(cleanValues(r.ReadLine()));
+                                var datos = cleanValues(r.ReadLine());
+                                datos = $"{Path.GetFileNameWithoutExtension(zipEntry.Name)};{datos}";
+                                writer.WriteLine(datos);
                             }
                         }
                     }
@@ -59,7 +62,7 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
 
 static string cleanHeader(string header)
 {
-    header = header.Replace("/", "-");
+    header = header.Replace("/", ";");
     header = string.Join(";", header.Split(';').Select((s) => s.Trim().Replace(" ", string.Empty)).Select((s) =>
     {
         if (!String.IsNullOrEmpty(s) && char.IsDigit(s[0]))
@@ -80,3 +83,4 @@ static string cleanValues(string values)
     var cleanValues = valuesArray.Where((s) => !String.IsNullOrEmpty(s)).Select((s) => s.Trim()).ToArray();
     return string.Join(";", cleanValues);
 }
+
