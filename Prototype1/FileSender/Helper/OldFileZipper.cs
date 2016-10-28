@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FileSender.Helper
 {
@@ -13,12 +10,20 @@ namespace FileSender.Helper
         private List<string> FileNames;
         private string LastFileName;
 
+        /// <summary>
+        /// Old zipped filed's class constructor
+        /// </summary>
+        /// <param name="path">Folder path where Csv files are stored</param>
         public OldFileZipper(string path)
         {
             LastFileName = getLastCsvZippedFileName();
             FileNames = getMissingFileNames(path);
         }
 
+        /// <summary>
+        /// Gets last Csv files that has been zipped.
+        /// </summary>
+        /// <returns></returns>
         private string getLastCsvZippedFileName()
         {
             LogHelper fileLog = new LogHelper(LogCategory.lastFile, false);
@@ -27,7 +32,11 @@ namespace FileSender.Helper
             return lines.LastOrDefault().Split(',').LastOrDefault();
         }
 
-
+        /// <summary>
+        /// Returns a list of Csv file names that have not been zipped.
+        /// </summary>
+        /// <param name="folderPath">Path where Csv files ar stored</param>
+        /// <returns></returns>
         private List<string> getMissingFileNames(string folderPath)
         {
             List<string> files = Directory.GetFiles(folderPath).ToList();
@@ -52,6 +61,10 @@ namespace FileSender.Helper
             return files;
         }
 
+        /// <summary>
+        /// Return saved list of Csv files when object class is created
+        /// </summary>
+        /// <returns></returns>
         public List<string> getMissingZippedFileNames()
         {
             return FileNames;

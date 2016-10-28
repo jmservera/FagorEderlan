@@ -33,6 +33,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "FileProcessor", "FileProces
 		SlnRelativePath = "FileProcessor\"
 	EndProjectSection
 EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "DataPipeline", "DataPipeline\DataPipeline.deployproj", "{E8EC3F64-7A9F-44FC-83EE-09A5EA779617}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{CD128431-DEEF-4487-80FA-E20295FE18FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD128431-DEEF-4487-80FA-E20295FE18FF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD128431-DEEF-4487-80FA-E20295FE18FF}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{E8EC3F64-7A9F-44FC-83EE-09A5EA779617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8EC3F64-7A9F-44FC-83EE-09A5EA779617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8EC3F64-7A9F-44FC-83EE-09A5EA779617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8EC3F64-7A9F-44FC-83EE-09A5EA779617}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
