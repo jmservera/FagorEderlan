@@ -92,8 +92,9 @@
     </Compile>
     <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\LogCategory.cs" />
+    <Compile Include="Helper\Utils.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Helper\AzureStorageHeper.cs" />
+    <Compile Include="Helper\AzureStorageHelper.cs" />
     <Compile Include="Helper\OldFileZipper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
