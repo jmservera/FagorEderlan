@@ -45,7 +45,7 @@ namespace FileSender.Helper
                 {
                     Trace.TraceError("Can't connect to azure storage. Error on Azure Account Key");
                 }
-                else
+                if (string.IsNullOrEmpty(azureStorageAccountName))
                 {
                     Trace.TraceError("Can't connect to azure storage. Error on Azure Account Name");
                 }
