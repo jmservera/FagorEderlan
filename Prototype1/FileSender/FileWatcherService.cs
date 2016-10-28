@@ -21,6 +21,7 @@ namespace FileSender
 {
     public partial class FileWatcherService : ServiceBase
     {
+        const int FileQuantityInZip = 100;
         System.Collections.Concurrent.ConcurrentDictionary<string, DateTime> files=new System.Collections.Concurrent.ConcurrentDictionary<string, DateTime>();
         Timer sendFilesTimer;
         object sync = new object();
@@ -30,6 +31,9 @@ namespace FileSender
         public CloudBlobContainer container;
         public AzureStorageHelper storageHelper;
         public LogHelper logHelper;
+
+        string csvFolder = ConfigurationManager.AppSettings["folder"];
+
 
         public FileWatcherService()
         {
@@ -51,12 +55,12 @@ namespace FileSender
 
         protected override void OnStart(string[] args)
         {
-            string folder = ConfigurationManager.AppSettings["folder"];
             logHelper = new LogHelper(LogCategory.lastFile, false);
 
             ReadOldFiles();
 
-            watcher = new FileSystemWatcher(folder, "*.csv");
+
+            watcher = new FileSystemWatcher(csvFolder, "*.csv");
             watcher.IncludeSubdirectories = true;
             watcher.Changed += Watcher_Changed;
             watcher.Created += Watcher_Created;
@@ -89,10 +93,14 @@ namespace FileSender
 
         private void ReadOldFiles()
         {
-            string folder = ConfigurationManager.AppSettings["folder"];
-            OldFileZipper oldFileZipper = new OldFileZipper(folder);
+            OldFileZipper oldFileZipper = new OldFileZipper(csvFolder);
             List<string> listOldFiles =  oldFileZipper.getMissingZippedFileNames();
             listOldFiles.ForEach(s => files.AddOrUpdate(s, DateTime.Now, (key, oldvalue) => DateTime.Now));
+            Console.WriteLine("OLD FILES:");
+            foreach (KeyValuePair<string, DateTime> file in files)
+            {
+                Console.WriteLine($"\t{file.Key}, {file.Value}");
+            }
         }
 
         private void Watcher_Created(object sender, FileSystemEventArgs e)
@@ -141,7 +149,7 @@ namespace FileSender
             stopTimer();
             Trace.TraceInformation($"{this.ServiceName} stoped.");
         }
-        private async void sendFilesTimer_Tick(object sender)
+        private void sendFilesTimer_Tick(object sender)
         {
             var filesToSend=new List<string>();
             try
@@ -164,25 +172,33 @@ namespace FileSender
                 {
                     try
                     {
-                        string lastFile = "";
-                        var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                        var zipFolder = Path.Combine(folder, "ZipFiles");
-                        if (!Directory.Exists(zipFolder)) Directory.CreateDirectory(zipFolder);
-                        var fileName =  DateTime.Now.ToString("yyyyMMddHHmmss") +".zip";
-                        Trace.TraceInformation($"Zipping file: {fileName}");
-                        ZipFile zip = ZipFile.Create(zipFolder+ "\\" + fileName);
-                        zip.BeginUpdate();
-                        foreach (var file in filesToSend)
+                        //// Send old files first.
+                        //string lastFile = "";
+                        //var zipFolder = Path.Combine(csvFolder, "ZipFiles");
+                        //if (!Directory.Exists(zipFolder)) Directory.CreateDirectory(zipFolder);
+                        //var fileName =  DateTime.Now.ToString("yyyyMMddHHmmss") +".zip";
+                        //Trace.TraceInformation($"Zipping file: {fileName}");
+                        //ZipFile zip = ZipFile.Create(zipFolder+ "\\" + fileName);
+                        //zip.BeginUpdate();
+                        //foreach (var file in filesToSend)
+                        //{
+                        //    zip.Add(file, Path.GetFileName(file));
+                        //    lastFile = file;
+                        //}
+                        //zip.CommitUpdate();
+                        //zip.Close();
+                        //if (!string.IsNullOrEmpty(lastFile)) logHelper.WriteLog(lastFile);
+                        //else Trace.TraceWarning("There are not lastFiles on the log file.");
+                        ////TODO Upload proces in a queue
+                        //storageHelper.UploadZipToStorage(fileName, zipFolder);
+                        for (int i = 0; i < filesToSend.Count; i+= FileQuantityInZip)
                         {
-                            zip.Add(file, Path.GetFileName(file));
-                            lastFile = file;
+                            int count = FileQuantityInZip;
+                            if (filesToSend.Count - i < FileQuantityInZip)
+                                count = filesToSend.Count - i;
+                            List<string> fileRange = filesToSend.GetRange(i, count);
+                            CreateZipAndUpload(fileRange, i);
                         }
-                        zip.CommitUpdate();
-                        zip.Close();
-                        if (!string.IsNullOrEmpty(lastFile)) logHelper.WriteLog(lastFile);
-                        else Trace.TraceWarning("There are not lastFiles on the log file.");
-                        //TODO Upload proces in a queue
-                        await storageHelper.UploadZipToStorage(fileName, zipFolder);
                     }
                     catch (Exception e)
                     {
@@ -194,6 +210,29 @@ namespace FileSender
             {
                 Trace.TraceError(ex.Message);
             }
+        }
+
+        public void CreateZipAndUpload (List<string> fileList, int batch)
+        {
+            string lastFile = "";
+            string zipFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ZipFiles");
+            var fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + $"_{batch}.zip";
+            Trace.TraceInformation($"Zipping file: {fileName}");
+            ZipFile zip = ZipFile.Create(zipFolder + "\\" + fileName);
+            zip.BeginUpdate();
+
+            foreach (var file in fileList)
+            {
+                zip.Add(file, Path.GetFileName(file));
+                lastFile = file;
+            }
+            zip.CommitUpdate();
+            zip.Close();
+            Console.WriteLine("Archivo creado.");
+            if (!string.IsNullOrEmpty(lastFile)) logHelper.WriteLog(lastFile);
+            else Trace.TraceWarning("There are not lastFiles on the log file.");
+            storageHelper.UploadZipToStorage(fileName, zipFolder);
+            Console.WriteLine($"Archivo zip enviado con {fileList.Count} csvs.");
         }
     }
 }

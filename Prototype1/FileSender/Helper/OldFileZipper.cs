@@ -27,9 +27,10 @@ namespace FileSender.Helper
         private string getLastCsvZippedFileName()
         {
             LogHelper fileLog = new LogHelper(LogCategory.lastFile, false);
-            string[] lines = File.ReadAllLines(fileLog.ReadLog());
-            Trace.WriteLine(lines.LastOrDefault());
-            return lines.LastOrDefault().Split(',').LastOrDefault();
+            string line = fileLog.ReadLog();
+            if (!string.IsNullOrEmpty(line))
+                Trace.WriteLine($"Last zipped csv {line}");
+            return line;
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace FileSender.Helper
             bool finished = false;
             while (!finished)
             {
-                if (files.Count == 0)
+                if (files.Count == 0 || string.IsNullOrEmpty(this.LastFileName))
                 {
                     finished = true;
                 }
