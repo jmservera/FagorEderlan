@@ -55,11 +55,13 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                             else
                             {
                                 var ss = r.ReadLine();
-                                //ss = "ref;" + ss;
+                                ss = "ref;" + ss;
                                 writer.WriteLine(cleanHeader(ss));
                                 while (!r.EndOfStream)
                                 {
-                                    writer.Write(cleanValues(r.ReadLine()));
+                                    var datos = cleanValues(r.ReadLine());
+                                    datos = $"{Path.GetFileNameWithoutExtension(zipEntry.Name)};{datos}";
+                                    writer.WriteLine(datos);
                                 }
                             }
                         }
@@ -76,7 +78,7 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
 
 static string cleanHeader(string header)
 {
-    header = header.Replace("/", ";").Replace(".", "");
+    header = header.Replace("1.", ";").Replace(".", "");
     header = string.Join(";", header.Split(';').Select((s) => s.Trim().Replace(" ", string.Empty)).Select((s) =>
     {
         if (!String.IsNullOrEmpty(s) && char.IsDigit(s[0]))
