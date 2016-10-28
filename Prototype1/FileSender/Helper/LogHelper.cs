@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.IO;
 
 namespace FileSender.Helper
@@ -10,19 +11,26 @@ namespace FileSender.Helper
         string fileName;
         string fileFullPath;
 
+        static LogHelper()
+        {
+            string logFolder = ConfigurationManager.AppSettings["logHelperFolder"];
+            if (!Directory.Exists(logFolder))
+                Directory.CreateDirectory(logFolder);
+        }
+
         /// <summary>
         /// Log class
         /// </summary>
-        /// <param name="_category">Category type</param>
-        public LogHelper(LogCategory _category, bool _accumulable)
+        /// <param name="category">Category type</param>
+        public LogHelper(LogCategory category, bool accumulable)
         {
-            category = _category;
-            accumulable = _accumulable;
-            fileName = category.ToString() + ".txt";
-            fileFullPath = ConfigurationManager.AppSettings["DefaultPath"] + "\\" + fileName;
+            this.category = category;
+            this.accumulable = accumulable;
+            fileName = this.category.ToString() + ".txt";
+            fileFullPath = $@"{ConfigurationManager.AppSettings["logHelperFolder"]}\{fileName}";
             if (!File.Exists(fileFullPath))
             {
-                File.Create(fileFullPath);
+                using (FileStream stream = File.Create(fileFullPath)) { }
             }
         }
 
