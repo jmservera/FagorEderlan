@@ -26,6 +26,10 @@ namespace FileSender.Helper
             }
         }
 
+        /// <summary>
+        /// Function to write on log file
+        /// </summary>
+        /// <param name="text">Content to be written</param>
         public void WriteLog(string text)
         {
             TextWriter tsw = new StreamWriter(fileFullPath,accumulable);
@@ -37,6 +41,10 @@ namespace FileSender.Helper
             tsw.Close();
         }
 
+        /// <summary>
+        /// Function to read log file's content
+        /// </summary>
+        /// <returns>Read content</returns>
         public string ReadLog()
         {
             string text = File.ReadAllText(fileFullPath);
