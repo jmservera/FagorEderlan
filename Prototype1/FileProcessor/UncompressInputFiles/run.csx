@@ -5,6 +5,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host.Bindings.Runtime;
+using System.Globalization;
 
 public static void Run(Stream myBlob, string name, Binder binder, TraceWriter log)
 {
@@ -87,7 +88,7 @@ static string cleanHeader(string header)
             return s;
         }
     }));
-    return cleanValues(header);
+    return cleanValues(RemoveDiacritics(header));
 }
 
 static string cleanValues(string values)
@@ -95,4 +96,21 @@ static string cleanValues(string values)
     var valuesArray = values.Split(';');
     var cleanValues = valuesArray.Where((s) => !String.IsNullOrEmpty(s)).Select((s) => s.Trim()).ToArray();
     return string.Join(";", cleanValues);
+}
+
+static string RemoveDiacritics(string text)
+{
+    var normalizedString = text.Normalize(NormalizationForm.FormD);
+    var stringBuilder = new StringBuilder();
+
+    foreach (var c in normalizedString)
+    {
+        var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+        if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+        {
+            stringBuilder.Append(c);
+        }
+    }
+
+    return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
 }
