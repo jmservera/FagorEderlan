@@ -29,6 +29,7 @@ namespace FileSender
 
         public CloudBlobContainer container;
         public AzureStorageHelper storageHelper;
+        public LogHelper logHelper;
 
         public FileWatcherService()
         {
@@ -51,6 +52,7 @@ namespace FileSender
         protected override void OnStart(string[] args)
         {
             string folder = ConfigurationManager.AppSettings["folder"];
+            logHelper = new LogHelper(LogCategory.lastFile, false);
 
             ////todo: remove, only test
             //files.AddOrUpdate(@"C:\temp\filetest\VINMasterList.csv", DateTime.Now.AddMinutes(-50), (s, d) => DateTime.Now.AddMinutes(-50));
@@ -155,10 +157,10 @@ namespace FileSender
                 {
                     try
                     {
+                        string lastFile = "";
                         var folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                         var zipFolder = Path.Combine(folder, "ZipFiles");
-                        Directory.CreateDirectory(zipFolder);
-                        
+                        if (!Directory.Exists(zipFolder)) Directory.CreateDirectory(zipFolder);
                         var fileName =  DateTime.Now.ToString("yyyyMMddHHmmss") +".zip";
                         Trace.TraceInformation($"Zipping file: {fileName}");
                         ZipFile zip = ZipFile.Create(zipFolder+ "\\" + fileName);
@@ -166,9 +168,13 @@ namespace FileSender
                         foreach (var file in filesToSend)
                         {
                             zip.Add(file, Path.GetFileName(file));
+                            lastFile = file;
                         }
                         zip.CommitUpdate();
                         zip.Close();
+                        if (!string.IsNullOrEmpty(lastFile)) logHelper.WriteLog(lastFile);
+                        else Trace.TraceWarning("There are not lastFiles on the log file.");
+                        //TODO Upload proces in a queue
                         await storageHelper.UploadZipToStorage(fileName, zipFolder);
                     }
                     catch (Exception e)
