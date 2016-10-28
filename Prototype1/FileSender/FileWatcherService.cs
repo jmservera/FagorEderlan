@@ -54,10 +54,7 @@ namespace FileSender
             string folder = ConfigurationManager.AppSettings["folder"];
             logHelper = new LogHelper(LogCategory.lastFile, false);
 
-            ////todo: remove, only test
-            //files.AddOrUpdate(@"C:\temp\filetest\VINMasterList.csv", DateTime.Now.AddMinutes(-50), (s, d) => DateTime.Now.AddMinutes(-50));
-            //sendFilesTimer_Tick(null);
-            //return;
+            ReadOldFiles();
 
             watcher = new FileSystemWatcher(folder, "*.csv");
             watcher.IncludeSubdirectories = true;
@@ -88,6 +85,14 @@ namespace FileSender
             {
                 Trace.TraceError($"OnStart error: {ex.Message}");
             }
+        }
+
+        private void ReadOldFiles()
+        {
+            string folder = ConfigurationManager.AppSettings["folder"];
+            OldFileZipper oldFileZipper = new OldFileZipper(folder);
+            List<string> listOldFiles =  oldFileZipper.getMissingZippedFileNames();
+            listOldFiles.ForEach(s => files.AddOrUpdate(s, DateTime.Now, (key, oldvalue) => DateTime.Now));
         }
 
         private void Watcher_Created(object sender, FileSystemEventArgs e)
@@ -122,6 +127,8 @@ namespace FileSender
         }
         protected override void OnContinue()
         {
+            files.Clear();
+            ReadOldFiles();
             watcher.EnableRaisingEvents = true;
             startTimer();
             base.OnContinue();
