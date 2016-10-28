@@ -48,33 +48,7 @@
       "properties": {
         "sku": {
           "name": "Standard"
-        },
-
-        "inputs": [
-          {
-            "name": "MyEventHubSource",
-            "properties": {
-              "type": "stream",
-              "serialization": {
-                "type": "JSON",
-                "properties": {
-                  "encoding": "UTF8"
-                }
-              },
-              "datasource": {
-                "type": "Microsoft.ServiceBus/EventHub",
-                "properties": {
-                  "serviceBusNamespace": "sampleServiceBus",
-                  "sharedAccessPolicyName": "SampleReceiver",
-                  "sharedAccessPolicyKey": "***/**********/******************************",
-                  "eventHubName": "sampleEventHub"
-                }
-              }
-            }
-          }
-
-
-
+        }
       }
     },
     {
