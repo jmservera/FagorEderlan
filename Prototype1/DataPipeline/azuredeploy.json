@@ -1,0 +1,115 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "storageAccounts_fagorederlanfiles_name": {
+        "defaultValue": "fagorederlanfiles",
+        "type": "String"
+      },
+        "storageAccounts_fagorederlanfunctions_name": {
+            "defaultValue": "fagorederlanfunctions",
+            "type": "String"
+        },
+        "serverfarms_NorthEuropePlan_name": {
+            "defaultValue": "NorthEuropePlan",
+            "type": "String"
+        },
+        "sites_FileProcessor_name": {
+            "defaultValue": "FileProcessor",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/fagorederlan/providers/Microsoft.Storage/storageAccounts/fagorederlanfiles'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_fagorederlanfiles_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "northeurope",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/fagorederlan/providers/Microsoft.Storage/storageAccounts/fagorederlanfunctions'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[parameters('storageAccounts_fagorederlanfunctions_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "northeurope",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/FagorEderlan/providers/Microsoft.Web/serverfarms/NorthEuropePlan'.",
+            "type": "Microsoft.Web/serverfarms",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic",
+                "size": "Y1",
+                "family": "Y",
+                "capacity": 0
+            },
+            "kind": "functionapp",
+            "name": "[parameters('serverfarms_NorthEuropePlan_name')]",
+            "apiVersion": "2015-08-01",
+            "location": "North Europe",
+            "properties": {
+                "name": "[parameters('serverfarms_NorthEuropePlan_name')]",
+                "numberOfWorkers": 0
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/FagorEderlan/providers/Microsoft.Web/sites/FileProcessor'.",
+            "type": "Microsoft.Web/sites",
+            "kind": "functionapp",
+            "name": "[parameters('sites_FileProcessor_name')]",
+            "apiVersion": "2015-08-01",
+            "location": "North Europe",
+            "properties": {
+                "name": "[parameters('sites_FileProcessor_name')]",
+                "hostNames": [
+                    "fileprocessor.azurewebsites.net"
+                ],
+                "enabledHostNames": [
+                    "fileprocessor.azurewebsites.net",
+                    "fileprocessor.scm.azurewebsites.net"
+                ],
+                "hostNameSslStates": [
+                    {
+                        "name": "[concat(parameters('sites_FileProcessor_name'),'fileprocessor.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    },
+                    {
+                        "name": "[concat(parameters('sites_FileProcessor_name'),'fileprocessor.scm.azurewebsites.net')]",
+                        "sslState": 0,
+                        "thumbprint": null,
+                        "ipBasedSslState": 0
+                    }
+                ],
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_NorthEuropePlan_name'))]"
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_NorthEuropePlan_name'))]"
+            ]
+        }
+    ]
+}

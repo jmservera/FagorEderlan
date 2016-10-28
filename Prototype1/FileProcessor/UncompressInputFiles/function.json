@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "myBlob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "input-files/{name}.zip",
+      "connection": "fagorederlanfiles_STORAGE"
+    }
+  ],
+  "disabled": false
+}
