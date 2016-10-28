@@ -37,16 +37,29 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                     {
                         using (var r = new StreamReader(s, Encoding.GetEncoding(1252)))
                         {
-                            var ss = r.ReadLine();
-                            ss = "ref;" + ss;
-                            writer.WriteLine(cleanHeader(ss));
-
-                            r.ReadLine();
-                            while (!r.EndOfStream)
+                            if (zipEntry.Name.Contains("_curv"))
                             {
-                                var datos = cleanValues(r.ReadLine());
-                                datos = $"{Path.GetFileNameWithoutExtension(zipEntry.Name)};{datos}";
-                                writer.WriteLine(datos);
+                                var ss = r.ReadLine();
+                                ss = "ref;" + ss;
+                                writer.WriteLine(cleanHeader(ss));
+                                r.ReadLine();
+
+                                while (!r.EndOfStream)
+                                {
+                                    var datos = cleanValues(r.ReadLine());
+                                    datos = $"{Path.GetFileNameWithoutExtension(zipEntry.Name)};{datos}";
+                                    writer.WriteLine(datos);
+                                }
+                            }
+                            else
+                            {
+                                var ss = r.ReadLine();
+                                //ss = "ref;" + ss;
+                                writer.WriteLine(cleanHeader(ss));
+                                while (!r.EndOfStream)
+                                {
+                                    writer.Write(cleanValues(r.ReadLine()));
+                                }
                             }
                         }
                     }
@@ -62,12 +75,12 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
 
 static string cleanHeader(string header)
 {
-    header = header.Replace("/", ";");
+    header = header.Replace("/", ";").Replace(".", "");
     header = string.Join(";", header.Split(';').Select((s) => s.Trim().Replace(" ", string.Empty)).Select((s) =>
     {
         if (!String.IsNullOrEmpty(s) && char.IsDigit(s[0]))
         {
-            return $"_{s}";
+            return s.Substring(1);
         }
         else
         {
@@ -83,4 +96,3 @@ static string cleanValues(string values)
     var cleanValues = valuesArray.Where((s) => !String.IsNullOrEmpty(s)).Select((s) => s.Trim()).ToArray();
     return string.Join(";", cleanValues);
 }
-

@@ -3,16 +3,16 @@
     "contentVersion": "1.0.0.0",
   "parameters": {
     "storageAccounts_fagorederlanfiles_name": {
-      "value": null
+      "value": "fagorederlanfiles001"
     },
     "storageAccounts_fagorederlanfunctions_name": {
-      "value": null
+      "value": "fagorederlanfoo001"
     },
     "serverfarms_NorthEuropePlan_name": {
-      "value": null
+      "value": "fagorederlanfarm001"
     },
     "sites_FileProcessor_name": {
-      "value": null
+      "value": "fagoredarlanproc001"
     }
   }
 }
