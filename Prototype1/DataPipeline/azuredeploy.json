@@ -2,26 +2,28 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
   "parameters": {
-    "storageAccounts_fagorederlanfiles_name": {
-      "defaultValue": "fagorederlanfiles",
-      "type": "String"
-    },
-    "storageAccounts_fagorederlanfunctions_name": {
-      "defaultValue": "fagorederlanfunctions",
-      "type": "String"
-    },
-    "serverfarms_NorthEuropePlan_name": {
-      "defaultValue": "NorthEuropePlan",
-      "type": "String"
+    "serviceName": {
+      "defaultValue": "MyService",
+      "type":  "string"
     },
     "sites_FileProcessor_name": {
       "defaultValue": "FileProcessor",
-      "type": "String"
+      "type": "string"
+    },
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [ "Standard_LRS", "Standard_ZRS", "Standard_GRS", "Standard_RAGRS", "Premium_LRS" ]
     }
-    
   },
   "variables": {
-    "StreamingAnalyticsName":"FileAnalyzer"
+    "sites_FileProcessor_name": "[concat(parameters('serviceName'),'FileProcessor')]",
+    "StreamingAnalyticsName": "FileAnalyzer",
+    "blobStorageAnalytics": "[substring(toLower(concat(parameters('serviceName'), 'str', uniquestring(resourceGroup().id), '0000000000')), 0, 24)]",
+    "serverfarms_plan_name": "[concat(parameters('serviceName'),'ServerFarm',resourceGroup().location,'Plan')]",
+    "storageAccountFunctionsName": "[toLower(concat(parameters('serviceName'),'FunctionLogs'))]",
+    "storageAccountFileStorageName": "[toLower(concat(parameters('serviceName'),'FileStorage'))]",
+    "fileAnalyzerQuery": "with curvas as (SELECT\n    REF,TRY_CAST(tiempo1Carrera as float) tiempo,\n    TRY_CAST(Diferenciadepresion as float) difpres,\n    DATEADD(ms,TRY_CAST(tiempo1Carrera as float), EventProcessedUtcTime) timestamp_t,\n    TRY_CAST(presionp2 as float) presionp2,\n    TRY_CAST(contrapresion as float) contrapresion,\n    TRY_CAST(canal5 as float) canal5,\n    TRY_CAST(canal6 as float) canal6,\n    TRY_CAST(canal7 as float) canal7,\n    TRY_CAST(canal8 as float) canal8,\n    TRY_CAST(presionp1 as float) presionp1\nFROM\n    input\ntimestamp by DATEADD(ms,TRY_CAST(tiempo1Carrera as float), EventProcessedUtcTime)\n    )\nselect * from curvas"
   },
   "resources": [
     {
@@ -32,9 +34,9 @@
         "tier": "Standard"
       },
       "kind": "Storage",
-      "name": "[parameters('storageAccounts_fagorederlanfiles_name')]",
+      "name": "[variables('storageAccountFileStorageName')]",
       "apiVersion": "2016-01-01",
-      "location": "northeurope",
+      "location": "[resourceGroup().location]",
       "tags": {},
       "properties": {},
       "resources": [],
@@ -43,13 +45,52 @@
     {
       "name": "[variables('StreamingAnalyticsName')]",
       "type": "Microsoft.StreamAnalytics/streamingjobs",
-      "location": "northeurope",
+      "location": "[resourceGroup().location]",
       "apiVersion": "2015-09-01",
       "properties": {
         "sku": {
           "name": "Standard"
+        },
+        "inputs": [
+          {
+            "name": "input",
+            "properties": {
+              "type": "stream",
+              "serialization": {
+                "type": "CSV",
+                "properties": {
+                  "fieldDelimiter": ";",
+                  "encoding": "UTF8"
+                }
+              },
+              "datasource": {
+                "type": "Microsoft.Storage/Blob",
+                "properties": {
+                  "storageAccounts": [
+                    {
+                      "accountName": "[variables('storageAccountFileStorageName')]",
+                      "accountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFileStorageName')), '2015-06-15').key1]"
+                    }
+                  ],
+                  "container": "input-files",
+                  "pathPattern": ""
+                }
+
+              }
+            }
+          }
+        ],
+        "transformation": {
+          "name": "[variables('StreamingAnalyticsName')]",
+          "properties": {
+            "streamingUnits": 1,
+            "query": "[variables('fileAnalyzerQuery')]"
+          }
         }
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFileStorageName'))]"
+      ]
     },
     {
       "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/fagorederlan/providers/Microsoft.Storage/storageAccounts/fagorederlanfunctions'.",
@@ -59,9 +100,9 @@
         "tier": "Standard"
       },
       "kind": "Storage",
-      "name": "[parameters('storageAccounts_fagorederlanfunctions_name')]",
+      "name": "[variables('storageAccountFunctionsName')]",
       "apiVersion": "2016-01-01",
-      "location": "northeurope",
+      "location": "[resourceGroup().location]",
       "tags": {},
       "properties": {},
       "resources": [],
@@ -78,51 +119,51 @@
         "capacity": 0
       },
       "kind": "functionapp",
-      "name": "[parameters('serverfarms_NorthEuropePlan_name')]",
+      "name": "[variables('serverfarms_plan_name')]",
       "apiVersion": "2015-08-01",
-      "location": "North Europe",
+      "location": "[resourceGroup().location]",
       "properties": {
-        "name": "[parameters('serverfarms_NorthEuropePlan_name')]",
+        "name": "[variables('serverfarms_plan_name')]",
         "numberOfWorkers": 0
       },
       "resources": [],
-      "dependsOn": []
+      "dependsOn": [ "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFunctionsName'))]" ]
     },
     {
       "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/FagorEderlan/providers/Microsoft.Web/sites/FileProcessor'.",
       "type": "Microsoft.Web/sites",
       "kind": "functionapp",
-      "name": "[parameters('sites_FileProcessor_name')]",
+      "name": "[variables('sites_FileProcessor_name')]",
       "apiVersion": "2015-08-01",
-      "location": "North Europe",
+      "location": "[resourceGroup().location]",
       "properties": {
-        "name": "[parameters('sites_FileProcessor_name')]",
+        "name": "[variables('sites_FileProcessor_name')]",
         "hostNames": [
-          "[concat(parameters('sites_FileProcessor_name'),'.azurewebsites.net')]"
+          "[concat(variables('sites_FileProcessor_name'),'.azurewebsites.net')]"
         ],
         "enabledHostNames": [
-          "[concat(parameters('sites_FileProcessor_name'),'azurewebsites.net')]",
-          "[concat(parameters('sites_FileProcessor_name'),'.scm.azurewebsites.net')]"
+          "[concat(variables('sites_FileProcessor_name'),'azurewebsites.net')]",
+          "[concat(variables('sites_FileProcessor_name'),'.scm.azurewebsites.net')]"
         ],
         "hostNameSslStates": [
           {
-            "name": "[concat(parameters('sites_FileProcessor_name'),'fileprocessor.azurewebsites.net')]",
+            "name": "[concat(variables('sites_FileProcessor_name'),'fileprocessor.azurewebsites.net')]",
             "sslState": 0,
             "thumbprint": null,
             "ipBasedSslState": 0
           },
           {
-            "name": "[concat(parameters('sites_FileProcessor_name'),'fileprocessor.scm.azurewebsites.net')]",
+            "name": "[concat(variables('sites_FileProcessor_name'),'fileprocessor.scm.azurewebsites.net')]",
             "sslState": 0,
             "thumbprint": null,
             "ipBasedSslState": 0
           }
         ],
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_NorthEuropePlan_name'))]"
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_plan_name'))]"
       },
       "resources": [],
       "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_NorthEuropePlan_name'))]"
+        "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_plan_name'))]"
       ]
     }
   ]

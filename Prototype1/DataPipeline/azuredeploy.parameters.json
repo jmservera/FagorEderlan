@@ -2,17 +2,14 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
   "parameters": {
-    "storageAccounts_fagorederlanfiles_name": {
-      "value": "fagorederlanfiles001"
-    },
-    "storageAccounts_fagorederlanfunctions_name": {
-      "value": "fagorederlanfoo001"
-    },
-    "serverfarms_NorthEuropePlan_name": {
-      "value": "fagorederlanfarm001"
+    "serviceName": {
+      "value": "MyService"
     },
     "sites_FileProcessor_name": {
-      "value": "fagoredarlanproc001"
+      "value": "FileProcessor"
+    },
+    "storageAccountType": {
+      "value": "Standard_LRS"
     }
   }
 }
