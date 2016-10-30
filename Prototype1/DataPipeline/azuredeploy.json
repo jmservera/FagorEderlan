@@ -14,6 +14,28 @@
       "type": "string",
       "defaultValue": "Standard_LRS",
       "allowedValues": [ "Standard_LRS", "Standard_ZRS", "Standard_GRS", "Standard_RAGRS", "Premium_LRS" ]
+    },
+      "_artifactsLocation": {
+          "type": "string"
+      },
+      "_artifactsLocationSasToken": {
+          "type": "securestring"
+      },
+    "UncompressFunctionPackageFolder": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "FileProcessorFunction",
+      "metadata": {
+        "description": "WebDeploy package location. This path is relative to the _artifactsLocation parameter"
+      }
+    },
+    "UncompressFunctionPackageFileName": {
+      "type": "string",
+      "defaultValue": "package.zip",
+      "minLength": 1,
+      "metadata": {
+        "description": "Name of the webdeploy package"
+      }
     }
   },
   "variables": {
@@ -177,7 +199,27 @@
             "Files_STORAGE": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountFileStorageName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFileStorageName')), '2015-05-01-preview').key1,';')]",
             "FUNCTIONS_EXTENSION_VERSION": "latest"
           }
-        }
+        },
+          {
+              "name": "MSDeploy",
+              "type": "extensions",
+              "location": "[resourceGroup().location]",
+              "apiVersion": "2015-08-01",
+              "dependsOn": [
+                  "[resourceId('Microsoft.Web/sites', variables('sites_FileProcessor_name'))]"
+              ],
+              "tags": {
+                  "displayName": "UncompressFunction"
+              },
+              "properties": {
+                  "packageUri": "[concat(parameters('_artifactsLocation'), '/', parameters('UncompressFunctionPackageFolder'), '/', parameters('UncompressFunctionPackageFileName'), parameters('_artifactsLocationSasToken'))]",
+                  "dbType": "None",
+                  "connectionString": "",
+                  "setParameters": {
+                      "IIS Web Application Name": "[variables('sites_FileProcessor_name')]"
+                  }
+              }
+          }
       ],
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('serverfarms_plan_name'))]",

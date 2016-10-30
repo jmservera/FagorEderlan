@@ -32,5 +32,12 @@
     <Content Include="Deploy-AzureResourceGroup.ps1" />
     <None Include="azuredeploy.json" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FileProcessorFunction\FileProcessorFunction.csproj">
+      <Targets>Build;Package</Targets>
+      <AdditionalProperties>PackageLocation=..\DataPipeline\$(ProjectReferencesOutputPath)\FileProcessorFunction\package.zip</AdditionalProperties>
+      <IncludeFilePath>$(ProjectReferencesOutputPath)\FileProcessorFunction\package.zip</IncludeFilePath>
+    </ProjectReference>
+  </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
 </Project>

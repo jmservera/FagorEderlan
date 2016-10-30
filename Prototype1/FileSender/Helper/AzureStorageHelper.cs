@@ -72,7 +72,7 @@ namespace FileSender.Helper
             }
             catch (Exception e)
             {
-                Trace.TraceError("Error uploading zip file.");
+                Trace.TraceError("Error uploading zip file: {0}",e.Message);
             }
             
         }
