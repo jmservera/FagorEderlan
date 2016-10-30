@@ -5,7 +5,7 @@
       "type": "blobTrigger",
       "direction": "in",
       "path": "input-files/{name}.zip",
-      "connection": "fagorederlanfiles_STORAGE"
+      "connection": "Files_STORAGE"
     }
   ],
   "disabled": false

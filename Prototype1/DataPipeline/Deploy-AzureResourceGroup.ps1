@@ -140,3 +140,10 @@ if ($ErrorMessages)
 {
     "", ("{0} returned the following errors:" -f ("Template deployment", "Validation")[[bool]$ValidateOnly]), @($ErrorMessages) | ForEach-Object { Write-Output $_ }
 }
+else
+{
+# TODO deploy:
+#		Azure Functions
+#		Stream Analytics Query -> by now is hardcoded
+#		PowerBI connection
+}
