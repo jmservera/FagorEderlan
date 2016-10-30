@@ -72,6 +72,11 @@ namespace FileSender
                             }
                             hasCommands = true;
                         }
+                        if (HasCommand(args, "run"))
+                        {
+                            RunInteractiveServices(ServicesToRun);
+                            hasCommands = true;
+                        }
                         // If we don't have commands we print usage message
                         if (!hasCommands)
                         {
@@ -81,6 +86,7 @@ namespace FileSender
                             Console.WriteLine(" - uninstall or u : Uninstall the services");
                             Console.WriteLine(" - start : Start the services");
                             Console.WriteLine(" - stop : Stop the services");
+                            Console.WriteLine(" - run : Run interactively from console");
                         }
                     }
                     catch (Exception ex)
