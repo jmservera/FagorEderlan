@@ -33,13 +33,26 @@ namespace FileSender
         public CloudBlobContainer container;
         public AzureStorageHelper storageHelper;
         public LogHelper logHelper;
+        private PoisonFileManager poisonFileManager;
 
         string csvFolder = ConfigurationManager.AppSettings["folder"];
-        string zipFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ZipFiles");
+        string zipFolder;
+        string poisonZipFolder;
 
         public FileWatcherService()
         {
             InitializeComponent();
+
+            this.zipFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ZipFiles");
+            if (!Directory.Exists(zipFolder))
+            {
+                Directory.CreateDirectory(zipFolder);
+            }
+            this.poisonZipFolder = Path.Combine(this.zipFolder, "Poison");
+            if (!Directory.Exists(poisonZipFolder))
+            {
+                Directory.CreateDirectory(poisonZipFolder);
+            }
         }
 
         private void startTimer()
@@ -58,8 +71,10 @@ namespace FileSender
 
         protected override void OnStart(string[] args)
         {
+            poisonFileManager = new PoisonFileManager(5);
+            poisonFileManager.AllowedErrorLimitReached += PoisonFileManagerAllowedErrorLimitReached;
             logHelper = new LogHelper(LogCategory.lastFile, false);
-            ReadOldFiles();
+            ReadOldCsvFiles();
             watcher = new FileSystemWatcher(csvFolder, "*.csv");
             watcher.IncludeSubdirectories = true;
             watcher.Changed += Watcher_Changed;
@@ -92,7 +107,7 @@ namespace FileSender
             }
         }
 
-        private void ReadOldFiles()
+        private void ReadOldCsvFiles()
         {
             OldFileZipper oldFileZipper = new OldFileZipper(csvFolder);
             List<string> listOldFiles =  oldFileZipper.getMissingZippedFileNames();
@@ -138,7 +153,7 @@ namespace FileSender
         protected override void OnContinue()
         {
             files.Clear();
-            ReadOldFiles();
+            ReadOldCsvFiles();
             watcher.EnableRaisingEvents = true;
             startTimer();
             base.OnContinue();
@@ -227,28 +242,43 @@ namespace FileSender
 
         private async Task UploadFile(string fileName, string zipFolder, int? zippedFileCount)
         {
+            string completeFilePath = Path.Combine(zipFolder, fileName);
             try
             {
                 await storageHelper.UploadZipToStorage(fileName, zipFolder);
-                if (zippedFileCount == null)
-                    Console.WriteLine("Zip file sent.");
+                if (zippedFileCount == null || zippedFileCount < 1)
+                    Console.WriteLine($"{fileName} file sent.");
                 else
-                    Console.WriteLine($"Zip file sent with {zippedFileCount} csvs.");
-                File.Delete(zipFolder + "\\" + fileName);
+                    Console.WriteLine($"{fileName} file sent with {zippedFileCount} csvs.");
+                File.Delete(completeFilePath);
             }
             catch (Exception e)
             {
                 Trace.TraceError($"Error uploading {fileName}: {e.Message}{Environment.NewLine}Stack trace:{Environment.NewLine}{e.StackTrace}");
+                this.poisonFileManager.AddOrUpdatePoisonFile(completeFilePath);
             }
         }
 
         private async Task CheckOldZipFiles()
         {
-            // TODO: No hacer esto infinitamente, hacer X intentos
             foreach (string file in Directory.GetFiles(this.zipFolder))
             {
                 if (file.EndsWith(".zip"))
                     await this.UploadFile(file, this.zipFolder, null);
+            }
+        }
+
+        private void PoisonFileManagerAllowedErrorLimitReached(object sender, PoisonFileEventArgs e)
+        {
+            try
+            {
+                string destFileName = Path.Combine(this.poisonZipFolder, Path.GetFileName(e.CompleteFilePath));
+                File.Move(e.CompleteFilePath, destFileName);
+                File.Delete(e.CompleteFilePath);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError($"Error moving {Path.GetFileName(e.CompleteFilePath)} poison file: {ex.Message}{Environment.NewLine}Stack trace:{Environment.NewLine}{ex.StackTrace}");
             }
         }
     }

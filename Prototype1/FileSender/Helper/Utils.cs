@@ -9,6 +9,10 @@ namespace FileSender.Helper
 {
     public class Utils
     {
+        /// <summary>
+        /// Checks if Internet connection is available or not.
+        /// </summary>
+        /// <returns>Returns true if Internet connection is available, otherwise returns false.</returns>
         public static bool CheckForInternetConnection()
         {
             try
