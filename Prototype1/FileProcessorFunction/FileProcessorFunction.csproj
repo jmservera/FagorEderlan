@@ -43,10 +43,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".secrets" />
-    <None Include="App_Data\PublishProfiles\MyService001FileProcessor - Web Deploy.pubxml" />
-    <None Include="App_Data\PublishProfiles\MyServiceFileProcessor - Web Deploy %282%29.pubxml" />
-    <None Include="App_Data\PublishProfiles\MyServiceFileProcessor - Web Deploy.pubxml" />
     <Content Include="host.json" />
     <Content Include="secrets\functions\secrets\host.json" />
     <Content Include="test.bat" />
@@ -55,13 +51,28 @@
     <Content Include="UncompressInputFiles\project.lock.json" />
     <Content Include="UncompressInputFiles\run.csx" />
     <Content Include="website.publishproj" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\PublishProfiles\" />
     <Folder Include="data\" />
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage">
+      <HintPath>..\packages\WindowsAzure.Storage.7.2.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
