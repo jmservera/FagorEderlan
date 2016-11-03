@@ -44,21 +44,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="host.json" />
-    <Content Include="secrets\functions\secrets\host.json" />
     <Content Include="test.bat" />
     <Content Include="UncompressInputFiles\function.json" />
     <Content Include="UncompressInputFiles\project.json" />
-    <Content Include="UncompressInputFiles\project.lock.json" />
     <Content Include="UncompressInputFiles\run.csx" />
-    <Content Include="website.publishproj" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\PublishProfiles\" />
-    <Folder Include="data\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>

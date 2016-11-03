@@ -28,7 +28,7 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                 var attributes = new Attribute[]
                 {
                     new BlobAttribute($"{container}/{zipEntry.Name}"),
-                    new StorageAccountAttribute("storageederlan_STORAGE")
+                    new StorageAccountAttribute("files_STORAGE")
                 };
 
                 //async work does not manage zip correctly
