@@ -35,7 +35,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FileProcessorFunction\FileProcessorFunction.csproj">
       <Targets>Build;Package</Targets>
-      <AdditionalProperties>PackageLocation=..\DataPipeline\$(ProjectReferencesOutputPath)\FileProcessorFunction\package.zip</AdditionalProperties>
+      <AdditionalProperties>PackageLocation=..\AzureDeployment\$(ProjectReferencesOutputPath)\FileProcessorFunction\package.zip</AdditionalProperties>
       <IncludeFilePath>$(ProjectReferencesOutputPath)\FileProcessorFunction\package.zip</IncludeFilePath>
     </ProjectReference>
   </ItemGroup>

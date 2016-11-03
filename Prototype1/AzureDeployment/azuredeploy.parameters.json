@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
   "parameters": {
     "serviceName": {
-      "value": "MyService001"
+      "value": "MyService005"
     },
     "sites_FileProcessor_name": {
-      "value": "FileProcessor001"
+      "value": "FileProcessor005"
     },
     "storageAccountType": {
       "value": "Standard_LRS"

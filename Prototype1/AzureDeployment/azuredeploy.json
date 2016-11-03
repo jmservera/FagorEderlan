@@ -191,7 +191,8 @@
           "dependsOn": [
             "[resourceId('Microsoft.Web/sites', variables('sites_FileProcessor_name'))]",
             "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFunctionsName'))]",
-            "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFileStorageName'))]"
+            "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFileStorageName'))]",
+            "[concat('Microsoft.Web/Sites/', variables('sites_FileProcessor_name'), '/Extensions/MSDeploy')]"
           ],
           "properties": {
             "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountFunctionsName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFunctionsName')), '2015-05-01-preview').key1,';')]",

@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvGenerator", "CsvGenerato
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessorFunction", "FileProcessorFunction\FileProcessorFunction.csproj", "{3B094CCF-BA3C-4DDE-9568-72B5331275DC}"
 EndProject
-Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "DataPipeline", "DataPipeline\DataPipeline.deployproj", "{E8EC3F64-7A9F-44FC-83EE-09A5EA779617}"
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureDeployment", "AzureDeployment\AzureDeployment.deployproj", "{E8EC3F64-7A9F-44FC-83EE-09A5EA779617}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
