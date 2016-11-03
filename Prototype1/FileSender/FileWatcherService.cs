@@ -72,7 +72,7 @@ namespace FileSender
         protected override void OnStart(string[] args)
         {
             poisonFileManager = new PoisonFileManager(5);
-            poisonFileManager.AllowedErrorLimitReached += PoisonFileManagerAllowedErrorLimitReached;
+            poisonFileManager.PoisonedFileDetected += PoisonedFileDetectedHandler;
             logHelper = new LogHelper(LogCategory.lastFile, false);
             ReadOldCsvFiles();
             watcher = new FileSystemWatcher(csvFolder, "*.csv");
@@ -255,7 +255,7 @@ namespace FileSender
             catch (Exception e)
             {
                 Trace.TraceError($"Error uploading {fileName}: {e.Message}{Environment.NewLine}Stack trace:{Environment.NewLine}{e.StackTrace}");
-                this.poisonFileManager.AddOrUpdatePoisonFile(completeFilePath);
+                this.poisonFileManager.NotifyErrorInFile(completeFilePath);
             }
         }
 
@@ -268,12 +268,12 @@ namespace FileSender
             }
         }
 
-        private void PoisonFileManagerAllowedErrorLimitReached(object sender, PoisonFileEventArgs e)
+        private void PoisonedFileDetectedHandler(object sender, PoisonedFileEventArgs e)
         {
             try
             {
-                string destFileName = Path.Combine(this.poisonZipFolder, Path.GetFileName(e.CompleteFilePath));
-                File.Move(e.CompleteFilePath, destFileName);
+                // TODO: hay que decidir si los ficheros que no se han podido subir hay que dejarlos dentro de AppData. ¿Aquí se borran con el tiempo?
+                File.Move(e.CompleteFilePath, Path.Combine(this.poisonZipFolder, e.FileName));
                 File.Delete(e.CompleteFilePath);
             }
             catch (Exception ex)
