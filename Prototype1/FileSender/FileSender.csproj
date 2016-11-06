@@ -147,7 +147,7 @@
     <Compile Include="Helper\PoisonFileManager.cs" />
     <Compile Include="Helper\Utils.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="Helper\AzureStorageHelper.cs" />
+    <Compile Include="Helper\IoTHelper.cs" />
     <Compile Include="Helper\OldFileZipper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -157,14 +157,12 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerialReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="deviceCertificate.cer">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="deviceCertificate.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

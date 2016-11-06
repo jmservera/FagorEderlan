@@ -2,15 +2,16 @@
 using System.Configuration;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FileSender.Helper
 {
-    public class AzureStorageHelper
+    public class IoTHelper
     {
         DeviceClient deviceClient;
 
-        public AzureStorageHelper()
+        public IoTHelper()
         {
             var connectionString = ConfigurationManager.AppSettings["IoTHubConnectionString"];
             var connBuilder = IotHubConnectionStringBuilder.Create(connectionString);
@@ -35,6 +36,11 @@ namespace FileSender.Helper
             {
                 await deviceClient.UploadToBlobAsync(fileName, fileStream);
             }
+        }
+
+        public Task SendDataAsync(string data)
+        {
+            return deviceClient.SendEventAsync(new Message(Encoding.UTF8.GetBytes(data)));
         }
     }
 }

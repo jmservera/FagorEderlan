@@ -31,7 +31,8 @@ namespace FileSender
         int zipInterval = 5 * 60 * 10000; //five minutes
 
         public CloudBlobContainer container;
-        public AzureStorageHelper storageHelper;
+        public IoTHelper ioTHelper;
+        public SerialReader reader;
         public LogHelper logHelper;
         private PoisonFileManager poisonFileManager;
 
@@ -84,8 +85,12 @@ namespace FileSender
             {
                 watcher.EnableRaisingEvents = true;
 
-                storageHelper = new AzureStorageHelper();
-
+                ioTHelper = new IoTHelper();
+                string comPort = ConfigurationManager.AppSettings["serialPort"];
+                if (!string.IsNullOrEmpty(comPort))
+                {
+                    reader = new SerialReader(comPort, ioTHelper);
+                }
                 string interval = ConfigurationManager.AppSettings["interval"];
                 if (!string.IsNullOrEmpty(interval))
                 {
@@ -246,7 +251,7 @@ namespace FileSender
             try
             {
                 Trace.TraceInformation($"Uploading file {fileName}");
-                await storageHelper.UploadZipToStorage(fileName, zipFolder);
+                await ioTHelper.UploadZipToStorage(fileName, zipFolder);
                 if (zippedFileCount == null || zippedFileCount < 1)
                     Console.WriteLine($"{fileName} file sent.");
                 else
