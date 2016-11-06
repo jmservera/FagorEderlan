@@ -245,6 +245,7 @@ namespace FileSender
             string completeFilePath = Path.Combine(zipFolder, fileName);
             try
             {
+                Trace.TraceInformation($"Uploading file {fileName}");
                 await storageHelper.UploadZipToStorage(fileName, zipFolder);
                 if (zippedFileCount == null || zippedFileCount < 1)
                     Console.WriteLine($"{fileName} file sent.");
@@ -259,12 +260,23 @@ namespace FileSender
             }
         }
 
+        int checking=0;
         private async Task CheckOldZipFiles()
         {
-            foreach (string file in Directory.GetFiles(this.zipFolder))
+            if (Interlocked.CompareExchange(ref checking, 1, 0) == 0)
             {
-                if (file.EndsWith(".zip"))
-                    await this.UploadFile(file, this.zipFolder, null);
+                try
+                {
+                    foreach (string file in Directory.GetFiles(this.zipFolder))
+                    {
+                        if (file.EndsWith(".zip"))
+                            await this.UploadFile(Path.GetFileName(file), this.zipFolder, null);
+                    }
+                }
+                finally
+                {
+                    Interlocked.Exchange(ref checking, 0);
+                }
             }
         }
 

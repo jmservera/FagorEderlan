@@ -1,80 +1,40 @@
-﻿using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using System;
+﻿using Microsoft.Azure.Devices.Client;
 using System.Configuration;
-using System.Diagnostics;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace FileSender.Helper
 {
     public class AzureStorageHelper
     {
-        // Azure Storage Account Credentials
-        public string azureStorageAccountKey;
-        public string azureStorageAccountContainer;
-        public string azureStorageAccountName;
-        public CloudBlobContainer container;
-        
+        DeviceClient deviceClient;
 
         public AzureStorageHelper()
         {
-            azureStorageAccountKey = ConfigurationManager.AppSettings["StorageConnectionString"];
-            azureStorageAccountContainer = ConfigurationManager.AppSettings["StorageContainer"];
-            azureStorageAccountName = ConfigurationManager.AppSettings["StorageAccountName"];
-
-            if (!string.IsNullOrEmpty(azureStorageAccountKey) || !string.IsNullOrEmpty(azureStorageAccountContainer) || !string.IsNullOrEmpty(azureStorageAccountName))
+            var connectionString = ConfigurationManager.AppSettings["IoTHubConnectionString"];
+            var connBuilder = IotHubConnectionStringBuilder.Create(connectionString);
+            if (connBuilder.UsingX509Cert)
             {
-                // Create an Azure CloudStorageAccount object.
-                CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName="
-                    + azureStorageAccountName + ";AccountKey=" + azureStorageAccountKey);
+                var x509Certificate = new X509Certificate2("deviceCertificate.pfx", "devicecertificate");
+                var authMethod = new DeviceAuthenticationWithX509Certificate(connBuilder.DeviceId, x509Certificate);
 
-                // Create a CloudBlobClient object using the CloudStorageAccount.
-                CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
-                // Create a CloudBlobContain object using the CloudBlobClient.
-
-                // Retrieve a reference to a container.
-                this.container = blobClient.GetContainerReference(azureStorageAccountContainer);
+                deviceClient = DeviceClient.Create(connBuilder.HostName, authMethod, TransportType.Amqp);
             }
             else
             {
-                if (string.IsNullOrEmpty(azureStorageAccountContainer))
-                {
-                    Trace.TraceError("Can't connect to azure storage. Error on Azure Container");
-                }
-                if (string.IsNullOrEmpty(azureStorageAccountKey))
-                {
-                    Trace.TraceError("Can't connect to azure storage. Error on Azure Account Key");
-                }
-                if (string.IsNullOrEmpty(azureStorageAccountName))
-                {
-                    Trace.TraceError("Can't connect to azure storage. Error on Azure Account Name");
-                }
+                deviceClient = DeviceClient.CreateFromConnectionString(connectionString, TransportType.Amqp);
             }
-            
         }
-        public async Task CreateContainerAsync()
-        {
-            // Create the container if it doesn't already exist.
-            await this.container.CreateIfNotExistsAsync();
-        }
+
         public async Task UploadZipToStorage(string fileName, string fileFolder)
         {
-            try
+            await deviceClient.OpenAsync();
+
+            using (var fileStream = System.IO.File.OpenRead(Path.Combine(fileFolder, fileName)))
             {
-                // Retrieve reference to a blob named "userName".
-                CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
-                using (var fileStream = System.IO.File.OpenRead(fileFolder + "\\" + fileName))
-                {
-                    await blockBlob.UploadFromStreamAsync(fileStream);
-                }
-                blockBlob.Properties.ContentType = "application/zip";
-                await blockBlob.SetPropertiesAsync();
+                await deviceClient.UploadToBlobAsync(fileName, fileStream);
             }
-            catch (Exception e)
-            {
-                Trace.TraceError("Error uploading zip file: {0}",e.Message);
-            }
-            
         }
     }
 }
