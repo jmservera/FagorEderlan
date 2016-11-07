@@ -3,10 +3,7 @@
     "contentVersion": "1.0.0.0",
   "parameters": {
     "serviceName": {
-      "value": "MyService005"
-    },
-    "sites_FileProcessor_name": {
-      "value": "FileProcessor005"
+      "value": "fagor01"
     },
     "storageAccountType": {
       "value": "Standard_LRS"

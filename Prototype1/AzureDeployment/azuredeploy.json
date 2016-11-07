@@ -6,10 +6,6 @@
       "defaultValue": "MyService",
       "type":  "string"
     },
-    "sites_FileProcessor_name": {
-      "defaultValue": "FileProcessor",
-      "type": "string"
-    },
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -39,17 +35,16 @@
     }
   },
   "variables": {
-    "sites_FileProcessor_name": "[concat(parameters('serviceName'),'FileProcessor')]",
-    "StreamingAnalyticsName": "FileAnalyzer",
+    "sites_FileProcessor_name": "[substring(concat(parameters('serviceName'),'FileProcessor',uniquestring(resourceGroup().id), '0000000000'),0,24)]",
+    "StreamingAnalyticsName": "[substring(concat(parameters('serviceName'),'FileAnalyzer',uniquestring(resourceGroup().id), '0000000000'),0,24)]",
     "blobStorageAnalytics": "[substring(toLower(concat(parameters('serviceName'), 'str', uniquestring(resourceGroup().id), '0000000000')), 0, 24)]",
     "serverfarms_plan_name": "[concat(parameters('serviceName'),'ServerFarm',resourceGroup().location,'Plan')]",
-    "storageAccountFunctionsName": "[toLower(concat(parameters('serviceName'),'FunctionLogs'))]",
-    "storageAccountFileStorageName": "[toLower(concat(parameters('serviceName'),'FileStorage'))]",
+    "storageAccountFunctionsName": "[substring(toLower(concat(parameters('serviceName'),'FnLogs',uniquestring(resourceGroup().id), '0000000000')),0,24)]",
+    "storageAccountFileStorageName": "[substring(toLower(concat(parameters('serviceName'),'Storage',uniquestring(resourceGroup().id), '0000000000')),0,24)]",
     "fileAnalyzerQuery": "with curvas as (SELECT\n    REF,TRY_CAST(tiempo1Carrera as float) tiempo,\n    TRY_CAST(Diferenciadepresion as float) difpres,\n    DATEADD(ms,TRY_CAST(tiempo1Carrera as float), EventProcessedUtcTime) timestamp_t,\n    TRY_CAST(presionp2 as float) presionp2,\n    TRY_CAST(contrapresion as float) contrapresion,\n    TRY_CAST(canal5 as float) canal5,\n    TRY_CAST(canal6 as float) canal6,\n    TRY_CAST(canal7 as float) canal7,\n    TRY_CAST(canal8 as float) canal8,\n    TRY_CAST(presionp1 as float) presionp1\nFROM\n    input\ntimestamp by DATEADD(ms,TRY_CAST(tiempo1Carrera as float), EventProcessedUtcTime)\n    )\nselect * from curvas"
   },
   "resources": [
     {
-      "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/fagorederlan/providers/Microsoft.Storage/storageAccounts/fagorederlanfiles'.",
       "type": "Microsoft.Storage/storageAccounts",
       "sku": {
         "name": "[parameters('storageAccountType')]",
@@ -94,7 +89,7 @@
                       "accountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFileStorageName')), '2015-06-15').key1]"
                     }
                   ],
-                  "container": "input-files",
+                  "container": "output-files",
                   "pathPattern": ""
                 }
 
@@ -115,7 +110,6 @@
       ]
     },
     {
-      "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/fagorederlan/providers/Microsoft.Storage/storageAccounts/fagorederlanfunctions'.",
       "type": "Microsoft.Storage/storageAccounts",
       "sku": {
         "name": "[parameters('storageAccountType')]",
@@ -131,7 +125,6 @@
       "dependsOn": []
     },
     {
-      "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/FagorEderlan/providers/Microsoft.Web/serverfarms/NorthEuropePlan'.",
       "type": "Microsoft.Web/serverfarms",
       "sku": {
         "name": "Y1",
@@ -152,7 +145,6 @@
       "dependsOn": [ "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountFunctionsName'))]" ]
     },
     {
-      "comments": "Generalized from resource: '/subscriptions/f19b7695-9685-461e-9700-2d9674197593/resourceGroups/FagorEderlan/providers/Microsoft.Web/sites/FileProcessor'.",
       "type": "Microsoft.Web/sites",
       "kind": "functionapp",
       "name": "[variables('sites_FileProcessor_name')]",
