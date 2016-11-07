@@ -40,6 +40,8 @@ namespace FileSender
         string zipFolder;
         string poisonZipFolder;
 
+        int isSendingFiles;
+
         public FileWatcherService()
         {
             InitializeComponent();
@@ -181,20 +183,14 @@ namespace FileSender
             Trace.TraceInformation($"{this.ServiceName} stoped.");
         }
 
-        int sending;
-        int tick = 0;
         private async void sendFilesTimer_Tick(object sender)
         {
             if (!Utils.CheckForInternetConnection()) return;
-            if (Interlocked.CompareExchange(ref sending, 1, 0) != 0)
-            {
-                Console.WriteLine($"Skipping tick {this.tick}");
-                return;
-            }
+
+            if (Interlocked.CompareExchange(ref isSendingFiles, 1, 0) != 0) return;
 
             try
             {
-                Console.WriteLine($"Tick {this.tick}");
                 await this.CheckOldZipFiles();
 
                 var filesToSend = new List<string>();
@@ -230,7 +226,6 @@ namespace FileSender
                         Trace.TraceError(e.Message);
                     }
                 }
-                Console.WriteLine($"Tick {this.tick} ended");
             }
             catch (Exception ex)
             {
@@ -238,8 +233,7 @@ namespace FileSender
             }
             finally
             {
-                Interlocked.Exchange(ref sending, 0);
-                this.tick++;
+                Interlocked.Exchange(ref isSendingFiles, 0);
             }
         }
 

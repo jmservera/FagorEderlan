@@ -29,17 +29,14 @@ namespace FileSender.Helper
                 deviceClient = DeviceClient.CreateFromConnectionString(connectionString, TransportType.Amqp);
             }
         }
-        static int count;
+
         public async Task<bool> UploadZipToStorage(string fileName, string fileFolder)
         {
             try
             {
                 await deviceClient.OpenAsync();
-
-                using (var fileStream = System.IO.File.OpenRead(Path.Combine(fileFolder, fileName)))
+                using (var fileStream = File.OpenRead(Path.Combine(fileFolder, fileName)))
                 {
-                    Console.WriteLine($"Upload {count++} {fileName}");
-
                     await deviceClient.UploadToBlobAsync(fileName, fileStream);
                 }
                 return true;
