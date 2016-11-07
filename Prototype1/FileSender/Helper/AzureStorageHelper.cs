@@ -3,6 +3,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace FileSender.Helper
@@ -57,24 +58,25 @@ namespace FileSender.Helper
             // Create the container if it doesn't already exist.
             await this.container.CreateIfNotExistsAsync();
         }
-        public async Task UploadZipToStorage(string fileName, string fileFolder)
+        public async Task<bool> UploadZipToStorage(string fileName, string fileFolder)
         {
             try
             {
                 // Retrieve reference to a blob named "userName".
                 CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
-                using (var fileStream = System.IO.File.OpenRead(fileFolder + "\\" + fileName))
+                using (var fileStream = System.IO.File.OpenRead(Path.Combine( fileFolder , fileName)))
                 {
                     await blockBlob.UploadFromStreamAsync(fileStream);
                 }
                 blockBlob.Properties.ContentType = "application/zip";
                 await blockBlob.SetPropertiesAsync();
+                return true;
             }
             catch (Exception e)
             {
                 Trace.TraceError("Error uploading zip file: {0}",e.Message);
             }
-            
+            return false;
         }
     }
 }

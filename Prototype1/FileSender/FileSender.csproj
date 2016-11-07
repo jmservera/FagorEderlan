@@ -112,7 +112,9 @@
     </None>
     <None Include="packages.config" />
     <Content Include=".gitignore" />
-    <Content Include="user.config" />
+    <Content Include="user.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FileWatcherService.resx">

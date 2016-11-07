@@ -168,17 +168,19 @@ namespace FileSender
             Trace.TraceInformation($"{this.ServiceName} stoped.");
         }
 
+        int sending;
         private async void sendFilesTimer_Tick(object sender)
         {
             if (!Utils.CheckForInternetConnection()) return;
-
-            await this.CheckOldZipFiles();
-
-            var filesToSend=new List<string>();
             try
             {
+                if (Interlocked.Exchange(ref sending, 1) != 0) return;
+
+                await this.CheckOldZipFiles();
+
+                var filesToSend = new List<string>();
                 var filesEnum = files.GetEnumerator();
-                var old = DateTime.Now.AddMilliseconds(0-zipInterval);
+                var old = DateTime.Now.AddMilliseconds(0 - zipInterval);
                 while (filesEnum.MoveNext())
                 {
                     if (filesEnum.Current.Value < old)
@@ -186,7 +188,7 @@ namespace FileSender
                         filesToSend.Add(filesEnum.Current.Key);
                     }
                 }
-                foreach(var name in filesToSend)
+                foreach (var name in filesToSend)
                 {
                     DateTime t;
                     files.TryRemove(name, out t);
@@ -195,7 +197,7 @@ namespace FileSender
                 {
                     try
                     {
-                        for (int i = 0; i < filesToSend.Count; i+= FileQuantityInZip)
+                        for (int i = 0; i < filesToSend.Count; i += FileQuantityInZip)
                         {
                             int count = FileQuantityInZip;
                             if (filesToSend.Count - i < FileQuantityInZip)
@@ -210,9 +212,13 @@ namespace FileSender
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Trace.TraceError(ex.Message);
+            }
+            finally
+            {
+                Interlocked.Exchange(ref sending, 0);
             }
         }
 
@@ -222,7 +228,7 @@ namespace FileSender
             var fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + $"_{batch}.zip";
             Trace.TraceInformation($"Zipping file: {fileName}");
 
-            ZipFile zip = ZipFile.Create(zipFolder + "\\" + fileName);
+            ZipFile zip = ZipFile.Create(Path.Combine( zipFolder , fileName));
             zip.BeginUpdate();
             foreach (var file in fileList)
             {
@@ -245,12 +251,18 @@ namespace FileSender
             string completeFilePath = Path.Combine(zipFolder, fileName);
             try
             {
-                await storageHelper.UploadZipToStorage(fileName, zipFolder);
-                if (zippedFileCount == null || zippedFileCount < 1)
-                    Console.WriteLine($"{fileName} file sent.");
+                if (await storageHelper.UploadZipToStorage(fileName, zipFolder))
+                {
+                    if (zippedFileCount == null || zippedFileCount < 1)
+                        Console.WriteLine($"{fileName} file sent.");
+                    else
+                        Console.WriteLine($"{fileName} file sent with {zippedFileCount} csvs.");
+                    File.Delete(completeFilePath);
+                }
                 else
-                    Console.WriteLine($"{fileName} file sent with {zippedFileCount} csvs.");
-                File.Delete(completeFilePath);
+                {
+                    Console.WriteLine($"{fileName} file not sent.");
+                }
             }
             catch (Exception e)
             {
@@ -264,7 +276,7 @@ namespace FileSender
             foreach (string file in Directory.GetFiles(this.zipFolder))
             {
                 if (file.EndsWith(".zip"))
-                    await this.UploadFile(file, this.zipFolder, null);
+                    await this.UploadFile(Path.GetFileName( file), this.zipFolder, null);
             }
         }
 
@@ -272,7 +284,6 @@ namespace FileSender
         {
             try
             {
-                // TODO: hay que decidir si los ficheros que no se han podido subir hay que dejarlos dentro de AppData. ¿Aquí se borran con el tiempo?
                 File.Move(e.CompleteFilePath, Path.Combine(this.poisonZipFolder, e.FileName));
                 File.Delete(e.CompleteFilePath);
             }
