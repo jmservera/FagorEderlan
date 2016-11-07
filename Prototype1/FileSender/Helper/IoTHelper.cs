@@ -35,8 +35,7 @@ namespace FileSender.Helper
             try
             {
                 await deviceClient.OpenAsync();
-
-                using (var fileStream = System.IO.File.OpenRead(Path.Combine(fileFolder, fileName)))
+                using (var fileStream = File.OpenRead(Path.Combine(fileFolder, fileName)))
                 {
                     await deviceClient.UploadToBlobAsync(fileName, fileStream);
                 }
