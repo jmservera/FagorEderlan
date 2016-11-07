@@ -9,6 +9,8 @@ using Microsoft.Azure.WebJobs.Host.Bindings.Runtime;
 using System.Globalization;
 using Newtonsoft.Json;
 
+const bool jsonOutput = false;
+
 public static void Run(Stream myBlob, string name, Binder binder, TraceWriter log)
 {
     log.Info($"C# Blob trigger function processed: {myBlob}");
@@ -27,9 +29,10 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                     container = "average-files";
                 }
                 log.Info($"Container: {container} \t file: {zipEntry.Name}");
+                var outputExtension = jsonOutput ? "json" : "csv";
                 var attributes = new Attribute[]
                 {
-                    new BlobAttribute($"{container}/{Path.GetFileNameWithoutExtension(zipEntry.Name)}.json"),
+                    new BlobAttribute($"{container}/{Path.GetFileNameWithoutExtension(zipEntry.Name)}.{outputExtension}"),
                     new StorageAccountAttribute("files_STORAGE")
                 };
 
@@ -40,7 +43,6 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                     {
                         using (var r = new StreamReader(s, Encoding.GetEncoding(1252)))
                         {
-
                             var ss = r.ReadLine();
                             ss = "ref;" + ss;
                             var header = cleanHeader(ss);
@@ -48,24 +50,16 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                             {
                                 r.ReadLine();
                             }
-                            writer.Write("[");
-                            bool first = true;
-                            while (!r.EndOfStream)
+
+                            if (jsonOutput)
                             {
-                                if (!first)
-                                {
-                                    writer.WriteLine(",");
-                                }
-                                else
-                                {
-                                    first = false;
-                                }
-                                var datos = cleanValues(r.ReadLine());
-                                datos = $"{Path.GetFileNameWithoutExtension(zipEntry.Name)};{datos}";
-                                dynamic jObject = createObject(header, datos);
-                                writer.Write(JsonConvert.SerializeObject(jObject));
+                                writeJson(header, zipEntry, writer, r);
                             }
-                            writer.Write("]");
+                            else
+                            {
+                                writeCSV(header, zipEntry, writer, r);
+                            }
+
                         }
                     }
                 }
@@ -76,6 +70,43 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
             }
         }
     }
+}
+
+static void writeJson(string header, ZipEntry zipEntry, TextWriter writer, StreamReader r)
+{
+    writer.Write("[");
+    bool first = true;
+    while (!r.EndOfStream)
+    {
+        if (!first)
+        {
+            writer.WriteLine(",");
+        }
+        else
+        {
+            first = false;
+        }
+        var datos = extractData(r.ReadLine(), Path.GetFileNameWithoutExtension(zipEntry.Name));
+        dynamic jObject = createObject(header, datos);
+        writer.Write(JsonConvert.SerializeObject(jObject));
+    }
+    writer.Write("]");
+}
+
+static void writeCSV(string header, ZipEntry zipEntry, TextWriter writer, StreamReader r)
+{
+    writer.WriteLine(header);
+
+    while (!r.EndOfStream)
+    {
+        var datos = extractData(r.ReadLine(), Path.GetFileNameWithoutExtension(zipEntry.Name));
+        writer.WriteLine(datos);
+    }
+}
+static string extractData(string rawData, string fileName)
+{
+    var data = cleanValues(rawData);
+    return $"{fileName};{data}";
 }
 
 static object createObject(string header, string data)
