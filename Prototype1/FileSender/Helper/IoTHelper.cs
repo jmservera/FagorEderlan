@@ -1,5 +1,7 @@
 ﻿using Microsoft.Azure.Devices.Client;
+using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -28,14 +30,23 @@ namespace FileSender.Helper
             }
         }
 
-        public async Task UploadZipToStorage(string fileName, string fileFolder)
+        public async Task<bool> UploadZipToStorage(string fileName, string fileFolder)
         {
-            await deviceClient.OpenAsync();
-
-            using (var fileStream = System.IO.File.OpenRead(Path.Combine(fileFolder, fileName)))
+            try
             {
-                await deviceClient.UploadToBlobAsync(fileName, fileStream);
+                await deviceClient.OpenAsync();
+
+                using (var fileStream = System.IO.File.OpenRead(Path.Combine(fileFolder, fileName)))
+                {
+                    await deviceClient.UploadToBlobAsync(fileName, fileStream);
+                }
+                return true;
             }
+            catch (Exception ex)
+            {
+                Trace.TraceError("{0}: {1}", nameof(UploadZipToStorage), ex.Message);
+            }
+            return false;
         }
 
         public Task SendDataAsync(string data)

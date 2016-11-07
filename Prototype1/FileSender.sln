@@ -17,6 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileProcessorFunction", "Fi
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "AzureDeployment", "AzureDeployment\AzureDeployment.deployproj", "{E8EC3F64-7A9F-44FC-83EE-09A5EA779617}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ArduinoSensor", "ArduinoSensor", "{6FC8D5BB-7C86-4218-BA26-F5DA3818026C}"
+	ProjectSection(SolutionItems) = preProject
+		ArduinoSensor\ArduinoSensor.ino = ArduinoSensor\ArduinoSensor.ino
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +47,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6FC8D5BB-7C86-4218-BA26-F5DA3818026C} = {2304D684-6BAC-43D8-BBBC-B87A80E5BAC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8

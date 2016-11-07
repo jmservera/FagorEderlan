@@ -25,22 +25,14 @@ namespace FileSender
             serialPort.Open();
         }
 
-        private async void startReading()
-        {
-            await Task.Run(async () =>
-            {
-                while (true)
-                {
-                    var values= serialPort.ReadLine();
-                    await hub.SendDataAsync(values);
-                }
-            });
-        }
-
         private async void SerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             var value=serialPort.ReadLine();
-            await hub.SendDataAsync(value);
+            dynamic values = Newtonsoft.Json.JsonConvert.DeserializeObject(value);
+            int light = values.light;
+            float temp = values.temp;
+            string tsvalues= Newtonsoft.Json.JsonConvert.SerializeObject(new { Light = light, Temp = temp, Timestamp = DateTime.Now });
+            await hub.SendDataAsync(tsvalues);
         }
 
         public void Dispose()
