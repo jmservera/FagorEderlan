@@ -46,6 +46,10 @@ namespace FileSender
         {
             InitializeComponent();
 
+            if (!Directory.Exists(csvFolder))
+            {
+                Directory.CreateDirectory(csvFolder);
+            }
             this.zipFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ZipFiles");
             if (!Directory.Exists(zipFolder))
             {
