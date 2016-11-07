@@ -43,6 +43,10 @@ namespace FileSender.Helper
             }
             catch (Exception ex)
             {
+                if (!Utils.CheckForInternetConnection())
+                {
+                    Trace.TraceWarning("No internet connection!");
+                }
                 Trace.TraceError("{0}: {1}", nameof(UploadZipToStorage), ex.Message);
             }
             return false;
