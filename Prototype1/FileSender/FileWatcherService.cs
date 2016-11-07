@@ -46,6 +46,10 @@ namespace FileSender
         {
             InitializeComponent();
 
+            if (!Directory.Exists(csvFolder))
+            {
+                Directory.CreateDirectory(csvFolder);
+            }
             this.zipFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ZipFiles");
             if (!Directory.Exists(zipFolder))
             {
@@ -60,7 +64,7 @@ namespace FileSender
 
         private void startTimer()
         {
-            sendFilesTimer = new Timer(sendFilesTimer_Tick, null, zipInterval / 10, zipInterval / 10);
+            sendFilesTimer = new Timer(sendFilesTimer_Tick, null, zipInterval, zipInterval);
         }
 
         private void stopTimer()
@@ -185,9 +189,17 @@ namespace FileSender
 
         private async void sendFilesTimer_Tick(object sender)
         {
-            if (!Utils.CheckForInternetConnection()) return;
+            //if (!Utils.CheckForInternetConnection())
+            //{
+            //    Console.WriteLine("No internet connection");
+            //    return;
+            //}
 
-            if (Interlocked.CompareExchange(ref isSendingFiles, 1, 0) != 0) return;
+            if (Interlocked.CompareExchange(ref isSendingFiles, 1, 0) != 0)
+            {
+                Console.WriteLine("Already sending files...");
+                return;
+            }
 
             try
             {

@@ -19,14 +19,15 @@ namespace FileSender.Helper
             {
                 using (var client = new WebClient())
                 {
-                    using (var stream = client.OpenRead("http://www.google.com"))
+                    using (var stream = client.OpenRead("https://portal.azure.com"))
                     {
                         return true;
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }
