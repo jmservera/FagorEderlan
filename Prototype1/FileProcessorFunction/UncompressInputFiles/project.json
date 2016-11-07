@@ -3,7 +3,8 @@
     "net46":{
       "dependencies": {
         "SharpZipLib": "0.86.0",
-        "WindowsAzure.Storage": "7.2.1"
+        "WindowsAzure.Storage": "7.2.1",
+        "Newtonsoft.Json": "9.0.1"
       }
     }
    }

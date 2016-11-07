@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Text;
 using ICSharpCode.SharpZipLib.Zip;
@@ -6,6 +7,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host.Bindings.Runtime;
 using System.Globalization;
+using Newtonsoft.Json;
 
 public static void Run(Stream myBlob, string name, Binder binder, TraceWriter log)
 {
@@ -27,7 +29,7 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                 log.Info($"Container: {container} \t file: {zipEntry.Name}");
                 var attributes = new Attribute[]
                 {
-                    new BlobAttribute($"{container}/{zipEntry.Name}"),
+                    new BlobAttribute($"{container}/{Path.GetFileNameWithoutExtension(zipEntry.Name)}.json"),
                     new StorageAccountAttribute("files_STORAGE")
                 };
 
@@ -38,32 +40,32 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
                     {
                         using (var r = new StreamReader(s, Encoding.GetEncoding(1252)))
                         {
+
+                            var ss = r.ReadLine();
+                            ss = "ref;" + ss;
+                            var header = cleanHeader(ss);
                             if (zipEntry.Name.Contains("_curv"))
                             {
-                                var ss = r.ReadLine();
-                                ss = "ref;" + ss;
-                                writer.WriteLine(cleanHeader(ss));
                                 r.ReadLine();
-
-                                while (!r.EndOfStream)
-                                {
-                                    var datos = cleanValues(r.ReadLine());
-                                    datos = $"{Path.GetFileNameWithoutExtension(zipEntry.Name)};{datos}";
-                                    writer.WriteLine(datos);
-                                }
                             }
-                            else
+                            writer.Write("[");
+                            bool first = true;
+                            while (!r.EndOfStream)
                             {
-                                var ss = r.ReadLine();
-                                ss = "ref;" + ss;
-                                writer.WriteLine(cleanHeader(ss));
-                                while (!r.EndOfStream)
+                                if (!first)
                                 {
-                                    var datos = cleanValues(r.ReadLine());
-                                    datos = $"{Path.GetFileNameWithoutExtension(zipEntry.Name)};{datos}";
-                                    writer.WriteLine(datos);
+                                    writer.WriteLine(",");
                                 }
+                                else
+                                {
+                                    first = false;
+                                }
+                                var datos = cleanValues(r.ReadLine());
+                                datos = $"{Path.GetFileNameWithoutExtension(zipEntry.Name)};{datos}";
+                                dynamic jObject = createObject(header, datos);
+                                writer.Write(JsonConvert.SerializeObject(jObject));
                             }
+                            writer.Write("]");
                         }
                     }
                 }
@@ -74,6 +76,18 @@ public static void Run(Stream myBlob, string name, Binder binder, TraceWriter lo
             }
         }
     }
+}
+
+static object createObject(string header, string data)
+{
+    dynamic jObject = new System.Dynamic.ExpandoObject();
+    var headers = header.Split(';');
+    var datas = data.Split(';');
+    for (int i = 0; i < datas.Length; i++)
+    {
+        ((IDictionary<String, Object>)jObject).Add(headers[i], datas[i]);
+    }
+    return jObject;
 }
 
 static string cleanHeader(string header)
