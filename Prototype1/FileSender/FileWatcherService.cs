@@ -182,13 +182,19 @@ namespace FileSender
         }
 
         int sending;
+        int tick = 0;
         private async void sendFilesTimer_Tick(object sender)
         {
             if (!Utils.CheckForInternetConnection()) return;
+            if (Interlocked.CompareExchange(ref sending, 1, 0) != 0)
+            {
+                Console.WriteLine($"Skipping tick {this.tick}");
+                return;
+            }
+
             try
             {
-                if (Interlocked.Exchange(ref sending, 1) != 0) return;
-
+                Console.WriteLine($"Tick {this.tick}");
                 await this.CheckOldZipFiles();
 
                 var filesToSend = new List<string>();
@@ -224,6 +230,7 @@ namespace FileSender
                         Trace.TraceError(e.Message);
                     }
                 }
+                Console.WriteLine($"Tick {this.tick} ended");
             }
             catch (Exception ex)
             {
@@ -232,6 +239,7 @@ namespace FileSender
             finally
             {
                 Interlocked.Exchange(ref sending, 0);
+                this.tick++;
             }
         }
 
@@ -284,23 +292,13 @@ namespace FileSender
             }
         }
 
-        int checking=0;
         private async Task CheckOldZipFiles()
         {
-            if (Interlocked.CompareExchange(ref checking, 1, 0) == 0)
+            var fileList = Directory.GetFiles(this.zipFolder);
+            foreach (string file in fileList)
             {
-                try
-                {
-                    foreach (string file in Directory.GetFiles(this.zipFolder))
-                    {
-                        if (file.EndsWith(".zip"))
-                            await this.UploadFile(Path.GetFileName(file), this.zipFolder, null);
-                    }
-                }
-                finally
-                {
-                    Interlocked.Exchange(ref checking, 0);
-                }
+                if (file.EndsWith(".zip"))
+                    await this.UploadFile(Path.GetFileName(file), this.zipFolder, null);
             }
         }
 

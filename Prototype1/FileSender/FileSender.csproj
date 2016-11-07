@@ -163,9 +163,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="deviceCertificate.pfx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="deviceCertificate.pfx" />
     <None Include="packages.config" />
     <Content Include=".gitignore" />
     <Content Include="user.config">
