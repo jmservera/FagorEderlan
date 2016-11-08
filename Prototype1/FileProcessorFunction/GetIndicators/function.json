@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "name": "myBlob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "output-files/{name}_curv.csv",
+      "connection": "Files_STORAGE"
+    }
+  ],
+  "disabled": false
+}

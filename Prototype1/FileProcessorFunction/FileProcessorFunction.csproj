@@ -56,6 +56,15 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="GetIndicators\function.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GetIndicators\project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GetIndicators\run.csx" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
