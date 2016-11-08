@@ -6,6 +6,13 @@
       "direction": "in",
       "path": "output-files/{name}_curv.csv",
       "connection": "Files_STORAGE"
+    },
+    {
+      "type": "blob",
+      "name": "outputBlob",
+      "path": "output-indicators/{name}.json",
+      "connection": "Files_STORAGE",
+      "direction": "out"
     }
   ],
   "disabled": false

@@ -2,7 +2,7 @@
   "frameworks": {
     "net46":{
       "dependencies": {
-        "WindowsAzure.Storage": "7.2.1"
+        "Newtonsoft.Json": "9.0.1"
       }
     }
    }
