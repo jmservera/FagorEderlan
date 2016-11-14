@@ -24,7 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ArduinoSensor", "ArduinoSen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Netduino Sensor", "Netduino Sensor", "{EB814ADF-A104-44DC-A16B-A551105E08B8}"
 	ProjectSection(SolutionItems) = preProject
-		Program.cs = Program.cs
+		Netduino Sensor\netduino sensor.fzz = Netduino Sensor\netduino sensor.fzz
+		Netduino Sensor\netduino sensor_bb.jpg = Netduino Sensor\netduino sensor_bb.jpg
 	EndProjectSection
 EndProject
 Global
