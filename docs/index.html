@@ -1,0 +1,43 @@
+---
+layout: default
+custom_js:
+- search.js
+---
+
+<div class="home">
+
+  <input id="nav-trigger" class="nav-trigger" type="checkbox">
+  {% include search.html %}
+  
+  <ul id="container" class="post-list js-packery"
+    data-packery-options='{ "itemSelector": ".item" }'>
+    {% for post in site.posts %}
+      <li class="carditem item{% if post.size > 1 %} {{ post.size }}{% endif %}" id="{{ post.id | slugify }}">
+        <div class="card">
+          <div class="card-image {{ post.color }}">
+            <a href="{{ post.url | prepend: site.baseurl }}">
+                {% if post.image %}
+                <img class="card-back" src="{{ post.image}}" alt="case study image"/>
+                <span class="card-title">
+                    <span class="card-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+                    {{ post.title }}
+                </span>
+                {% else %}
+                <span class="card-title inline">
+                    <span class="card-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+                    {{ post.title }}
+                </span>
+                {% endif %}
+            </a>
+          </div>
+          <div class="card-content">
+            {{ post.excerpt | strip_html }}<p><a href="{{ post.url | prepend: site.baseurl }}">Read the full article</a></p>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="row" id="no-results" style="display:none">
+    <div class="col s12">No matches were found for your search criteria. Please adjust your criteria and try again.</div>
+  </div>
+</div>
