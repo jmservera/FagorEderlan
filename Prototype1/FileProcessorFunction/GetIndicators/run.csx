@@ -9,12 +9,13 @@ public static void Run(Stream myBlob, string name, out string outputBlob, TraceW
 {
     log.Info($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes");
 
-    int year = int.Parse(name.Substring(0, 2));
-    int month = int.Parse(name.Substring(2, 2));
-    int day = int.Parse(name.Substring(4, 2));
-    int hour = int.Parse(name.Substring(6, 2));
-    int minute = int.Parse(name.Substring(8, 2));
-    int seconds = int.Parse(name.Substring(10, 2));
+    var nameRef = name.Split('/')[1];
+    int year = int.Parse(nameRef.Substring(0, 2));
+    int month = int.Parse(nameRef.Substring(2, 2));
+    int day = int.Parse(nameRef.Substring(4, 2));
+    int hour = int.Parse(nameRef.Substring(6, 2));
+    int minute = int.Parse(nameRef.Substring(8, 2));
+    int seconds = int.Parse(nameRef.Substring(10, 2));
 
     DateTime thisDate = new DateTime(year + 2000, month, day, hour, minute, seconds);
 
@@ -53,7 +54,7 @@ public static void Run(Stream myBlob, string name, out string outputBlob, TraceW
         var outObject = new
         {
             date = thisDate,
-            reference = name,
+            reference = nameRef,
             rarea = areaCarreraSub,
             vmax = velocityChars.Item1,
             vmin = velocityChars.Item2,

@@ -22,6 +22,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ArduinoSensor", "ArduinoSen
 		ArduinoSensor\ArduinoSensor.ino = ArduinoSensor\ArduinoSensor.ino
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Netduino Sensor", "Netduino Sensor", "{EB814ADF-A104-44DC-A16B-A551105E08B8}"
+	ProjectSection(SolutionItems) = preProject
+		Netduino Sensor\netduino sensor.fzz = Netduino Sensor\netduino sensor.fzz
+		Netduino Sensor\netduino sensor_bb.jpg = Netduino Sensor\netduino sensor_bb.jpg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +56,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6FC8D5BB-7C86-4218-BA26-F5DA3818026C} = {2304D684-6BAC-43D8-BBBC-B87A80E5BAC8}
+		{EB814ADF-A104-44DC-A16B-A551105E08B8} = {2304D684-6BAC-43D8-BBBC-B87A80E5BAC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8
