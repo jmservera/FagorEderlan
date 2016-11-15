@@ -1,0 +1,24 @@
+# Site settings
+title: Microsoft Technical Case Studies
+email: dcaro@microsoft.com
+# description: 
+baseurl: "/FagorEderlan" # the subpath of your site, e.g. /blog/
+url: "https://jmservera.github.io" # the base hostname & protocol for your site
+twitter_username: dcaro
+github_username:  microsoft
+encoding: utf-8
+use_static_category_list: false # true/false: use true to indicate that site will use 
+                               # the static category list to build the category tree. 
+                               # Use false to indicate the site to build the category 
+                               # tree dynamically using the posts' metadata 
+
+# Build settings
+# markdown: redcarpet
+# highlighter: pygments
+# extensions: [tables fenced_code_blocks]
+
+exclude: [vendor]
+kramdown:
+   input: GFM
+gems:
+  - jekyll-sitemap
