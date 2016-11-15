@@ -1,6 +1,5 @@
 ---
 layout: default
-<<<<<<< HEAD
 custom_js:
 - search.js
 ---
@@ -41,43 +40,4 @@ custom_js:
   <div class="row" id="no-results" style="display:none">
     <div class="col s12">No matches were found for your search criteria. Please adjust your criteria and try again.</div>
   </div>
-=======
-title: Home
----
-
-<div class="posts">
-  {% for post in paginator.posts %}
-  <div class="post">
-    <h1 class="post-title">
-      <a href="{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </h1>
-
-    <span class="post-date">{{ post.date | date_to_string }} | <a href="{{ post.url }}#disqus_thread">0 Comentarios</a></span>
-
-    {{ post.content | split:'<!--break-->' | first }}
-	{% if post.content contains '<!--break-->' %}
-      <a href="{{ post.url }}">...</a>
-   {% endif %}
-  </div>
-  {% endfor %}
-</div>
-
-<div class="pagination">
-  {% if paginator.next_page %}
-    <a class="pagination-item older" href="{{ site.baseurl }}page{{paginator.next_page}}">Antiguos</a>
-  {% else %}
-    <span class="pagination-item older">Antiguos</span>
-  {% endif %}
-  {% if paginator.previous_page %}
-    {% if paginator.page == 2 %}
-      <a class="pagination-item newer" href="{{ site.baseurl }}">Nuevos</a>
-    {% else %}
-      <a class="pagination-item newer" href="{{ site.baseurl }}page{{paginator.previous_page}}">Nuevos</a>
-    {% endif %}
-  {% else %}
-    <span class="pagination-item newer">Nuevos</span>
-  {% endif %}
->>>>>>> 8c223f46402f8bba7cfcdd782dd3c7905bc602ea
 </div>

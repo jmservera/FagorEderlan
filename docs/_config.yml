@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Site settings
 title: Microsoft Technical Case Studies
 email: dcaro@microsoft.com
@@ -23,31 +22,3 @@ kramdown:
    input: GFM
 gems:
   - jekyll-sitemap
-=======
-# Dependencies
-markdown:         kramdown
-highlighter:      rouge
-
-# Permalinks
-permalink:        pretty
-relative_permalinks: false
-
-# Setup
-name:             test
-title:            test
-tagline:          'El blog de test'
-description:      'it works on my machine'
-url:              http://jmservera.github.io/FagorEderlan
-baseurl:          http://jmservera.github.io/
-icon:             ''
-locale:           es_es
-
-  
-paginate:         5
-
-# Custom vars
-version:          2.1.0
-
-github:
-  repo:           https://github.com/jmservera/FagorEderlan
->>>>>>> 8c223f46402f8bba7cfcdd782dd3c7905bc602ea
