@@ -79,7 +79,7 @@ The main hack team has been formed by:
 - Microsoft
     - Juan Manuel Servera. Senior Technical Evangelist. ([@jmservera](http://twitter.com/jmservera))
 
-The Hackfest will focus on three different matters:
+The Hackfest focus was on three different matters:
 - Learning to use IoT Hub and how it enhances the real-time capture of the data
 - Creating a windows service to gather actual data using the technology that they are using nowadays, but sending it to the cloud to help analyzing it
 - Create a simulator that uses samples of the real data and simulates the direct gathering from the sensors to create a prototype of the full solution with all the 
@@ -87,41 +87,56 @@ data management, real-time analytics, ML and visualization.
  
 ## Pain point ##
 
-The solution they are building right now has the objective of early identification of defective pieces in an aluminum molding machine, by finding pores, fill levels (or lack of fill), and act in base of the gathered knowledge.
-The current machine does the aluminum injection and during this process it takes many parameters like speed & pressure, and creates an 800KB csv file with all the measures taken each millisecond. The process of filling the die and cooling the piece takes about 35 seconds. They have found that this data is not enough to identify the defective pieces, so they are also installing thermographic cameras that will take one picture for each stage of the process. The thermographic images are processed locally and filed in an access database.
-Visual defects are also manually registered.
+The solution they are building has the objective of early identification of defective pieces in an aluminum molding machine, by finding pores, fill levels (or lack of fill),
+and act in base of the gathered knowledge.
+During the injection process, the machine takes many parameters per millisecond, like speed, pressure & injector run. This creates an 800KB *CSV* file with all the measures
+and another one of averages.
+The process of filling the die and cooling the piece takes about 90 seconds, that can be enhanced by improving the process manually.
+They have found that this data is not enough to identify the defective pieces, so they are also installing thermographic cameras that will take one picture for each stage of the process.
+The thermographic images are processed locally and filed in an Access database.
 
-Nowadays, the identification of a defective piece is done at assembly time, that is usually done one-month after the piece is built.
+When the piece is finished, a worker does a visual examination of the piece to detect defective pieces, but this does not guarantee that a piece is not defective.
+The main identification of defective pieces is done at assembly time, that is usually done one-month after the piece is built.
 
-The main issues we are facing right now are:
-- The molding and data gathering is controlled by a proprietary system we cannot modify
-- We currently cannot read directly from the sensors, we can just take the csv file regularly
-- The PC is using Windows XP and it has no network connection
+The main issues they were facing were:
+- The molding and data gathering is controlled by a proprietary system that cannot be modified
+- We cannot read directly from the sensors, we can just take the *CSV* files regularly
+- The PC was using Windows XP and it had no network connection
 - The data gathering is not complete until the piece is assembled one-month after
 
-Some of the issues will be alleviated by the company by upgrading their systems, but some of them will be done in the future:
-- The molding controller will be upgraded with a more powerful machine with Windows 7
-- In the future, they will evaluate new IO-Link compatible sensors so data could be retrieved in real-time
+Some of the issues were alleviated by the company by upgrading their systems, but some of them will be done in the future:
+- The molding controller was upgraded with a more powerful machine with Windows 7
+- In the future, they will evaluate new IO-Link compatible sensors so data could be retrieved in real-time using an OPC-UA gateway
 
-Other concerns of the company are:
+Other concerns of the company were:
 - Security: in this project the IT department of the company is also involved, and they are concerned about the security of the whole system
-- Connectivity and bandwidth limits: their current broadband network is very limited, so they want to limit bandwidth usage of the system and control when the data is sent to the cloud to avoid having bandwidth problems with their other systems.
-- Generalization: we are going to create a pilot over one molding process, but they have a very broad range of pieces they build, so we should think on what parts of the solution are reusable and what should be built or modified in every case.
+- Connectivity and bandwidth limits: their current broadband network is very limited, so they want to limit bandwidth usage of the system and control when the data is sent to the cloud
+to avoid having bandwidth problems with their other systems.
+- Generalization: we are going to create a pilot over one molding process, but they have a very broad range of pieces they build,
+so we should think on what parts of the solution are reusable and what should be built or modified in every case.
 - Costs of the whole system and scalability of the system to the full manufacturing plant
  
 ## Solution ##
 
-The solution we will build will be focused on the data gathering, we have agreed that the ML project will be a future step, even though they already have a small ML that we will fill with the data.
-We will build two prototypes, one for using with the current solution and we will do another one with a simulator to demonstrate the value of a real-time solution, this one will be used in the future when the IO-Link sensors are installed.
+The solution we built was focused on the data gathering, we agreed that the ML project will be a future step, even though they already have a small ML that we could fill with the data.
 
+We built the prototype in incremental steps, and opened to build a real-time solution in the future, the one that will be used when the IO-Link sensors are installed.
 
 ### Hackfest agenda ###
 
+During the first meetings we agreed on an agenda, that should be flexible because the access to the molding machine depended on the production needs.
+We did a 5 day hackfest, split in two blocks. The first 3 days we developed all the basic parts to have a reliable solution that sends the data to the cloud.
+The second block was a week after and we focused on enhancing security and reliability of the system.    
+
 * Day 1
-    * Morning: IoT Hub lab, using some Intel Edison boards, Raspberry Pi 2 and a MiFi we will introduce the technology we can use to send all the data to the cloud
-    * Afternoon: Kanban Board with the for the next days
-* Day 2
-    * Data management
+    * We dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
+    In the lab we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and node-red.
+![IotLab](../images/FagorEderlan/iotLab.jpg)
+    * During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days.
+![Kanban1](../images/FagorEderlan/kanban1.jpg)
+* For the day 2 we divided the teams to build the different parts we needed:
+    * A Windows service with a file watcher that zipped the files and connected to Azure Storage to send them 
+    * 
         * Create a windows service to retrieve the current data from the molding controller (it’s a PC with windows)
         * Create a cloud service for the data management: they currently process all the data with one monolithic application, we will split the data gathering and data management in two apps. The data gathering runs in the edge and the data management and preparation is done in the cloud. We will evaluate and/or use:
             * Blob Storage
@@ -148,7 +163,7 @@ We will build two prototypes, one for using with the current solution and we wil
         * Security (should be present in the prototype)
 * Day 5
     * Conclusions
-    * Prototype evaluation
+    * Prototype deployment and evaluation
     * Costs calculation
 
 
