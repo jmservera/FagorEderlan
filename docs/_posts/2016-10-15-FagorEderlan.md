@@ -3,40 +3,39 @@ layout: post
 title:  "Fagor Ederlan IoT Hackfest"
 author: "Juan Manuel Servera"
 author-link: "#"
-#author-image: "{{ site.baseurl }}/images/authors/jmservera.jpg"
+#author-image: "../images/authors/jmservera.jpg"
 date:   2016-11-08
 categories: IoT
 color: "blue"
-#image: "{{ site.baseurl }}/images/imagename.png" #should be ~350px tall
-excerpt: The case of an IoT project for an aluminum molding machine.
+#image: "../images/imagename.png" #should be ~350px tall
+excerpt: An Industry 4.0 project for gathering data secureyly from an aluminum molding machine to create a ML model to discard faster the defective pieces and then improve the process. The data is sent compressed to Azure through an IoT connection and prepared with Azure Functions, then sent to a ML model from Stream Analytics and presented in a PowerBI.
 language: English
 verticals: Manufacturing
 ---
 
 ## Enhancing a molding process with Industry 4.0 solutions ##
 
-In the third wave of industrial evolution we had automation. All these enhancements generated big amounts of data with a high potential of analytic uses, but it that was not easy to analyze, because the data was siloed in the machines where it was generated.
-With this project we will demonstrate that it's not complex to send the data to the cloud, using secure and reliable services, that allows us to analyze the data in near-realtime and build ML models to extract knowledge from it.
+In the third wave of industrial evolution we had automation, that produced big amounts of data with a high potential of analytic uses. This data was not easy to analyze, because it was siloed in the machines where it was generated.
+With this project we will demonstrate that it's not complex to send the data to the cloud, using secure and reliable services, that allow us to analyze the data in near-realtime and build ML models to extract knowledge from it.
 
-This is a manufacturing project where we need to capture data to build a ML model to enhance the quality of the product during the molding process.
-While in a canonical scenario, data is gathered directly from sensors and send to the cloud, directly or via a gateway, in many manufacturing projects we have to deal with old and/or proprietary systems that cannot be directly connected.
+In this project will capture the data produced during the molding process to build a ML model that will warn us when the quality of the product may be lower than the defined standard.
+While in a canonical scenario, the data is gathered directly from the sensors (or via PLC) and send to the cloud, directly or via a gateway, in many manufacturing projects we have to deal with old and/or proprietary systems that cannot be directly connected. Sometimes you don't have a system with connectivity, in other cases you don't have the protocols to communicate with the sensors.
+
+The machine where we will deploy this prototype didn't have a network connection, and the sensors are connected directly to the machine. The control software already gathers all the sensors information as *CSV* files and for each piece it calculates averages, means and some other statistical values from the data. As we wanted to minimize the impact we have in the machine, we developed a small windows service that detected new *CSV* files in a folder and sent them zipped to IoT Hub, all the rest of the process is executed in the cloud side.
+
+![Robot and Mold](../images/fagorederlan/robotAndMold.jpg)
 
 Two ML models will be built with the gathered data:
 - The first one will be built on the data from in-mold sensors, and will be correlated with a dataset of defective parts. This will greatly enhance the project, because it will allow to do early detection of defective pieces.  
 - In the future, the plan is to build a model to enhance the molding process directly, but for this we will need to retrieve the molding parameters as well.
 
-![Overview]({{ site.baseurl }}/images/fagorederlan/schema.svg)
-
-- Main Technologies used:
+The main Technologies used are:
     * IoT Hub
     * Intel Curie
     * Azure Functions
     * Azure Stream Analytics
     * Azure ML
 
-- Core Hack Team: 
-    * Juan Manuel Servera, TE at Microsoft, [@jmservera](http://twitter.com/jmservera)
-    * 
  
 ## Customer ##
 **Mondragon** is one of the leading Spanish business groups, integrated by autonomous and independent cooperatives with production subsidiaries and corporate offices in 41 countries and sales in more than 150.
@@ -44,7 +43,6 @@ Two ML models will be built with the gathered data:
 **Fagor Ederlan** is a company under this business group – a leading supplier of complete solutions for the automotive industry, specializing in Chassis and Powertrain applications.
 
 Their main installation is in the Mondragón village, in the Basque Country, Spain. This is where we will develop and run the prototype, but one big concern is how to scale this to the whole company.
-
 
 The participants will be people from three different companies: **Fagor Ederlan**, **LKS** and **ETIC**. LKS is a SI that is helping the company to build the ML system to improve their manufacturing process.
 **ETIC** is a Microsoft Innovation Center focused in embedded systems and Smart Cities, that are working with LKS in this project.
@@ -60,11 +58,12 @@ The participants will be people from three different companies: **Fagor Ederlan*
     - Miguel Baroja
 - ETIC
     - Natividad Herrasti (Managing Director)
-    - Jon Alza
-    - Aitor Gomez
-    - Aitor Akizu 
-    - Josu Lopez 
-    - Maite Beamurgia 
+    - Development Team
+        - Aitor Gomez
+        - Aitor Akizu 
+        - Jon Alza
+        - Josu Lopez 
+        - Maite Beamurgia (Data Scientist)
 - Microsoft
     - Juan Manuel Servera
 
@@ -147,7 +146,8 @@ Future potential to their business and operations.
 
 ##Architecture##
 
-Schema of the solution architecture.
+In the technology diagram below you will find the different technologies we are using to get all the information from the machine.
+![Overview](../images/fagorederlan/schema.svg)
 
 ##Device used & Code artifacts
 
