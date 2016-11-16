@@ -30,22 +30,34 @@ Two ML models will be built with the gathered data:
 - In the future, the plan is to build a model to enhance the molding process directly, but for this we will need to retrieve the molding parameters as well.
 
 The main Technologies used are:
-    * IoT Hub
-    * Intel Curie
-    * Azure Functions
-    * Azure Stream Analytics
-    * Azure ML
+* IoT Hub, to receive sensor data as events and files
+* Intel Curie, to gather environmental data
+* Azure Functions, to uncompress data and do some maths on the data
+* Azure Stream Analytics, to join the datasets and ask the ML model
+* Azure ML, to build the ML models and create the API endpoints
 
- 
+Jesús Para, main Data Scientist in Edertek, indicated that 
+> "Being able to early detect one defective piece before it arrives to our customers will pay the Azure consumption for one month".
+
+
 ## Customer ##
-**Mondragon** is one of the leading Spanish business groups, integrated by autonomous and independent cooperatives with production subsidiaries and corporate offices in 41 countries and sales in more than 150.
+**Mondragon** is one of the leading Spanish business groups, integrated by autonomous and independent cooperatives with production subsidiaries and
+corporate offices in 41 countries and sales in more than 150.
 
-**Fagor Ederlan** is a company under this business group – a leading supplier of complete solutions for the automotive industry, specializing in Chassis and Powertrain applications.
+**Fagor Ederlan** is a company under this business group – a leading supplier of complete solutions for the automotive industry, specializing in Chassis and
+Powertrain applications.
 
-Their main installation is in the Mondragón village, in the Basque Country, Spain. This is where we will develop and run the prototype, but one big concern is how to scale this to the whole company.
+Their main installation is in the Mondragón village, in the Basque Country, Spain. This is where we have developed and deployed the prototype,
+but one big concern is how to scale this to the whole company, with a focus in security and in working scenarios with very low bandwidth.
 
-The participants will be people from three different companies: **Fagor Ederlan**, **LKS** and **ETIC**. LKS is a SI that is helping the company to build the ML system to improve their manufacturing process.
-**ETIC** is a Microsoft Innovation Center focused in embedded systems and Smart Cities, that are working with LKS in this project.
+The participants were people from three different companies: **Fagor Ederlan**, **LKS** and **ETIC**.
+
+**LKS** is a SI that is helping the company to build the ML system to improve their manufacturing process.
+
+**ETIC** is a Microsoft Innovation Center focused in embedded systems and Smart Cities, sited in Mondragon, they are working along with LKS in this project,
+providing their knowledge in building solutions in Azure with PowerBI and Machine Learning.
+
+The main hack team has been formed by:
 
 - Fagor Ederlan (Edertek)
     - Eber Arregui (Project Manager)
@@ -56,7 +68,7 @@ The participants will be people from three different companies: **Fagor Ederlan*
 - LKS
     - Vicente Briz
     - Miguel Baroja
-- ETIC
+- [ETIC](http://www.embedded-technologies.org)
     - Natividad Herrasti (Managing Director)
     - Development Team
         - Aitor Gomez
@@ -65,7 +77,7 @@ The participants will be people from three different companies: **Fagor Ederlan*
         - Josu Lopez 
         - Maite Beamurgia (Data Scientist)
 - Microsoft
-    - Juan Manuel Servera
+    - Juan Manuel Servera. Senior Technical Evangelist. ([@jmservera](http://twitter.com/jmservera))
 
 The Hackfest will focus on three different matters:
 - Learning to use IoT Hub and how it enhances the real-time capture of the data
