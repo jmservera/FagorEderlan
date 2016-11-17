@@ -51,7 +51,7 @@ Powertrain applications.
 Their main installation is in the [Mondragón](https://es.wikipedia.org/wiki/Mondrag%C3%B3n) town, in the Basque Country, Spain. This is where we have developed and deployed the prototype,
 but one big concern is how to scale this to the whole company, with a focus in security and in working scenarios with very low bandwidth.
 
-The participants were people from three different companies: **Fagor Ederlan**, **LKS** and **ETIC**.
+The participants were from the three companies that are working on the project: **Fagor Ederlan**, **LKS** and **ETIC**.
 
 **[LKS](http://www.lks.es)** is the SI that is helping Fagor Ederlan building the ML models to improve their manufacturing process.
 
@@ -61,13 +61,13 @@ Located in the Mondragón town as well, they are working along with LKS in this 
 
 The main hack team has been formed by:
 
-- Fagor Ederlan
+- [Fagor Ederlan](http://www.fagorederlan.es)
     - Eber Arregui (Project Manager)
     - Yolanda Mendi (IT)
     - Ibai Peña (IT)
     - Jesús Para (Data Analytics)
     - Imanol Santos (Installation technician)
-- LKS
+- [LKS](http://www.lks.es)
     - Vicente Briz
     - Miguel Baroja
 - [ETIC](http://www.embedded-technologies.org)
@@ -82,10 +82,10 @@ The main hack team has been formed by:
     - Juan Manuel Servera. Senior Technical Evangelist. ([@jmservera](http://twitter.com/jmservera))
 
 The Hackfest was focused on three different matters:
-- Learning to use IoT Hub and how it enhances the real-time capture of the data
-- Creating a windows service to gather actual data using the technology that they are using nowadays, but sending it to the cloud to help analyzing it
-- Create a simulator that uses samples of the real data and simulates the direct gathering from the sensors to create a prototype of the full solution with all the 
-data management, real-time analytics, ML and visualization.
+- Learn how to use IoT Hub, how it enhances the real-time capture of the data and solves the security concerns of the company.
+- Create a windows service to gather actual data using the technology that they are using nowadays, but sending it to the cloud to help analyzing it.
+- Create a simulator that uses samples of the real for a prototype of the full solution with all the data management, real-time analytics, ML and visualization.
+This simulator allows us to test everything without 
  
 ## Pain point ##
 
@@ -133,9 +133,9 @@ The second block was a week after and we focused on enhancing security and relia
 * Day 1
     * We dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
     In the lab we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform.
-![IotLab]({{ site.baseurl }}/images/fagorederlan/iotLab.jpg)
+![IotLab]({{ site.baseurl }}/images/fagorederlan/iotLab.jpg =150x)
     * During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days.
-![Kanban1]({{ site.baseurl }}/images/fagorederlan/kanban1.jpg)
+![Kanban1]({{ site.baseurl }}/images/fagorederlan/kanban1.jpg =150x)
 * For the day 2 we divided the teams to build the different parts we needed:
     * A Windows service with a file watcher that zipped the files and connected to Azure Storage to send them 
     * 
