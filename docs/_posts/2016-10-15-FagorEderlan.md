@@ -150,16 +150,19 @@ We did a *5 day hackfest* in two blocks:
 
 ![Collage][Collage]
 
-| **Day 1** | hackfest preparation |
-| **IoT Lab** | we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use. In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform. |
-| Afternoon | During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days. |
-| **Day 2** | divide teams and work |
-| Windows Service | a file watcher that zipped the files and connected to Azure Storage to send them |
-| Azure Functions | to uncompress the files and extract characteristics from the curves |
-| **Day 3** | ASA and PowerBI |
-| ASA | Use Stream Analytics and PowerBI to represent the data |
-| Simulator ||
-| Storage of the data ||
+**Day 1** | *Hackfest preparation* 
+--- | --- 
+IoT Lab | we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use. In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform. 
+Kanban Board | During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days. |
+**Day 2** | *Divide teams and start the work* 
+--- | ---
+Windows Service | a file watcher that zipped the files and connected to Azure Storage to send them 
+Azure Functions | to uncompress the files and extract characteristics from the curves 
+**Day 3** | Visualization 
+--- | ---
+ASA | Use Stream Analytics and PowerBI to represent the data 
+Simulator | We developed a data simulator to test the solution and created a set of tests 
+Storage of the data | We sent all the data to the Azure Tables storage to build the ML model 
 
 
 * Day 1
