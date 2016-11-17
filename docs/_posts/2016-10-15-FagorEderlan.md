@@ -144,10 +144,23 @@ the one that will be used when the IO-Link sensors are installed.
 
 During the first meetings, we agreed on an agenda that should be flexible because the access to the molding machine depended on the production needs.
 We did a *5 day hackfest* in two blocks:
+
 - The first 3 days we developed all the basic parts to have a reliable solution that sends the data to the cloud.
 - A week after we started the second part of the hackfest, where we focused on enhancing security and reliability of the system.
 
 ![Collage][Collage]
+
+| **Day 1** | hackfest preparation |
+| **IoT Lab** | we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use. In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform. |
+| Afternoon | During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days. |
+| **Day 2** | divide teams and work |
+| Windows Service | a file watcher that zipped the files and connected to Azure Storage to send them |
+| Azure Functions | to uncompress the files and extract characteristics from the curves |
+| **Day 3** | ASA and PowerBI |
+| ASA | Use Stream Analytics and PowerBI to represent the data |
+| Simulator ||
+| Storage of the data ||
+
 
 * Day 1
     * **IoT Lab**: we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
