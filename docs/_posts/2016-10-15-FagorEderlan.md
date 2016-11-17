@@ -22,7 +22,7 @@ that allow us to analyze the data in near-real-time and build ML models to extra
 
 The project is based on a molding machine that takes measurements each millisecond during its process.
 
-![Robot and Mold]({{ site.baseurl }}/images/fagorederlan/robotAndMold.jpg)
+![Robot and Mold][robot]
 
 The data captured during the molding process is useful to build a ML model that will warn us when the quality of the product may be lower than the defined standard.
 While in a canonical scenario, the data is gathered from the sensors (directly, via PLC or a gateway) and sent to the cloud,
@@ -147,14 +147,12 @@ We did a *5 day hackfest* in two blocks:
 - The first 3 days we developed all the basic parts to have a reliable solution that sends the data to the cloud.
 - A week after we started the second part of the hackfest, where we focused on enhancing security and reliability of the system.
 
-![Collage]({{ site.baseurl }}/images/fagorederlan/hackfestcollage.jpg)
+![Collage][Collage]
 
 * Day 1
     * **IoT Lab**: we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
     In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform.
-#![IotLab]({{ site.baseurl }}/images/fagorederlan/iotLab.jpg)
     * During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days.
-#![Kanban1]({{ site.baseurl }}/images/fagorederlan/kanban1.jpg)
 * For the day 2 we divided the teams to build the different parts we needed:
     * A Windows service with a file watcher that zipped the files and connected to Azure Storage to send them 
     * The Azure Functions to uncompress the files and extract characteristics from the curves
@@ -191,12 +189,12 @@ IoT proposed solution will do X and help with the pain points above by Y.
 
 Future potential to their business and operations.
 
-![PowerBI Dashboard]({{ site.baseurl }}/images/fagorederlan/PowerBIDemo.png)
+![PowerBI Dashboard][PowerBIDashboard]
 
 ##Architecture##
 
 In the technology diagram below you will find the different technologies we are using to get all the information from the machine.
-[![Overview]({{ site.baseurl }}/images/fagorederlan/schema.svg)]({{ site.baseurl }}/images/fagorederlan/schema.svg)
+[![Overview][schemasvg]]({{ site.baseurl }}/images/fagorederlan/schema.svg)
 
 ##Device used & Code artifacts
 
@@ -209,3 +207,10 @@ This section is optional, but if you have details on how the customer plans to p
 Time or cost savings metrics resulting from the implementation of the solution
 
 Changes in the company culture or their organization
+
+[robot]: ({{ site.baseurl }}/images/fagorederlan/robotAndMold.jpg)
+[Collage]: ({{ site.baseurl }}/images/fagorederlan/hackfestcollage.jpg)
+[IoTLab]: ({{ site.baseurl }}/images/fagorederlan/iotLab.jpg)
+[Kanban1]: ({{ site.baseurl }}/images/fagorederlan/kanban1.jpg)
+[schemasvg]: ({{ site.baseurl }}/images/fagorederlan/schema.svg)
+[PowerBIDashboard]: ({{ site.baseurl }}/images/fagorederlan/PowerBIDemo.png)
