@@ -15,22 +15,30 @@ verticals: Manufacturing
 
 ## Enhancing a molding process with Industry 4.0 solutions ##
 
-In the third wave of industrial evolution we had automation that produced big amounts of data. This data has high potential of analytic uses, but it was not easy to analyze,
+In the third wave of industrial evolution we had automation that produced big amounts of data. This data has high potential for analytic applications, but it was not easy to analyze,
 because it was siloed in the machines where it was generated.
-With this project we will demonstrate that it's not complex to send the data to the cloud, using secure and reliable services, that allow us to analyze the data in near-realtime and build ML models to extract knowledge from it.
+With this project we will demonstrate that it's not complex to send the data to the cloud, using secure and reliable services,
+that allow us to analyze the data in near-realtime and build ML models to extract knowledge from it.
 
-In this project will capture the data produced during the molding process to build a ML model that will warn us when the quality of the product may be lower than the defined standard.
-While in a canonical scenario, the data is gathered directly from the sensors (or via PLC) and send to the cloud, directly or via a gateway, in many manufacturing projects we have to deal with old and/or proprietary systems that cannot be directly connected. Sometimes you don't have a system with connectivity, in other cases you don't have the protocols to communicate with the sensors.
-
-The machine where we will deploy this prototype didn't have a network connection, and the sensors are connected directly to the machine. The control software already gathers all the sensors information as *CSV* files and for each piece it calculates averages, means and some other statistical values from the data. As we wanted to minimize the impact we have in the machine, we developed a small windows service that detected new *CSV* files in a folder and sent them zipped to IoT Hub, all the rest of the process is executed in the cloud side.
+The project is based on a molding machine that takes measurements each millisecond during its process.
 
 ![Robot and Mold]({{ site.baseurl }}/images/fagorederlan/robotAndMold.jpg)
+
+The data captured during the molding process is useful to build a ML model that will warn us when the quality of the product may be lower than the defined standard.
+While in a canonical scenario, the data is gathered from the sensors (directly, via PLC or a gateway) and sent to the cloud,
+in many manufacturing projects we have to deal with old and/or proprietary systems that cannot be directly connected. You have to get the data from already existing
+sensors, using diverse communication protocols and with special calibration issues. Furthermore, many factories have low bandwidth connectivity and overloading their 
+communications is a big concern.
+
+In the machine where we were going to make this pilot, there's a control software that already gathers all the sensors information as *CSV* files. For each piece it calculates averages,
+means and some other statistical values from the data.
+As we wanted to minimize the impact we have in the machine, we developed a small windows service that detected new *CSV* files in a folder and sent them zipped to IoT Hub, all the rest of the process is executed in the cloud side.
 
 Two ML models will be built with the gathered data:
 - The first one will be built on the data from in-mold sensors, and will be correlated with a dataset of defective parts. This will greatly enhance the project, because it will allow to do early detection of defective pieces.  
 - In the future, the plan is to build a model to enhance the molding process directly, but for this we will need to retrieve the molding parameters as well.
 
-The main Technologies used are:
+The main technologies we used are:
 * IoT Hub, to receive sensor data as events and files
 * Intel Curie, to gather environmental data
 * Azure Functions, to uncompress data and do some maths on the data
@@ -51,7 +59,7 @@ Powertrain applications.
 Their main installation is in the [Mondragón](https://es.wikipedia.org/wiki/Mondrag%C3%B3n) town, in the Basque Country, Spain. This is where we have developed and deployed the prototype,
 but one big concern is how to scale this to the whole company, with a focus in security and in working scenarios with very low bandwidth.
 
-The participants were from the three companies that are working on the project: **Fagor Ederlan**, **LKS** and **ETIC**.
+The hackfest participants were from the three companies that are working on the project: **Fagor Ederlan** (Edertek), **LKS** and **ETIC**.
 
 **[LKS](http://www.lks.es)** is the SI that is helping Fagor Ederlan building the ML models to improve their manufacturing process.
 
@@ -78,7 +86,7 @@ The main hack team has been formed by:
         - Jon Alza
         - Josu Lopez 
         - Maite Beamurgia (Data Scientist)
-- Microsoft
+- Microsoft(http://www.microsoft.com)
     - Juan Manuel Servera. Senior Technical Evangelist. ([@jmservera](http://twitter.com/jmservera))
 
 The Hackfest was focused on three different matters:
@@ -89,16 +97,17 @@ This simulator allows us to test everything without
  
 ## Pain point ##
 
-The solution they are building has the objective of early identification of defective pieces in an aluminum molding machine, by finding pores, fill levels (or lack of fill),
-and act in base of the gathered knowledge.
+The objective of solution they are building is the early identification of defective pieces in an aluminum molding machine.
 During the injection process, the machine takes many parameters per millisecond, like speed, pressure & injector run. This creates an 800KB *CSV* file with all the measures
 and another one of averages.
-The process of filling the die and cooling the piece takes about 90 seconds, that can be enhanced by improving the process manually.
-They have found that this data is not enough to identify the defective pieces, so they are also installing thermographic cameras that will take one picture for each stage of the process.
-The thermographic images are processed locally and filed in an Access database.
 
-When the piece is finished, a worker does a visual examination of the piece to detect defective pieces, but this does not guarantee that a piece is not defective.
-The main identification of defective pieces is done at assembly time, that is usually done one-month after the piece is built.
+The process of filling the die and cooling the piece takes between 60 to 90 seconds, and can be enhanced by improving the process manually.
+They have found that this data is not enough to identify the defective pieces, so they are also installing thermographic cameras that will take one picture for each stage of the process.
+The thermographic images are processed locally and the results are stored in an Access database.
+
+When the piece is finished, an operator does a visual examination of the piece to detect defective pieces, but this does not guarantee that a piece is not defective,
+because it can have internal pores or other defects. So, the main identification of defective pieces is done by the customer at assembly time,
+that usually happens one-month after the piece is built.
 
 The main issues they were facing were:
 - The molding and data gathering is controlled by a proprietary system that cannot be modified
@@ -107,40 +116,40 @@ The main issues they were facing were:
 - The data gathering is not complete until the piece is assembled one-month after
 
 Some of the issues were alleviated by the company by upgrading their systems, but some of them will be done in the future:
-- The molding controller was upgraded with a more powerful machine with Windows 7
+- The molding controller was upgraded with a more powerful machine with Windows 7, so we will have a better.Net compatilibity
 - In the future, they will evaluate new IO-Link compatible sensors so data could be retrieved in real-time using an OPC-UA gateway
 
-Other concerns of the company were:
-- Security: in this project the IT department of the company is also involved, and they are concerned about the security of the whole system
-- Connectivity and bandwidth limits: their current broadband network is very limited, so they want to limit bandwidth usage of the system and control when the data is sent to the cloud
+The concerns that arised about this project:
+- **Security**: the IT department of the company is also involved, and they are concerned about the security of the whole system
+- **Connectivity and bandwidth limits**: their current broadband network is very limited, so they want to limit bandwidth usage of the system and control when the data is sent to the cloud
 to avoid having bandwidth problems with their other systems.
-- Generalization: we are going to create a pilot over one molding process, but they have a very broad range of pieces they build,
+- **Generalization**: we are going to create a pilot over one molding process, but they have a very broad range of pieces they build,
 so we should think on what parts of the solution are reusable and what should be built or modified in every case.
-- Costs of the whole system and scalability of the system to the full manufacturing plant
+- **Costs** of the whole system and scalability of the system to the full manufacturing plant
  
 ## Solution ##
 
-The solution we built was focused on the data gathering, we agreed that the ML project will be a future step, even though they already have a small ML that we could fill with the data.
+The LKS + ETIC team were already building the ML model, but until now, the *CSV* files were retrieved manually via a USB flash drive and then they uploaded the data to the ML platform.
 
-We built the prototype in incremental steps, and opened to build a real-time solution in the future, the one that will be used when the IO-Link sensors are installed.
+So, we built a prototype in incremental steps, focused in the data gathering, but let the solution open to build a real-time solution in the future,
+the one that will be used when the IO-Link sensors are installed.
 
 ### Hackfest agenda ###
 
-During the first meetings we agreed on an agenda, that should be flexible because the access to the molding machine depended on the production needs.
-We did a 5 day hackfest, split in two blocks. The first 3 days we developed all the basic parts to have a reliable solution that sends the data to the cloud.
-The second block was a week after and we focused on enhancing security and reliability of the system.    
+During the first meetings we agreed on an agenda that should be flexible because the access to the molding machine depended on the production needs.
+We did a *5 day hackfest* in two blocks:
+- The first 3 days we developed all the basic parts to have a reliable solution that sends the data to the cloud.
+- A week after we started the second part of the hackfest, where we focused on enhancing security and reliability of the system.
 
 * Day 1
-    * We dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
+    * **IoT Lab**: we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
     In the lab we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform.
 ![IotLab]({{ site.baseurl }}/images/fagorederlan/iotLab.jpg)
-<img src="{{ site.baseurl }}/images/fagorederlan/iotLab.jpg" width="50px"/>
     * During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days.
 ![Kanban1]({{ site.baseurl }}/images/fagorederlan/kanban1.jpg)
 * For the day 2 we divided the teams to build the different parts we needed:
     * A Windows service with a file watcher that zipped the files and connected to Azure Storage to send them 
-    * 
-        * Create a windows service to retrieve the current data from the molding controller (it’s a PC with windows)
+    * The Azure Functions to uncompress the files and extract characteristics from the curves
         * Create a cloud service for the data management: they currently process all the data with one monolithic application, we will split the data gathering and data management in two apps. The data gathering runs in the edge and the data management and preparation is done in the cloud. We will evaluate and/or use:
             * Blob Storage
             * Message queue
@@ -173,6 +182,8 @@ The second block was a week after and we focused on enhancing security and relia
 IoT proposed solution will do X and help with the pain points above by Y.
 
 Future potential to their business and operations.
+
+![PowerBI Dashboard]({{ site.baseurl }}/images/fagorederlan/PowerBIDemo.png)
 
 ##Architecture##
 
