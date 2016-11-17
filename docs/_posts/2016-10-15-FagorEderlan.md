@@ -53,7 +53,7 @@ but one big concern is how to scale this to the whole company, with a focus in s
 
 The participants were people from three different companies: **Fagor Ederlan**, **LKS** and **ETIC**.
 
-**[LKS](http://www.lds.es)** is the SI that is helping Fagor Ederlan building the ML models to improve their manufacturing process.
+**[LKS](http://www.lks.es)** is the SI that is helping Fagor Ederlan building the ML models to improve their manufacturing process.
 
 **[ETIC](http://www.embedded-technologies.org/en-us)** (Smart Cities Innovation Center) is a non-profit business service co-operative specialised in the development of products,
 services and applications within the context of Smart Cities. By virtue of a framework agreement, it operates as a Microsoft Innovation Center.
