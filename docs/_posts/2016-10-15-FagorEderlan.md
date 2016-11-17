@@ -174,7 +174,7 @@ Future potential to their business and operations.
 ##Architecture##
 
 In the technology diagram below you will find the different technologies we are using to get all the information from the machine.
-![Overview]({{ site.baseurl }}/images/fagorederlan/schema.svg)
+[![Overview]({{ site.baseurl }}/images/fagorederlan/schema.svg)]({{ site.baseurl }}/images/fagorederlan/schema.svg)
 
 ##Device used & Code artifacts
 
