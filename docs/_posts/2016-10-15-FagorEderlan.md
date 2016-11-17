@@ -90,6 +90,7 @@ The main hack team has been formed by:
     - Juan Manuel Servera. Senior Technical Evangelist. ([@jmservera](http://twitter.com/jmservera))
 
 The Hackfest was focused on three different matters:
+
 - Learn how to use IoT Hub, how it enhances the real-time capture of the data and solves the security concerns of the company.
 - Create a windows service to gather actual data using the technology that they are using nowadays, but sending it to the cloud to help analyzing it.
 - Create a simulator that uses samples of the real for a prototype of the full solution with all the data management, real-time analytics, ML and visualization.
@@ -110,16 +111,19 @@ because it can have internal pores or other defects. So, the main identification
 that usually happens one-month after the piece is built.
 
 The main issues they were facing were:
+
 - The molding and data gathering is controlled by a proprietary system that cannot be modified
 - We cannot read directly from the sensors, we can just take the *CSV* files regularly
 - The PC was using Windows XP and it had no network connection
 - The data gathering is not complete until the piece is assembled one-month after
 
 Some of the issues were alleviated by the company by upgrading their systems, but some of them will be done in the future:
+
 - The molding controller was upgraded with a more powerful machine with Windows 7, so we will have a better.Net compatilibity
 - In the future, they will evaluate new IO-Link compatible sensors so data could be retrieved in real-time using an OPC-UA gateway
 
 The concerns that arised about this project:
+
 - **Security**: the IT department of the company is also involved, and they are concerned about the security of the whole system
 - **Connectivity and bandwidth limits**: their current broadband network is very limited, so they want to limit bandwidth usage of the system and control when the data is sent to the cloud
 to avoid having bandwidth problems with their other systems.
