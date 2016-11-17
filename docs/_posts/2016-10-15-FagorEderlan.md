@@ -15,7 +15,8 @@ verticals: Manufacturing
 
 ## Enhancing a molding process with Industry 4.0 solutions ##
 
-In the third wave of industrial evolution we had automation, that produced big amounts of data with a high potential of analytic uses. This data was not easy to analyze, because it was siloed in the machines where it was generated.
+In the third wave of industrial evolution we had automation that produced big amounts of data. This data has high potential of analytic uses, but it was not easy to analyze,
+because it was siloed in the machines where it was generated.
 With this project we will demonstrate that it's not complex to send the data to the cloud, using secure and reliable services, that allow us to analyze the data in near-realtime and build ML models to extract knowledge from it.
 
 In this project will capture the data produced during the molding process to build a ML model that will warn us when the quality of the product may be lower than the defined standard.
@@ -36,7 +37,8 @@ The main Technologies used are:
 * Azure Stream Analytics, to join the datasets and ask the ML model
 * Azure ML, to build the ML models and create the API endpoints
 
-Jesús Para, main Data Scientist in Edertek, indicated that 
+Jesús Para, main Data Scientist in Edertek, indicated that
+
 > "Being able to early detect one defective piece before it arrives to our customers will pay the Azure consumption for one month".
 
 
