@@ -17,8 +17,8 @@ verticals: Manufacturing
 
 In the third wave of industrial evolution we had automation that produced big amounts of data. This data has high potential for analytic applications, but it was not easy to analyze,
 because it was siloed in the machines where it was generated.
-With this project we will demonstrate that it's not complex to send the data to the cloud, using secure and reliable services,
-that allow us to analyze the data in near-realtime and build ML models to extract knowledge from it.
+With this project, we will demonstrate that it's not complex to send the data to the cloud, using secure and reliable services,
+that allow us to analyze the data in near-real-time and build ML models to extract knowledge from it.
 
 The project is based on a molding machine that takes measurements each millisecond during its process.
 
@@ -26,7 +26,7 @@ The project is based on a molding machine that takes measurements each milliseco
 
 The data captured during the molding process is useful to build a ML model that will warn us when the quality of the product may be lower than the defined standard.
 While in a canonical scenario, the data is gathered from the sensors (directly, via PLC or a gateway) and sent to the cloud,
-in many manufacturing projects we have to deal with old and/or proprietary systems that cannot be directly connected. You have to get the data from already existing
+in many manufacturing projects we have to deal with old and/or proprietary systems that cannot be directly connected. You must get the data from already existing
 sensors, using diverse communication protocols and with special calibration issues. Furthermore, many factories have low bandwidth connectivity and overloading their 
 communications is a big concern.
 
@@ -35,13 +35,15 @@ means and some other statistical values from the data.
 As we wanted to minimize the impact we have in the machine, we developed a small windows service that detected new *CSV* files in a folder and sent them zipped to IoT Hub, all the rest of the process is executed in the cloud side.
 
 Two ML models will be built with the gathered data:
+
 - The first one will be built on the data from in-mold sensors, and will be correlated with a dataset of defective parts. This will greatly enhance the project, because it will allow to do early detection of defective pieces.  
 - In the future, the plan is to build a model to enhance the molding process directly, but for this we will need to retrieve the molding parameters as well.
 
 The main technologies we used are:
+
 * IoT Hub, to receive sensor data as events and files
 * Intel Curie, to gather environmental data
-* Azure Functions, to uncompress data and do some maths on the data
+* Azure Functions, to uncompress data and do some math on the data
 * Azure Stream Analytics, to join the datasets and ask the ML model
 * Azure ML, to build the ML models and create the API endpoints
 
@@ -63,7 +65,7 @@ The hackfest participants were from the three companies that are working on the 
 
 **[LKS](http://www.lks.es)** is the SI that is helping Fagor Ederlan building the ML models to improve their manufacturing process.
 
-**[ETIC](http://www.embedded-technologies.org/en-us)** (Smart Cities Innovation Center) is a non-profit business service co-operative specialised in the development of products,
+**[ETIC](http://www.embedded-technologies.org/en-us)** (Smart Cities Innovation Center) is a non-profit business service co-operative specialized in the development of products,
 services and applications within the context of Smart Cities. By virtue of a framework agreement, it operates as a Microsoft Innovation Center.
 Located in the Mondragón town as well, they are working along with LKS in this project, providing their knowledge in building IoT solutions in Azure with PowerBI and Machine Learning.
 
@@ -107,7 +109,7 @@ They have found that this data is not enough to identify the defective pieces, s
 The thermographic images are processed locally and the results are stored in an Access database.
 
 When the piece is finished, an operator does a visual examination of the piece to detect defective pieces, but this does not guarantee that a piece is not defective,
-because it can have internal pores or other defects. So, the main identification of defective pieces is done by the customer at assembly time,
+because it can have internal pores or other defects. So, it is the customer that does the main identification of defective pieces at assembly time,
 that usually happens one-month after the piece is built.
 
 The main issues they were facing were:
@@ -119,7 +121,7 @@ The main issues they were facing were:
 
 Some of the issues were alleviated by the company by upgrading their systems, but some of them will be done in the future:
 
-- The molding controller was upgraded with a more powerful machine with Windows 7, so we will have a better.Net compatilibity
+- The molding controller was upgraded with a more powerful machine with Windows 7, so we will have a better.Net compatibility
 - In the future, they will evaluate new IO-Link compatible sensors so data could be retrieved in real-time using an OPC-UA gateway
 
 The concerns that arised about this project:
@@ -140,14 +142,14 @@ the one that will be used when the IO-Link sensors are installed.
 
 ### Hackfest agenda ###
 
-During the first meetings we agreed on an agenda that should be flexible because the access to the molding machine depended on the production needs.
+During the first meetings, we agreed on an agenda that should be flexible because the access to the molding machine depended on the production needs.
 We did a *5 day hackfest* in two blocks:
 - The first 3 days we developed all the basic parts to have a reliable solution that sends the data to the cloud.
 - A week after we started the second part of the hackfest, where we focused on enhancing security and reliability of the system.
 
 * Day 1
     * **IoT Lab**: we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
-    In the lab we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform.
+    In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform.
 ![IotLab]({{ site.baseurl }}/images/fagorederlan/iotLab.jpg)
     * During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days.
 ![Kanban1]({{ site.baseurl }}/images/fagorederlan/kanban1.jpg)
