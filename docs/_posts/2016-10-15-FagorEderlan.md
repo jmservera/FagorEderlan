@@ -155,69 +155,44 @@ Day 1 | *Hackfest preparation*
 IoT Lab | we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use. In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform. 
 Kanban Board | During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days. |
 
-
 Day 2 | *Divide teams and start the work* 
 --- | ---
 Windows Service | Develop a file watcher that zipped the files and connected to Azure Storage to send them 
 Azure Functions | To uncompress the files and extract characteristics from the curves 
 
-
-Day 3 | Visualization 
+Day 3 | *Visualization* 
 --- | ---
-ASA | Use Stream Analytics and PowerBI to represent the data 
+ASA + PowerBI | Use Stream Analytics and PowerBI to represent the data 
 Simulator | We developed a data simulator to test the solution and created a set of tests 
 Storage of the data | We sent all the data to the Azure Tables storage to build the ML model
 
+One week after, we did the last two days:
+
+Day 4 | *Improve security using IoT Hub*
+--- | ---
+IoT Hub | Replaced the code that connected directly to the Azure Storage to enhance the security using IoT Hub. We also connected an Intel Genuino 101 with enviromental sensor to improve the data model
+ML Model | We connected the ML Model to ASA to get real-time predictions
+Tests | We designed a test plan to test the whole project, but mainly the Windows Service that had to run inside the control machine.
+
+Day 5 | *Deployment and conclusions *
+--- | ---
+Last tweaks | We used the morning to fix all what we found during the test phase before going to the factory to install the service
+Deployment | The factory visit was the culmination of all the work, where we could see how the molding process was done
+Conclusions | The afternoon of the last day we discussed the future of the solution and made the cost calculations of the deployment in the whole factory
 
 
-* Day 1
-    * **IoT Lab**: we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
-    In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform.
-    * During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days.
-* For the day 2 we divided the teams to build the different parts we needed:
-    * A Windows service with a file watcher that zipped the files and connected to Azure Storage to send them 
-    * The Azure Functions to uncompress the files and extract characteristics from the curves
-        * Create a cloud service for the data management: they currently process all the data with one monolithic application, we will split the data gathering and data management in two apps. The data gathering runs in the edge and the data management and preparation is done in the cloud. We will evaluate and/or use:
-            * Blob Storage
-            * Message queue
-            * Maybe Data Factory
-            * A storage solution
-            * DocumentDB
-            * Azure Database
-            * DataLake or Blobs?
-* Day 3
-    * Use Stream Analytics and PowerBI to represent the data
-    * Send the data to a Database in order to fill the ML model
-    * Develop a simulator that sends the raw data to IoT Hub, for preparing Day 4
-
-* One week of working remotely on the project between day 3 and 4 
-
-* Day 4
-    * Field Gateway: as the hardware is not still prepared, we will create a small simulator that sends all the data to IoT Hub, using
-        * A field simulator (from day 3)
-        * IoT Hub
-        * Stream Analytics
-        * ML model in Real Time
-        * PowerBI Embedded
-        * Security (should be present in the prototype)
-* Day 5
-    * Conclusions
-    * Prototype deployment and evaluation
-    * Costs calculation
-
-
-IoT proposed solution will do X and help with the pain points above by Y.
-
-Future potential to their business and operations.
 
 ![PowerBI Dashboard][PowerBIDashboard]
 
-##Architecture##
+## Architecture ##
 
 In the technology diagram below you will find the different technologies we are using to get all the information from the machine.
+
 [![Overview][schemasvg]]({{ site.baseurl }}/images/fagorederlan/schema.svg)
 
-##Device used & Code artifacts
+## Device used & Code artifacts ##
+
+Find the code at the [Fagor Ederlan repo](https://github.com/jmservera/FagorEderlan)
 
 ##Opportunities going forward
 
