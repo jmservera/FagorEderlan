@@ -3,11 +3,11 @@ layout: post
 title:  "Fagor Ederlan IoT Hackfest"
 author: "Juan Manuel Servera"
 author-link: "#"
-#author-image: "../images/authors/jmservera.jpg"
+#author-image: "{{ site.baseurl }}/images/authors/jmservera.jpg"
 date:   2016-11-08
 categories: IoT
 color: "blue"
-#image: "../images/imagename.png" #should be ~350px tall
+#image: "{{ site.baseurl }}/images/imagename.png" #should be ~350px tall
 excerpt: An Industry 4.0 project for gathering data secureyly from an aluminum molding machine to create a ML model to discard faster the defective pieces and then improve the process. The data is sent compressed to Azure through an IoT connection and prepared with Azure Functions, then sent to a ML model from Stream Analytics and presented in a PowerBI.
 language: English
 verticals: Manufacturing
@@ -23,7 +23,7 @@ While in a canonical scenario, the data is gathered directly from the sensors (o
 
 The machine where we will deploy this prototype didn't have a network connection, and the sensors are connected directly to the machine. The control software already gathers all the sensors information as *CSV* files and for each piece it calculates averages, means and some other statistical values from the data. As we wanted to minimize the impact we have in the machine, we developed a small windows service that detected new *CSV* files in a folder and sent them zipped to IoT Hub, all the rest of the process is executed in the cloud side.
 
-![Robot and Mold](../images/fagorederlan/robotAndMold.jpg)
+![Robot and Mold]({{ site.baseurl }}/images/fagorederlan/robotAndMold.jpg)
 
 Two ML models will be built with the gathered data:
 - The first one will be built on the data from in-mold sensors, and will be correlated with a dataset of defective parts. This will greatly enhance the project, because it will allow to do early detection of defective pieces.  
@@ -131,9 +131,9 @@ The second block was a week after and we focused on enhancing security and relia
 * Day 1
     * We dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
     In the lab we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and node-red.
-![IotLab](../images/FagorEderlan/iotLab.jpg)
+![IotLab]({{ site.baseurl }}/images/FagorEderlan/iotLab.jpg)
     * During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days.
-![Kanban1](../images/FagorEderlan/kanban1.jpg)
+![Kanban1]({{ site.baseurl }}/images/FagorEderlan/kanban1.jpg)
 * For the day 2 we divided the teams to build the different parts we needed:
     * A Windows service with a file watcher that zipped the files and connected to Azure Storage to send them 
     * 
@@ -174,7 +174,7 @@ Future potential to their business and operations.
 ##Architecture##
 
 In the technology diagram below you will find the different technologies we are using to get all the information from the machine.
-![Overview](../images/fagorederlan/schema.svg)
+![Overview]({{ site.baseurl }}/images/fagorederlan/schema.svg)
 
 ##Device used & Code artifacts
 
