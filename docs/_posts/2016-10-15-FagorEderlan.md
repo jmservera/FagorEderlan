@@ -155,10 +155,12 @@ Day 1 | *Hackfest preparation*
 IoT Lab | we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use. In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform. 
 Kanban Board | During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days. |
 
+
 Day 2 | *Divide teams and start the work* 
 --- | ---
-Windows Service | a file watcher that zipped the files and connected to Azure Storage to send them 
-Azure Functions | to uncompress the files and extract characteristics from the curves 
+Windows Service | Develop a file watcher that zipped the files and connected to Azure Storage to send them 
+Azure Functions | To uncompress the files and extract characteristics from the curves 
+
 
 Day 3 | Visualization 
 --- | ---
