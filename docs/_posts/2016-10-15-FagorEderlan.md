@@ -147,12 +147,14 @@ We did a *5 day hackfest* in two blocks:
 - The first 3 days we developed all the basic parts to have a reliable solution that sends the data to the cloud.
 - A week after we started the second part of the hackfest, where we focused on enhancing security and reliability of the system.
 
+![Collage]({{ site.baseurl }}/images/fagorederlan/hackfestcollage.jpg)
+
 * Day 1
     * **IoT Lab**: we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
     In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform.
-![IotLab]({{ site.baseurl }}/images/fagorederlan/iotLab.jpg)
+#![IotLab]({{ site.baseurl }}/images/fagorederlan/iotLab.jpg)
     * During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days.
-![Kanban1]({{ site.baseurl }}/images/fagorederlan/kanban1.jpg)
+#![Kanban1]({{ site.baseurl }}/images/fagorederlan/kanban1.jpg)
 * For the day 2 we divided the teams to build the different parts we needed:
     * A Windows service with a file watcher that zipped the files and connected to Azure Storage to send them 
     * The Azure Functions to uncompress the files and extract characteristics from the curves
