@@ -208,9 +208,9 @@ Time or cost savings metrics resulting from the implementation of the solution
 
 Changes in the company culture or their organization
 
-[robot]: ({{ site.baseurl }}/images/fagorederlan/robotAndMold.jpg)
-[Collage]: ({{ site.baseurl }}/images/fagorederlan/hackfestcollage.jpg)
-[IoTLab]: ({{ site.baseurl }}/images/fagorederlan/iotLab.jpg)
-[Kanban1]: ({{ site.baseurl }}/images/fagorederlan/kanban1.jpg)
-[schemasvg]: ({{ site.baseurl }}/images/fagorederlan/schema.svg)
-[PowerBIDashboard]: ({{ site.baseurl }}/images/fagorederlan/PowerBIDemo.png)
+[robot]: {{ site.baseurl }}/images/fagorederlan/robotAndMold.jpg
+[Collage]: {{ site.baseurl }}/images/fagorederlan/hackfestcollage.jpg
+[IoTLab]: {{ site.baseurl }}/images/fagorederlan/iotLab.jpg
+[Kanban1]: {{ site.baseurl }}/images/fagorederlan/kanban1.jpg
+[schemasvg]: {{ site.baseurl }}/images/fagorederlan/schema.svg
+[PowerBIDashboard]: {{ site.baseurl }}/images/fagorederlan/PowerBIDemo.png
