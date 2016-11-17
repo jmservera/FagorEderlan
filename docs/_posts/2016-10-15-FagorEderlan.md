@@ -37,31 +37,31 @@ The main Technologies used are:
 * Azure Stream Analytics, to join the datasets and ask the ML model
 * Azure ML, to build the ML models and create the API endpoints
 
-Jesús Para, main Data Scientist in Edertek, indicated that
+As Jesús Para, main Data Scientist in Fagor Ederlan, indicated:
 
 > "Being able to early detect one defective piece before it arrives to our customers will pay the Azure consumption for one month".
 
 
 ## Customer ##
-**Mondragon** is one of the leading Spanish business groups, integrated by autonomous and independent cooperatives with production subsidiaries and
+**[Mondragón](http://www.mondragon-corporation.com/eng)** is one of the leading Spanish business groups, integrated by autonomous and independent cooperatives with production subsidiaries and
 corporate offices in 41 countries and sales in more than 150.
 
-**Fagor Ederlan** is a company under this business group – a leading supplier of complete solutions for the automotive industry, specializing in Chassis and
+**[Fagor Ederlan](http://www.fagorederlan.es)** is a company under this business group – a leading supplier of complete solutions for the automotive industry, specializing in Chassis and
 Powertrain applications.
-
-Their main installation is in the Mondragón village, in the Basque Country, Spain. This is where we have developed and deployed the prototype,
+Their main installation is in the [Mondragón](https://es.wikipedia.org/wiki/Mondrag%C3%B3n) town, in the Basque Country, Spain. This is where we have developed and deployed the prototype,
 but one big concern is how to scale this to the whole company, with a focus in security and in working scenarios with very low bandwidth.
 
 The participants were people from three different companies: **Fagor Ederlan**, **LKS** and **ETIC**.
 
-**LKS** is a SI that is helping the company to build the ML system to improve their manufacturing process.
+**[LKS](http://www.lds.es)** is the SI that is helping Fagor Ederlan building the ML models to improve their manufacturing process.
 
-**ETIC** is a Microsoft Innovation Center focused in embedded systems and Smart Cities, sited in Mondragon, they are working along with LKS in this project,
-providing their knowledge in building solutions in Azure with PowerBI and Machine Learning.
+**[ETIC](http://www.embedded-technologies.org/en-us)** (Smart Cities Innovation Center) is a non-profit business service co-operative specialised in the development of products,
+services and applications within the context of Smart Cities. By virtue of a framework agreement, it operates as a Microsoft Innovation Center.
+Located in the Mondragón town as well, they are working along with LKS in this project, providing their knowledge in building IoT solutions in Azure with PowerBI and Machine Learning.
 
 The main hack team has been formed by:
 
-- Fagor Ederlan (Edertek)
+- Fagor Ederlan
     - Eber Arregui (Project Manager)
     - Yolanda Mendi (IT)
     - Ibai Peña (IT)
@@ -81,7 +81,7 @@ The main hack team has been formed by:
 - Microsoft
     - Juan Manuel Servera. Senior Technical Evangelist. ([@jmservera](http://twitter.com/jmservera))
 
-The Hackfest focus was on three different matters:
+The Hackfest was focused on three different matters:
 - Learning to use IoT Hub and how it enhances the real-time capture of the data
 - Creating a windows service to gather actual data using the technology that they are using nowadays, but sending it to the cloud to help analyzing it
 - Create a simulator that uses samples of the real data and simulates the direct gathering from the sensors to create a prototype of the full solution with all the 
