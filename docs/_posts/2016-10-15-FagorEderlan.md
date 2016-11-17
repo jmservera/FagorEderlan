@@ -131,9 +131,9 @@ The second block was a week after and we focused on enhancing security and relia
 * Day 1
     * We dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use.
     In the lab we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform.
-![IotLab]({{ site.baseurl }}/images/fagorderelan/iotLab.jpg)
+![IotLab]({{ site.baseurl }}/images/fagorederlan/iotLab.jpg)
     * During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days.
-![Kanban1]({{ site.baseurl }}/images/fagorderelan/kanban1.jpg)
+![Kanban1]({{ site.baseurl }}/images/fagorederlan/kanban1.jpg)
 * For the day 2 we divided the teams to build the different parts we needed:
     * A Windows service with a file watcher that zipped the files and connected to Azure Storage to send them 
     * 
