@@ -4,7 +4,7 @@ title:  "Fagor Ederlan IoT Hackfest"
 author: "Juan Manuel Servera"
 author-link: "#"
 #author-image: "{{ site.baseurl }}/images/authors/jmservera.jpg"
-date:   2016-11-08
+date:   2016-11-22
 categories: IoT
 color: "blue"
 #image: "{{ site.baseurl }}/images/imagename.png" #should be ~350px tall
