@@ -202,6 +202,8 @@ You will find the code at the [Fagor Ederlan repository][FagorRepo]
 
 It contains the code for the Windows Service, the [Intel Genuino 101][Genuino101] board and all the [Azure][Azure] deployment artifacts.
 
+![Intel Genuino 101][GenuinoPic]
+
 ## Going Forward ##
 
 In this project, we did the data gathering in a secure, reliable and scalable way, but there's still much work to do. Now we have the data in the cloud, 
@@ -243,3 +245,4 @@ the info transmitted via USB is directly sent through the IoT Hub messaging syst
 [jmservera]: http://twitter.com/jmservera
 [Genuino101]: https://software.intel.com/en-us/iot/hardware/curie/dev-kit
 [Azure]: https://azure.microsoft.com
+[GenuinoPic]: https://software.intel.com/en-us/iot/hardware/curie/dev-kit "Genuino 101"
