@@ -202,7 +202,7 @@ You will find the code at the [Fagor Ederlan repository][FagorRepo]
 
 It contains the code for the Windows Service, the [Intel Genuino 101][Genuino101] board and all the [Azure][Azure] deployment artifacts.
 
-![Intel Genuino 101][GenuinoPic]
+[![Intel Genuino 101][GenuinoPic]][Genuino]
 
 ## Going Forward ##
 
