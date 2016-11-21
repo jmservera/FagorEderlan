@@ -98,7 +98,7 @@ The Hackfest was focused on three different matters:
 - Create a simulator that uses samples of the real for a prototype of the full solution with all the data management, real-time analytics, ML and visualization.
 This simulator allows us to test everything without 
  
-## Pain point ##
+## Pain point: automated data gathering ##
 
 The objective of solution they are building is the early identification of defective pieces in an aluminum molding machine.
 During the injection process, the machine takes many parameters per millisecond, like speed, pressure & injector run. This creates an 800KB *CSV* file with all the measures
@@ -166,8 +166,6 @@ ASA + PowerBI | Use Stream Analytics and PowerBI to represent the data
 Simulator | We developed a data simulator to test the solution and created a set of tests 
 Storage of the data | We sent all the data to the Azure Tables storage to build the ML model
 
-One week after, we did the last two days:
-
 Day 4 | *Improve security using IoT Hub*
 --- | ---
 IoT Hub | Replaced the code that connected directly to the Azure Storage to enhance the security using IoT Hub. We also connected an Intel Genuino 101 with enviromental sensor to improve the data model
@@ -180,6 +178,18 @@ Last tweaks | We used the morning to fix all what we found during the test phase
 Deployment | The factory visit was the culmination of all the work, where we could see how the molding process was done
 Conclusions | The afternoon of the last day we discussed the future of the solution and made the cost calculations of the deployment in the whole factory
 
+### Solutions built during the Hackfest ###
+
+We had a very aspiring agenda, but we managed all the work in a Kanban Board, where we pivoted quickly when we detected any stopper or new scenario, so the solutions we built were not exactly what we defined 
+at the beginning, but were much more adjusted to the project needs. So, the results of the Hackfest were:
+
+* A Windows Service connected to IoT Hub to gather and compress *CSV* documents and other direct sensor information
+* A command line simulator, used to test the full solution without having to deploy it inside a running machine
+* Two azure functions: one for decompressing the files and another one to extract the characteristics from the curves
+* A Stream Analytics query, to join all the data from the different files, do the last data preparation steps and ask the Azure ML model
+* A Machine Learning model, fed with all the historical data and retrained with new data when needed
+* 
+
 
 
 ![PowerBI Dashboard][PowerBIDashboard]
@@ -188,11 +198,11 @@ Conclusions | The afternoon of the last day we discussed the future of the solut
 
 In the technology diagram below you will find the different technologies we are using to get all the information from the machine.
 
-[![Overview][schemasvg]]({{ site.baseurl }}/images/fagorederlan/schema.svg)
+[![Overview][schemasvg]][PowerBIDashboard]
 
 ## Device used & Code artifacts ##
 
-Find the code at the [Fagor Ederlan repo](https://github.com/jmservera/FagorEderlan)
+Find the code at the [Fagor Ederlan repo][FagorRepo]
 
 ##Opportunities going forward
 
@@ -209,4 +219,5 @@ Changes in the company culture or their organization
 [IoTLab]: {{ site.baseurl }}/images/fagorederlan/iotLab.jpg
 [Kanban1]: {{ site.baseurl }}/images/fagorederlan/kanban1.jpg
 [schemasvg]: {{ site.baseurl }}/images/fagorederlan/schema.svg
-[PowerBIDashboard]: {{ site.baseurl }}/images/fagorederlan/PowerBIDemo.png
+[PowerBIDashboard]: {{ site.baseurl }}/images/fagorederlan/PowerBIDemo.png "PowerBI Dashboard"
+[FagorRepo]: https://github.com/jmservera/FagorEderlan
