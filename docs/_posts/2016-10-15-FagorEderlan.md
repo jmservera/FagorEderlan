@@ -213,6 +213,12 @@ scale easily, but the ML Model is unique for each mold and machine, and a soluti
 Automating the upload of files and the data preparation has solved a critical problem of the solution that the team was building. Furthermore, it opens the door to tackle the issues
 in near real-time, saving costs, time and enhancing the quality of the product that will arrive to the customers.
 
+Using Azure solved many concerns of the IT Department:
+* Security: no information about the storage is set at device level, we have a secure channel communication and the ability to use certificates
+* Scalability: IoT Hub scales to millions of devices
+* Bandwidth limits: the files are compressed before sending them through the wire and uncompressed on arrival
+* Use of the existing hardware, we only deployed a small Windows Service inside the control PC
+* External sensors: adding sensors it's easy and the information can be sent in real-time
 
 
 
