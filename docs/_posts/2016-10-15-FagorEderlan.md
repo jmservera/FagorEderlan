@@ -198,7 +198,9 @@ have been already working for several years.
 
 ## Device used & Code artifacts ##
 
-You will find find the code at the [Fagor Ederlan repository][FagorRepo], that contains the code for the Windows Service, the Intel Genuino 101 board and all the Azure deployment artifacts.
+You will find the code at the [Fagor Ederlan repository][FagorRepo]
+
+It contains the code for the Windows Service, the [Intel Genuino 101][Genuino101] board and all the [Azure][Azure] deployment artifacts.
 
 ## Going Forward ##
 
@@ -213,13 +215,15 @@ scale easily, but the ML Model is unique for each mold and machine, and a soluti
 Automating the upload of files and the data preparation has solved a critical problem of the solution that the team was building. Furthermore, it opens the door to tackle the issues
 in near real-time, saving costs, time and enhancing the quality of the product that will arrive to the customers.
 
-Using Azure solved many concerns of the IT Department:
+The IoT solutions we have in Azure solved many of the concerns of the IT Department:
+
 * Security: no information about the storage is set at device level, we have a secure channel communication and the ability to use certificates
 * Scalability: IoT Hub scales to millions of devices
 * Bandwidth limits: the files are compressed before sending them through the wire and uncompressed on arrival
-* Use of the existing hardware, we only deployed a small Windows Service inside the control PC
-* External sensors: adding sensors it's easy and the information can be sent in real-time
-
+* Use of the existing hardware: we only deployed a small Windows Service inside the control PC
+* External sensors extensibility: adding sensor it's easy because the Windows Service is extensible via a USB serial connection. We can connect an Arduino or a Genuino 101 and all
+the info transmitted via USB is directly sent through the IoT Hub messaging system.
+* Command and control: IoT Hub allows to build c&c solutions, adding a C2D receiver in the control PC is now very easy.
 
 
 [robot]: {{ site.baseurl }}/images/fagorederlan/robotAndMold.jpg
@@ -237,3 +241,5 @@ Using Azure solved many concerns of the IT Department:
 [Microsoft]: http://www.microsoft.com
 [IoTLab]: http://thinglabs.io
 [jmservera]: http://twitter.com/jmservera
+[Genuino101]: https://software.intel.com/en-us/iot/hardware/curie/dev-kit
+[Azure]: https://azure.microsoft.com
