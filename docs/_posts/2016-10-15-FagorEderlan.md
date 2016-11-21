@@ -73,12 +73,12 @@ The main hack team has been formed by:
 
  [Fagor Ederlan](http://www.fagorederlan.es) | [LKS](http://www.lks.es) | [ETIC](http://www.embedded-technologies.org) | [Microsoft](http://www.microsoft.com)
  ---|---|---|---
-Eber Arregui (Project Manager) | Vicente Briz | Natividad Herrasti (Managing Director) | Juan Manuel Servera. Senior Technical Evangelist. ([@jmservera](http://twitter.com/jmservera))
+Eber Arregui (Project Manager) | Vicente Briz | Natividad Herrasti (Managing Director) | [Juan Manuel Servera](http://twitter.com/jmservera) (Senior Technical Evangelist)
 Yolanda Mendi (IT)| Miguel Baroja (Data) | Aitor Gomez (Dev)
 Ibai Peña (IT)| |Aitor Akizu (Dev)
 Jesús Para (Data Analytics)||Jon Alza (Dev)
 Imanol Santos (Installation technician) ||Josu Lopez (Dev)
-|||Maite Beamurgia (Data Scientist)
+ | | Maite Beamurgia (Data Scientist)
 
 
 The Hackfest was focused on three different matters:
