@@ -8,7 +8,7 @@ date:   2016-11-08
 categories: IoT
 color: "blue"
 #image: "{{ site.baseurl }}/images/imagename.png" #should be ~350px tall
-excerpt: An Industry 4.0 project for gathering data secureyly from an aluminum molding machine to create a ML model to discard faster the defective pieces and then improve the process. The data is sent compressed to Azure through an IoT connection and prepared with Azure Functions, then sent to a ML model from Stream Analytics and presented in a PowerBI.
+excerpt: An Industry 4.0 project for gathering data securely from an aluminum molding machine to create a ML model to discard faster the defective pieces and then improve the process. The data is sent compressed to Azure through an IoT connection and prepared with Azure Functions, then sent to a ML model from Stream Analytics and presented in a PowerBI.
 language: English
 verticals: Manufacturing
 ---
@@ -18,7 +18,7 @@ verticals: Manufacturing
 In the third wave of industrial evolution we had automation that produced big amounts of data. This data has high potential for analytic applications, but it was not easy to analyze,
 because it was siloed in the machines where it was generated.
 With this project, we will demonstrate that it's not complex to send the data to the cloud, using secure and reliable services,
-that allow us to analyze the data in near-real-time and build ML models to extract knowledge from it.
+that allow us to analyze the data in near-real-time and build ML models to extract knowledge from it. 
 
 The project is based on a molding machine that takes measurements each millisecond during its process.
 
@@ -39,7 +39,7 @@ Two ML models will be built with the gathered data:
 - The first one will be built on the data from in-mold sensors, and will be correlated with a dataset of defective parts. This will greatly enhance the project, because it will allow to do early detection of defective pieces.  
 - In the future, the plan is to build a model to enhance the molding process directly, but for this we will need to retrieve the molding parameters as well.
 
-The main technologies we used are:
+The main technologies we used:
 
 * IoT Hub, to receive sensor data as events and files
 * Intel Curie, to gather environmental data
@@ -53,27 +53,27 @@ As Jesús Para, main Data Scientist in Fagor Ederlan, indicated:
 
 
 ## Customer ##
-**[Mondragón](http://www.mondragon-corporation.com/eng)** is one of the leading Spanish business groups, integrated by autonomous and independent cooperatives with production subsidiaries and
+**[Mondragón][MondragonCorp]** is one of the leading Spanish business groups, integrated by autonomous and independent cooperatives with production subsidiaries and
 corporate offices in 41 countries and sales in more than 150.
 
-**[Fagor Ederlan](http://www.fagorederlan.es)** is a company under this business group – a leading supplier of complete solutions for the automotive industry, specializing in Chassis and
+**[Fagor Ederlan][FagorEderlan]** is a company under this business group – a leading supplier of complete solutions for the automotive industry, specializing in Chassis and
 Powertrain applications.
-Their main installation is in the [Mondragón](https://es.wikipedia.org/wiki/Mondrag%C3%B3n) town, in the Basque Country, Spain. This is where we have developed and deployed the prototype,
+Their main installation is in the [Mondragón][Mondragon] town, in the Basque Country, Spain. This is where we have developed and deployed the prototype,
 but one big concern is how to scale this to the whole company, with a focus in security and in working scenarios with very low bandwidth.
 
 The hackfest participants were from the three companies that are working on the project: **Fagor Ederlan** (Edertek), **LKS** and **ETIC**.
 
-**[LKS](http://www.lks.es)** is the SI that is helping Fagor Ederlan building the ML models to improve their manufacturing process.
+**[LKS][LKS]** is the SI that is helping Fagor Ederlan building the ML models to improve their manufacturing process.
 
-**[ETIC](http://www.embedded-technologies.org/en-us)** (Smart Cities Innovation Center) is a non-profit business service co-operative specialized in the development of products,
+**[ETIC][ETIC]** (Smart Cities Innovation Center) is a non-profit business service co-operative specialized in the development of products,
 services and applications within the context of Smart Cities. By virtue of a framework agreement, it operates as a Microsoft Innovation Center.
 Located in the Mondragón town as well, they are working along with LKS in this project, providing their knowledge in building IoT solutions in Azure with PowerBI and Machine Learning.
 
 The main hack team has been formed by:
 
- [Fagor Ederlan](http://www.fagorederlan.es) | [LKS](http://www.lks.es) | [ETIC](http://www.embedded-technologies.org) | [Microsoft](http://www.microsoft.com)
+ [Fagor Ederlan][FagorEderlan] | [LKS][LKS] | [ETIC][ETIC] | [Microsoft][Microsoft]
  ---|---|---|---
-Eber Arregui (Project Manager) | Vicente Briz | Natividad Herrasti (Managing Director) | [Juan Manuel Servera](http://twitter.com/jmservera) (Senior Technical Evangelist)
+Eber Arregui (Project Manager) | Vicente Briz | Natividad Herrasti (Managing Director) | [Juan Manuel Servera][jmservera] (Senior Technical Evangelist)
 Yolanda Mendi (IT)| Miguel Baroja (Data) | Aitor Gomez (Dev)
 Ibai Peña (IT)| |Aitor Akizu (Dev)
 Jesús Para (Data Analytics)||Jon Alza (Dev)
@@ -114,7 +114,7 @@ Some of the issues were alleviated by the company by upgrading their systems, bu
 - The molding controller was upgraded with a more powerful machine with Windows 7, so we will have a better.Net compatibility
 - In the future, they will evaluate new IO-Link compatible sensors so data could be retrieved in real-time using an OPC-UA gateway
 
-The concerns that arised about this project:
+The concerns that arose about this project:
 
 - **Security**: the IT department of the company is also involved, and they are concerned about the security of the whole system
 - **Connectivity and bandwidth limits**: their current broadband network is very limited, so they want to limit bandwidth usage of the system and control when the data is sent to the cloud
@@ -142,7 +142,7 @@ We did a *5 day hackfest* in two blocks:
 
 Day 1 | *Hackfest preparation* 
 --- | --- 
-IoT Lab | we dedicated the morning to do a [IoT Hub lab](http://thinglabs.io) to get familiar with the technology, so anyone could discuss about all the parts we were going to use. In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform. 
+IoT Lab | we dedicated the morning to do a [IoT Hub lab][IoTLab] to get familiar with the technology, so anyone could discuss about all the parts we were going to use. In the lab, we used Intel Edison with Grove kits, Raspberry Pi 2 with Fez Hat and connected to the cloud using node.js and also the node-red platform. 
 Kanban Board | During the afternoon, we discussed about the technology we were going to use for each part and created an initial Kanban Board with the work for the next days. |
 
 Day 2 | *Divide teams and start the work* 
@@ -158,7 +158,7 @@ Storage of the data | We sent all the data to the Azure Tables storage to build 
 
 Day 4 | *Improve security using IoT Hub*
 --- | ---
-IoT Hub | Replaced the code that connected directly to the Azure Storage to enhance the security using IoT Hub. We also connected an Intel Genuino 101 with enviromental sensor to improve the data model
+IoT Hub | Replaced the code that connected directly to the Azure Storage to enhance the security using IoT Hub. We also connected an Intel Genuino 101 with environmental sensor to improve the data model
 ML Model | We connected the ML Model to ASA to get real-time predictions
 Tests | We designed a test plan to test the whole project, but mainly the Windows Service that had to run inside the control machine.
 
@@ -178,31 +178,43 @@ at the beginning, but were much more adjusted to the project needs. So, the resu
 * Two azure functions: one for decompressing the files and another one to extract the characteristics from the curves
 * A Stream Analytics query, to join all the data from the different files, do the last data preparation steps and ask the Azure ML model
 * A Machine Learning model, fed with all the historical data and retrained with new data when needed
-* 
-
-
+* An Azure Resource Manager template, so we will be able to deploy this solution multiple times
+* A PowerBI Dashboard to see the curves and the results for each piece in real time
 
 ![PowerBI Dashboard][PowerBIDashboard]
 
 ## Architecture ##
 
 In the technology diagram below you will find the different technologies we are using to get all the information from the machine.
+On the left, there's the deployment we did inside the control PC, while on the right side, there's all the technology we are using in Azure right now,
+plus what we want to add in the near future, marked with a green asterisk.
 
 [![Overview][schemasvg]][schemasvg]
 
+While we use a Service -> IoT Hub -> Function -> ASA -> PowerBI pipeline for live data, we cannot use the same method for the historical data that is already stored in the controller computer.
+It is a huge amount of data that may be uploaded manually from another computer with a higher bandwidth. In any case, the work won't be done by the functions directly,
+but we will create an HDInsight deployment that will do the data preparation and characterization for the ML model. This will not be necessary for the new machines, but for all the old ones that
+have been already working for several years.
+
 ## Device used & Code artifacts ##
 
-Find the code at the [Fagor Ederlan repo][FagorRepo]
+You will find find the code at the [Fagor Ederlan repository][FagorRepo], that contains the code for the Windows Service, the Intel Genuino 101 board and all the Azure deployment artifacts.
 
-##Opportunities going forward
+## Going Forward ##
 
-This section is optional, but if you have details on how the customer plans to proceed or what more they hope to accomplish, please include.
+In this project, we did the data gathering in a secure, reliable and scalable way, but there's still much work to do. Now we have the data in the cloud, 
+we can do incremental improvements in the ML models and create new ones that could offer recommendations to improve the molding process.
 
-##Conclusion##
+Another fundamental aspect of this development has been the security and the scalability of the system. The Iot Hub, ASA and Azure Functions used in the project will
+scale easily, but the ML Model is unique for each mold and machine, and a solution for using multiple models should be developed.     
 
-Time or cost savings metrics resulting from the implementation of the solution
+## Conclusion ##
 
-Changes in the company culture or their organization
+Automating the upload of files and the data preparation has solved a critical problem of the solution that the team was building. Furthermore, it opens the door to tackle the issues
+in near real-time, saving costs, time and enhancing the quality of the product that will arrive to the customers.
+
+
+
 
 [robot]: {{ site.baseurl }}/images/fagorederlan/robotAndMold.jpg
 [Collage]: {{ site.baseurl }}/images/fagorederlan/hackfestcollage.jpg
@@ -211,3 +223,11 @@ Changes in the company culture or their organization
 [schemasvg]: {{ site.baseurl }}/images/fagorederlan/schema.svg
 [PowerBIDashboard]: {{ site.baseurl }}/images/fagorederlan/PowerBIDemo.png "PowerBI Dashboard"
 [FagorRepo]: https://github.com/jmservera/FagorEderlan
+[Mondragon]: https://es.wikipedia.org/wiki/Mondrag%C3%B3n
+[MondragonCorp]: http://www.mondragon-corporation.com/eng
+[FagorEderlan]: http://www.fagorederlan.es
+[LKS]: http://www.lks.es
+[ETIC]: http://www.embedded-technologies.org/en-us
+[Microsoft]: http://www.microsoft.com
+[IoTLab]: http://thinglabs.io
+[jmservera]: http://twitter.com/jmservera
