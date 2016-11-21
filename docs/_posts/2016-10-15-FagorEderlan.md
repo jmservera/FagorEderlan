@@ -198,7 +198,7 @@ at the beginning, but were much more adjusted to the project needs. So, the resu
 
 In the technology diagram below you will find the different technologies we are using to get all the information from the machine.
 
-[![Overview][schemasvg]][PowerBIDashboard]
+[![Overview][schemasvg]][schemasvg]
 
 ## Device used & Code artifacts ##
 
