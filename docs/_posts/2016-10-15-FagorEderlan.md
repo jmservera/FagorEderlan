@@ -71,25 +71,24 @@ Located in the Mondragón town as well, they are working along with LKS in this 
 
 The main hack team has been formed by:
 
-- [Fagor Ederlan](http://www.fagorederlan.es)
+ [Fagor Ederlan](http://www.fagorederlan.es) | [LKS](http://www.lks.es) | [ETIC](http://www.embedded-technologies.org) | [Microsoft](http://www.microsoft.com)
+ ---|---|---|---
     - Eber Arregui (Project Manager)
     - Yolanda Mendi (IT)
     - Ibai Peña (IT)
     - Jesús Para (Data Analytics)
-    - Imanol Santos (Installation technician)
-- [LKS](http://www.lks.es)
+    - Imanol Santos (Installation technician) |
     - Vicente Briz
-    - Miguel Baroja
-- [ETIC](http://www.embedded-technologies.org)
+    - Miguel Baroja |
     - Natividad Herrasti (Managing Director)
     - Development Team
         - Aitor Gomez
         - Aitor Akizu 
         - Jon Alza
         - Josu Lopez 
-        - Maite Beamurgia (Data Scientist)
-- Microsoft(http://www.microsoft.com)
+        - Maite Beamurgia (Data Scientist) |
     - Juan Manuel Servera. Senior Technical Evangelist. ([@jmservera](http://twitter.com/jmservera))
+
 
 The Hackfest was focused on three different matters:
 
