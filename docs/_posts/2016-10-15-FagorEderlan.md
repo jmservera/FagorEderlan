@@ -245,4 +245,4 @@ the info transmitted via USB is directly sent through the IoT Hub messaging syst
 [jmservera]: http://twitter.com/jmservera
 [Genuino101]: https://software.intel.com/en-us/iot/hardware/curie/dev-kit
 [Azure]: https://azure.microsoft.com
-[GenuinoPic]: {{ site.baseurl }}/images/fagorederlan/genuino.jpg "Genuino 101"
+[GenuinoPic]: https://software.intel.com/sites/default/files/managed/72/25/arduino-angle-500x350.jpg "Genuino 101"
