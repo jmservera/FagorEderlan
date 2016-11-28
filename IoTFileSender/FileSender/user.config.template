@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<appSettings>
+  <add key="IoTHubConnectionString" value="[yourdeviceconnectionstring]"/>
+  <!--<add key="folder" value="c:\temp\filetest" />
+  <add key="interval" value="90000" />
+  <add key="logHelperFolder" value="c:\temp\log" />
+  <add key="SerialPort" value="COM10"/>-->
+</appSettings>

@@ -164,6 +164,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="deviceCertificate.pfx" />
+    <None Include="user.config.template" />
     <None Include="packages.config" />
     <Content Include=".gitignore" />
     <Content Include="user.config">
@@ -179,6 +180,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="BeforeBuild">
+    <Copy SourceFiles="user.config.template" Condition="!Exists('user.config')" DestinationFiles="user.config"/>
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
