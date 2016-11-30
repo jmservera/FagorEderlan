@@ -1,5 +1,5 @@
 
-## Learning from Hackfest with *Fagor Ederlan* ##
+## Enhancing a molding process with Industry 4.0 solutions with *Fagor Ederlan* ##
 
 This is a manufacturing project where we need to capture data to build a ML model to enhance the quality of the product during the molding process.
 
