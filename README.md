@@ -8,3 +8,6 @@ This is a manufacturing project where we need to capture data to build a ML mode
     * Intel Curie
     * Azure ML
     * Azure Functions
+    * Azure Resource Manager
+  
+  Find the full story at: [Microsft Technical Case Studies](https://microsoft.github.io/techcasestudies/)
