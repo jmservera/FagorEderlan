@@ -10,7 +10,7 @@ This is a manufacturing project where we need to capture data to build a ML mode
     * Azure Functions
     * Azure Resource Manager
   
-Find the full story at: [Microsoft Technical Case Studies](https://microsoft.github.io/techcasestudies/images/fagorederlan/schema.svg)
+Find the full story at: [Microsoft Technical Case Studies](https://microsoft.github.io/techcasestudies/iot/2016/12/19/FagorEderlan.html)
 
 ![Schema](https://microsoft.github.io/techcasestudies/images/fagorederlan/schema.svg "Solution schema")
 
