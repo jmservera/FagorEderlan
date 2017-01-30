@@ -10,4 +10,8 @@ This is a manufacturing project where we need to capture data to build a ML mode
     * Azure Functions
     * Azure Resource Manager
   
-  Find the full story at: [Microsft Technical Case Studies](https://microsoft.github.io/techcasestudies/)
+  Find the full story at: [Microsoft Technical Case Studies](https://microsoft.github.io/techcasestudies/images/fagorederlan/schema.svg)
+  
+  ![Schema](https://microsoft.github.io/techcasestudies/images/fagorederlan/schema.svg "Solution schema")
+  
+  You can find all the code assets of this schema in the [IoTFileSender folder](./IoTFileSender)
